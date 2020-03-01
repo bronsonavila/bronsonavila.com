@@ -1,9 +1,14 @@
+$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
 body {
+  font: 100% $font-stack;
+  color: $primary-color;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -572,9 +577,6 @@ th {
   text-align: left;
   border-bottom: 1px solid hsla(0, 0%, 0%, 0.12);
   font-feature-settings: "tnum";
-  -moz-font-feature-settings: "tnum";
-  -ms-font-feature-settings: "tnum";
-  -webkit-font-feature-settings: "tnum";
   padding-left: 0.96667rem;
   padding-right: 0.96667rem;
   padding-top: 0.725rem;

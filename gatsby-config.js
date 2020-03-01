@@ -1,10 +1,31 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Bronson Avila | Gatsby Portfolio`,
+    description: `Portfolio website.`,
+    author: `@bronsonavila`,
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        postCssPlugins: [
+          require("tailwindcss"),
+          require("./tailwind.config.js"),
+          require("autoprefixer"),
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-purgecss`,
+      options: {
+        // printRejected: true, // Print removed selectors and processed file names
+        // develop: true, // Enable while using `gatsby develop`
+        tailwind: true, // Enable tailwindcss support
+        // whitelist: ['whitelist'], // Don't remove this selector
+        // ignore: ['/ignored.css', 'prismjs/', 'docsearch.js/'], // Ignore files/folders
+        // purgeOnly : ['components/', '/main.css', 'bootstrap/'], // Purge only these files/folders
+      }
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
