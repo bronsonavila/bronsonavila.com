@@ -1,5 +1,5 @@
-import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
 
 const AllFileTable = () => {
   const data = useStaticQuery(graphql`
@@ -16,7 +16,7 @@ const AllFileTable = () => {
         }
       }
     }
-  `)
+  `);
 
   return (
     <div className="my-8">
@@ -39,7 +39,7 @@ const AllFileTable = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AllFileTable
+export default AllFileTable;
