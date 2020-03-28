@@ -1,29 +1,13 @@
 /**
  * Wraps all pages with a static header and a transition-enabled router.
  */
-
 import React from "react";
-import posed, { PoseGroup } from "react-pose";
+import { PoseGroup } from "react-pose";
 import { useStaticQuery, graphql } from "gatsby";
 
 import Header from "./header";
-
-const timeout = 200;
-
-const RoutesContainer = posed.div({
-  enter: {
-    opacity: 1,
-    filter: "blur(0px)",
-    y: 0,
-    delay: timeout,
-    delayChildren: timeout,
-  },
-  exit: {
-    opacity: 0,
-    filter: "blur(20px)",
-    y: 30,
-  },
-});
+import Layout from "./layout";
+import Transition from "./Transition";
 
 const PageWrapper = ({ children, location }) => {
   const data = useStaticQuery(graphql`
@@ -40,7 +24,9 @@ const PageWrapper = ({ children, location }) => {
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
       <PoseGroup>
-        <RoutesContainer key={location.pathname}>{children}</RoutesContainer>
+        <Transition key={location.pathname}>
+          <Layout>{children}</Layout>
+        </Transition>
       </PoseGroup>
     </>
   );
