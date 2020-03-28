@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "gatsby";
 
-import Image from "../components/image";
-import SEO from "../components/seo";
-import AllFileTable from "../components/allFileTable";
+import Image from "../components/Image";
+import SEO from "../components/SEO";
+import AllFileTable from "../components/AllFileTable";
 import MarkdownList from "../components/MarkdownList";
 
 const IndexPage = () => (

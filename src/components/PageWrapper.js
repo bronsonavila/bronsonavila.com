@@ -5,8 +5,8 @@ import React from "react";
 import { PoseGroup } from "react-pose";
 import { useStaticQuery, graphql } from "gatsby";
 
-import Header from "./header";
-import Layout from "./layout";
+import Header from "./Header";
+import Layout from "./Layout";
 import Transition from "./Transition";
 
 const PageWrapper = ({ children, location }) => {
