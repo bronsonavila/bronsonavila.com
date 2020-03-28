@@ -4,10 +4,10 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 import React from "react";
-import Transition from "./src/components/transition";
+import PageWrapper from "./src/components/PageWrapper";
 
 import "./src/styles/_styles.scss"
 
 export const wrapPageElement = ({ element, props }) => {
-  return <Transition {...props}>{element}</Transition>;
+  return <PageWrapper {...props}>{element}</PageWrapper>;
 };

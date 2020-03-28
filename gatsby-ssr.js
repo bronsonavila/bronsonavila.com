@@ -5,8 +5,8 @@
  */
 
 import React from "react";
-import Transition from "./src/components/transition";
+import PageWrapper from "./src/components/PageWrapper";
 
 export const wrapPageElement = ({ element, props }) => {
-  return <Transition {...props}>{element}</Transition>;
+  return <PageWrapper {...props}>{element}</PageWrapper>;
 };

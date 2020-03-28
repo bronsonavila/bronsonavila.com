@@ -1,3 +1,7 @@
+/**
+ * Wraps all pages with a static header and a transition-enabled router.
+ */
+
 import React from "react";
 import posed, { PoseGroup } from "react-pose";
 import { useStaticQuery, graphql } from "gatsby";
@@ -21,7 +25,7 @@ const RoutesContainer = posed.div({
   },
 });
 
-const Transition = ({ children, location }) => {
+const PageWrapper = ({ children, location }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -42,4 +46,4 @@ const Transition = ({ children, location }) => {
   );
 };
 
-export default Transition;
+export default PageWrapper;
