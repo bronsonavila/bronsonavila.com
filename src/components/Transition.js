@@ -4,8 +4,7 @@ const duration = 350;
 
 const Transition = posed.div({
   enter: {
-    // delay: duration,
-    // delayChildren: duration,
+    delay: duration / 4,
     filter: 'blur(0px)',
     opacity: 1,
     y: 0,
