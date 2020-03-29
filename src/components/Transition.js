@@ -1,21 +1,21 @@
 import posed from 'react-pose';
 
-const duration = 350;
+const delay = 350;
 
 const Transition = posed.div({
   enter: {
-    delay: duration / 2,
+    delay: delay / 2,
     filter: 'blur(0px)',
     opacity: 1,
     y: 0,
-    transition: { duration },
+    transition: { duration: delay },
   },
   exit: {
-    delay: duration / 2,
+    delay: delay / 2,
     filter: 'blur(10px)',
     opacity: 0,
     y: 50,
-    transition: { duration: duration / 2 },
+    transition: { duration: delay / 2 },
   },
 });
 
