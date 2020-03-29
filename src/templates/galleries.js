@@ -19,7 +19,7 @@ const displayGalleryCards = () => {
   cards.forEach((card, index) => {
     setTimeout(() => {
       card.style.display = 'block';
-    }, (index * delay) / 3.666);
+    }, (index * delay) / 3.666); // Must trigger before `observerCallback` runs.
   });
 };
 
