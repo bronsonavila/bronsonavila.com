@@ -10,11 +10,11 @@ export default ({ data }) => {
     images.forEach((image, index) => {
       setTimeout(() => {
         image.style.display = 'block';
-      }, (index * 300) / 2.333);
+      }, (index * 300) / 3.666);
       setTimeout(() => {
         image.style.opacity = 1;
         image.style.transform = 'scale(0.9) translateY(0)';
-      }, (index * 300) / 2);
+      }, (index * 300) / 3);
     });
   });
 
@@ -57,7 +57,8 @@ export const query = graphql`
       filter: {
         sourceInstanceName: { eq: "images" }
         relativeDirectory: { eq: $relativeDirectory }
-      }
+      },
+      sort: {fields: name}
     ) {
       edges {
         node {
