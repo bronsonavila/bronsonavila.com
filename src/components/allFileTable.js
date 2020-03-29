@@ -1,5 +1,5 @@
-import React from "react";
-import { useStaticQuery, graphql } from "gatsby";
+import React from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
 
 const AllFileTable = () => {
   const data = useStaticQuery(graphql`

@@ -1,13 +1,13 @@
 /**
  * Wraps all pages with a static header and a transition-enabled router.
  */
-import React from "react";
-import { PoseGroup } from "react-pose";
-import { useStaticQuery, graphql } from "gatsby";
+import React from 'react';
+import { PoseGroup } from 'react-pose';
+import { useStaticQuery, graphql } from 'gatsby';
 
-import Header from "./Header";
-import Layout from "./Layout";
-import Transition from "./Transition";
+import Header from './Header';
+import Layout from './Layout';
+import Transition from './Transition';
 
 const PageWrapper = ({ children, location }) => {
   const data = useStaticQuery(graphql`

@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "gatsby";
+import React from 'react';
+import { Link } from 'gatsby';
 
-import SEO from "../components/SEO";
-import MarkdownList from "../components/MarkdownList";
+import SEO from '../components/SEO';
+import MarkdownList from '../components/MarkdownList';
 
 const IndexPage = () => (
   <>

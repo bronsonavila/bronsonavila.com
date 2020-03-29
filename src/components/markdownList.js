@@ -1,5 +1,5 @@
-import React from "react";
-import { useStaticQuery, graphql, Link } from "gatsby";
+import React from 'react';
+import { useStaticQuery, graphql, Link } from 'gatsby';
 
 const MarkdownList = () => {
   const data = useStaticQuery(graphql`
