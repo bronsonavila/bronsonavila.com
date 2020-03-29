@@ -4,23 +4,31 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const path = require(`path`);
+const { createFilePath } = require(`gatsby-source-filesystem`);
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
   if (node.internal.type === `MarkdownRemark`) {
-    const slug = createFilePath({ node, getNode, basePath: `pages` })
+    const { createNodeField } = actions;
+    const slug = createFilePath({ node, getNode, basePath: `pages` });
+    // The `template` is the name of the directory containing the Markdown file:
+    const template = slug.substring(1, slug.length - 1).split('/')[0];
+
     createNodeField({
       node,
       name: `slug`,
       value: slug,
-    })
+    });
+    createNodeField({
+      node,
+      name: `template`,
+      value: template,
+    });
   }
-}
+};
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
   const result = await graphql(`
     query {
       allMarkdownRemark {
@@ -28,22 +36,26 @@ exports.createPages = async ({ graphql, actions }) => {
           node {
             fields {
               slug
+              template
             }
           }
         }
       }
     }
-  `)
+  `);
 
   result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    const slug = node.fields.slug;
+    // Trim prepending and appending slashes from slug to get directory:
+    const relativeDirectory = slug.substring(1, slug.length - 1);
+
     createPage({
-      path: node.fields.slug,
-      component: path.resolve(`./src/templates/blog-post.js`),
-      context: {
-        // Data passed to context is available
-        // in page queries as GraphQL variables.
-        slug: node.fields.slug,
-      },
-    })
-  })
-}
+      path: slug,
+      component: path.resolve(
+        `./src/templates/${node.fields.template}.js`
+      ),
+      // Context data is available in page queries as GraphQL variables.
+      context: { slug, relativeDirectory },
+    });
+  });
+};

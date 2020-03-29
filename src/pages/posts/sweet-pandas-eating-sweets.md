@@ -1,6 +1,7 @@
 ---
 title: "Sweet Pandas Eating Sweets"
 date: "2017-08-10"
+description: Watch a video of a panda eating some sweet treats!
 ---
 
 Pandas are really sweet.

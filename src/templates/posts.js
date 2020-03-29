@@ -2,13 +2,13 @@ import React from "react";
 import { graphql } from "gatsby";
 
 export default ({ data }) => {
-  const post = data.markdownRemark;
+  const content = data.markdownRemark;
 
   return (
-    <div>
-      <h1>{post.frontmatter.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.html }} />
-    </div>
+    <article class="post">
+      <h1>{content.frontmatter.title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: content.html }} />
+    </article>
   );
 };
 
