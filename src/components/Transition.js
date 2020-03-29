@@ -7,13 +7,19 @@ const Transition = posed.div({
     delay: delay / 2,
     opacity: 1,
     y: 0,
-    transition: { duration: delay },
+    transition: {
+      ease: 'easeOut',
+      duration: delay,
+    },
   },
   exit: {
     delay: delay / 2,
     opacity: 0,
     y: 50,
-    transition: { duration: delay / 2 },
+    transition: {
+      ease: 'easeIn',
+      duration: delay / 2,
+    },
   },
 });
 
