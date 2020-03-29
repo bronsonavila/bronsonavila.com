@@ -60,7 +60,7 @@ export default ({ data }) => {
         {data.allFile.edges.map((image, index) => (
           <div
             className="gallery__card observable"
-            data-observable-offset="0px 0px 6%" // Best with bottom offset only.
+            data-observer-root-margin="0px 0px 6%" // Best with bottom margin.
             key={index}
             style={{
               display: 'none',
