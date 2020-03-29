@@ -1,0 +1,29 @@
+.gallery {
+  &__card {
+    @apply border;
+    @apply border-gray-300;
+    @apply shadow-md;
+    @apply transition;
+    @apply duration-300;
+    @apply ease-in-out;
+    height: 275px;
+    width: 275px;
+    margin-bottom: 49px;
+    margin-right: 48px;
+
+    img {
+      @apply border;
+      @apply border-solid;
+      @apply border-gray-300;
+      border-left-color: #cbd5e0;
+      border-top-color: #cbd5e0;
+      transform: scale(0.9);
+    }
+  }
+
+  &__card-container {
+    @apply flex;
+    @apply flex-wrap;
+    width: 970px;
+  }
+}

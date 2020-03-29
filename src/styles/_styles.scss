@@ -4,4 +4,8 @@
 /* purgecss end ignore */
 @import "tailwindcss/utilities";
 
+// Global styles
 @import "layout.scss";
+
+// Page-specific styles
+@import "gallery.scss";
