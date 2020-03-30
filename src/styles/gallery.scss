@@ -1,5 +1,7 @@
 .gallery {
   &__card {
+    @apply cursor-pointer;
+    @apply bg-white;
     @apply border;
     @apply border-gray-300;
     @apply shadow-md;
@@ -10,6 +12,11 @@
     width: 275px;
     margin-bottom: 49px;
     margin-right: 48px;
+
+    &:hover {
+      @apply shadow-lg;
+      transform: scale(1.025) translateY(-4px) !important;
+    }
 
     img {
       @apply border;
