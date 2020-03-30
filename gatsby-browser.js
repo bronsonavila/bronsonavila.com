@@ -8,6 +8,16 @@ import PageWrapper from "./src/components/PageWrapper";
 
 import "./src/styles/_styles.scss"
 
+// Required for page transition animation.
 export const wrapPageElement = ({ element, props }) => {
   return <PageWrapper {...props}>{element}</PageWrapper>;
+};
+
+// Hide footer when changing routes.
+export const onPreRouteUpdate = ({ location, prevLocation }) => {
+  const footer = document.querySelector('footer');
+
+  if (footer) {
+    footer.classList.remove('is-active');
+  }
 };

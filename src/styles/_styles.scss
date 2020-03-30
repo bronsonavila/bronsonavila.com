@@ -4,8 +4,11 @@
 /* purgecss end ignore */
 @import "tailwindcss/utilities";
 
-// Global styles
+// Default global styles
 @import "layout.scss";
+
+// Override library/default styles
+@import "overrides.scss";
 
 // Page-specific styles
 @import "gallery.scss";

@@ -23,7 +23,7 @@ const PageWrapper = ({ children, location }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
-      <PoseGroup>
+      <PoseGroup className="flex flex-col flex-grow">
         <Transition key={location.pathname}>
           <Layout>{children}</Layout>
         </Transition>
