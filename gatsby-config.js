@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Bronson Avila | Gatsby Portfolio`,
+    title: `B.A.`,
     description: `Portfolio website.`,
     author: `@bronsonavila`,
   },
