@@ -17,9 +17,8 @@ const displayGalleryCards = () => {
   const cards = [...document.querySelectorAll('.gallery__card')];
 
   cards.forEach((card, index) => {
-    setTimeout(() => {
-      card.style.display = 'block';
-    }, (index * delay) / 3.666); // Must trigger before `observerCallback` runs.
+    // Must trigger before `observerCallback` runs:
+    setTimeout(() => card.classList.add('is-visible'), (index * delay) / 3.666);
   });
 };
 
@@ -32,11 +31,7 @@ const displayGalleryCards = () => {
 const observerCallback = entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.style.height = '275px';
-        entry.target.style.opacity = 1;
-        entry.target.style.transform = 'scale(1) translateY(0)';
-      }, delay / 3);
+      setTimeout(() => entry.target.classList.add('has-entered'), delay / 3);
     }
   });
 };
@@ -62,13 +57,6 @@ export default ({ data }) => {
             className="gallery__card observable"
             data-observer-root-margin="0px 0px 6%" // Best with bottom margin.
             key={index}
-            style={{
-              display: 'none',
-              height: '0',
-              opacity: 0,
-              transform: 'scale(0.9) translateY(100px)',
-              willChange: 'transform',
-            }}
           >
             <Img
               alt={image.node.base.split('.')[0]}

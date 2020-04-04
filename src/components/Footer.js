@@ -41,7 +41,7 @@ const Footer = () => {
     <div className="overflow-hidden">
       <footer ref={footerRef}>
         <div className="container h-12 mx-auto px-4 py-4">
-          <Link to="/" className="text-white no-underline">
+          <Link to="/" className="font-sans text-white no-underline">
             © {new Date().getFullYear()} Bronson Avila
           </Link>
         </div>
