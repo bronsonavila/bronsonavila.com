@@ -1,0 +1,9 @@
+.container {
+  @screen lg {
+    max-width: 960px;
+  }
+
+  @screen xl {
+    max-width: 960px;
+  }
+}

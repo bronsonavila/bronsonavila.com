@@ -4,14 +4,17 @@
 /* purgecss end ignore */
 @import "tailwindcss/utilities";
 
-// Default global styles
-@import "layout.scss";
+// `gatsby-starter-default` styles
+// See: https://github.com/gatsbyjs/gatsby-starter-default/
+@import "starter-default.scss";
 
 // Override library/default styles
-@import "overrides.scss";
+@import "overrides/gatsby.scss";
+@import "overrides/starter-default.scss";
+@import "overrides/tailwind.scss";
 
 // Component-specific styles
 @import "footer.scss";
 
-// Page-specific styles
+// Page/template-specific styles
 @import "gallery.scss";
