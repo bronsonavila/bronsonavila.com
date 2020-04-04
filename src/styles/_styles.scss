@@ -10,5 +10,8 @@
 // Override library/default styles
 @import "overrides.scss";
 
+// Component-specific styles
+@import "footer.scss";
+
 // Page-specific styles
 @import "gallery.scss";
