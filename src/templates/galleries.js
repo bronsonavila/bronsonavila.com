@@ -55,7 +55,7 @@ export default ({ data }) => {
         {data.allFile.edges.map((image, index) => (
           <div
             className="gallery__card observable"
-            data-observer-root-margin="0px 0px 6%" // Best with bottom margin.
+            data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
             key={index}
           >
             <Img
