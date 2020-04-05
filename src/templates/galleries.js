@@ -3,7 +3,7 @@ import { graphql } from 'gatsby';
 import Img from 'gatsby-image/withIEPolyfill';
 
 import { lazyLoad } from '../utils/lazyLoad';
-import { moveElementRelativeToMouse } from '../utils/moveElementRelativeToMouse';
+import { moveElementsRelativeToMouse } from '../utils/moveElementsRelativeToMouse';
 
 const delay = 300; // For lazy loading animation.
 
@@ -46,10 +46,10 @@ export default ({ data }) => {
     lazyLoad(observerCallback);
 
     // Animate position of gallery cards on hover:
-    moveElementRelativeToMouse({
+    moveElementsRelativeToMouse({
       additionalTransformValues: 'scale(1.025)',
       containerSelector: '.gallery__card-container',
-    })
+    });
   });
 
   return (

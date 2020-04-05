@@ -1,3 +1,9 @@
+const defaultConfig = {
+  additionalTransformValues: '',
+  containerSelector: '.movable-container',
+  intensityDivisor: 32,
+};
+
 /**
  * Moves a target element's position in relation to the position of the mouse cursor on
  * hover. The center of the element will move in the direction of the cursor. As the
@@ -11,11 +17,15 @@
  * @param {String} [config.containerSelector=.movable-container] - The CSS selector for the target element's container.
  * @param {Integer} [config.intensityDivisor=32] - A positive integer that controls the intensity of the animation.
  */
-export const moveElementRelativeToMouse = ({
-  additionalTransformValues = '',
-  containerSelector = '.movable-container',
-  intensityDivisor = 32,
-}) => {
+export const moveElementsRelativeToMouse = config => {
+  // Set configuration values (overwriting any default parameters with passed in values):
+  const {
+    additionalTransformValues,
+    containerSelector,
+    intensityDivisor,
+  } = Object.assign({}, defaultConfig, config);
+
+  // Select the containers of all elements that will be subject to movement:
   const containers = [...document.querySelectorAll(containerSelector)];
 
   containers.forEach(container => {
