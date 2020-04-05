@@ -19,6 +19,8 @@
     transform: scale(0.9) translateY(100px);
     will-change: transform;
 
+    // Performant box shadow animation.
+    // See: https://tobiasahlin.com/blog/how-to-animate-box-shadow/
     &::after {
       @apply absolute;
       @apply top-0;
