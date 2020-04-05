@@ -72,23 +72,21 @@ export default ({ data }) => {
         x: 0,
         y: 0,
         updatePosition: e => {
-          const container = e.target.parentNode;
-          mouse.x =
-            e.pageX - container.offsetLeft - Math.floor(container.offsetWidth / 2);
+          mouse.x = e.pageX - inner.offsetLeft - Math.floor(inner.offsetWidth / 2);
           mouse.y =
-            (e.pageY - container.offsetTop) * -1 +
+            (e.pageY - inner.offsetTop) * -1 +
             (window.scrollY +
-              container.getBoundingClientRect().top +
-              Math.floor(container.offsetHeight / 2) -
-              container.offsetTop);
+              inner.getBoundingClientRect().top +
+              Math.floor(inner.offsetHeight / 2) -
+              inner.offsetTop);
         },
-        setOrigin: container => {
-          mouse._x = container.offsetLeft + Math.floor(container.offsetWidth / 2);
-          mouse._y = container.offsetTop + Math.floor(container.offsetHeight / 2);
+        setOrigin: inner => {
+          mouse._x = inner.offsetLeft + Math.floor(inner.offsetWidth / 2);
+          mouse._y = inner.offsetTop + Math.floor(inner.offsetHeight / 2);
         },
       };
 
-      mouse.setOrigin(container);
+      mouse.setOrigin(inner);
 
       const update = event => {
         mouse.updatePosition(event);
