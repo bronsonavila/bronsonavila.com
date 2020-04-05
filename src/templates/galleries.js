@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import Img from 'gatsby-image/withIEPolyfill';
 
 import { lazyLoad } from '../utils/lazyLoad';
+import { moveElementRelativeToMouse } from '../utils/moveElementRelativeToMouse';
 
 const delay = 300; // For lazy loading animation.
 
@@ -39,64 +40,16 @@ const observerCallback = entries => {
 export default ({ data }) => {
   const content = data.markdownRemark;
 
-  // Handle lazy loading:
   useEffect(() => {
+    // Handle lazy loading:
     displayGalleryCards();
     lazyLoad(observerCallback);
-  });
 
-  useEffect(() => {
-    const containers = [...document.querySelectorAll('.gallery__card-container')];
-
-    containers.forEach(container => {
-      const inner = container.querySelector('.gallery__card');
-      const onMouseEnterHandler = event => update(event);
-      const onMouseLeaveHandler = () => (inner.style = '');
-      const onMouseMoveHandler = event => {
-        if (isTimeToUpdate()) {
-          update(event);
-        }
-      };
-
-      inner.onmouseenter = onMouseEnterHandler;
-      inner.onmouseleave = onMouseLeaveHandler;
-      inner.onmousemove = onMouseMoveHandler;
-
-      let counter = 0;
-      const updateRate = 10;
-      const isTimeToUpdate = () => counter++ % updateRate === 0;
-
-      const mouse = {
-        _x: 0,
-        _y: 0,
-        x: 0,
-        y: 0,
-        updatePosition: e => {
-          mouse.x = e.pageX - inner.offsetLeft - Math.floor(inner.offsetWidth / 2);
-          mouse.y =
-            (e.pageY - inner.offsetTop) * -1 +
-            (window.scrollY +
-              inner.getBoundingClientRect().top +
-              Math.floor(inner.offsetHeight / 2) -
-              inner.offsetTop);
-        },
-        setOrigin: inner => {
-          mouse._x = inner.offsetLeft + Math.floor(inner.offsetWidth / 2);
-          mouse._y = inner.offsetTop + Math.floor(inner.offsetHeight / 2);
-        },
-      };
-
-      mouse.setOrigin(inner);
-
-      const update = event => {
-        mouse.updatePosition(event);
-        updateTransformStyle((mouse.x / 32).toFixed(2), (mouse.y / 32).toFixed(2) * -1);
-      };
-
-      const updateTransformStyle = (x, y) => {
-        inner.style.transform = `scale(1.025) translateX(${x}px) translateY(${y}px)`;
-      };
-    });
+    // Animate position of gallery cards on hover:
+    moveElementRelativeToMouse({
+      additionalTransformValues: 'scale(1.025)',
+      containerSelector: '.gallery__card-container',
+    })
   });
 
   return (
