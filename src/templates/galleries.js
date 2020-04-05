@@ -90,7 +90,7 @@ export default ({ data }) => {
 
       const update = event => {
         mouse.updatePosition(event);
-        updateTransformStyle((mouse.x / 20).toFixed(2), (mouse.y / 20).toFixed(2) * -1);
+        updateTransformStyle((mouse.x / 32).toFixed(2), (mouse.y / 32).toFixed(2) * -1);
       };
 
       const updateTransformStyle = (x, y) => {
