@@ -46,61 +46,59 @@ export default ({ data }) => {
   });
 
   useEffect(() => {
-    setTimeout(() => {
-      const containers = [...document.querySelectorAll('.gallery__card-container')];
+    const containers = [...document.querySelectorAll('.gallery__card-container')];
 
-      containers.forEach(container => {
-        const inner = container.querySelector('.gallery__card');
-        const onMouseEnterHandler = event => update(event);
-        const onMouseLeaveHandler = () => (inner.style = '');
-        const onMouseMoveHandler = event => {
-          if (isTimeToUpdate()) {
-            update(event);
-          }
-        };
+    containers.forEach(container => {
+      const inner = container.querySelector('.gallery__card');
+      const onMouseEnterHandler = event => update(event);
+      const onMouseLeaveHandler = () => (inner.style = '');
+      const onMouseMoveHandler = event => {
+        if (isTimeToUpdate()) {
+          update(event);
+        }
+      };
 
-        inner.onmouseenter = onMouseEnterHandler;
-        inner.onmouseleave = onMouseLeaveHandler;
-        inner.onmousemove = onMouseMoveHandler;
+      inner.onmouseenter = onMouseEnterHandler;
+      inner.onmouseleave = onMouseLeaveHandler;
+      inner.onmousemove = onMouseMoveHandler;
 
-        let counter = 0;
-        const updateRate = 10;
-        const isTimeToUpdate = () => counter++ % updateRate === 0;
+      let counter = 0;
+      const updateRate = 10;
+      const isTimeToUpdate = () => counter++ % updateRate === 0;
 
-        const mouse = {
-          _x: 0,
-          _y: 0,
-          x: 0,
-          y: 0,
-          updatePosition: e => {
-            const container = e.target.parentNode;
-            mouse.x =
-              e.pageX - container.offsetLeft - Math.floor(container.offsetWidth / 2);
-            mouse.y =
-              (e.pageY - container.offsetTop) * -1 +
-              (window.scrollY +
-                container.getBoundingClientRect().top +
-                Math.floor(container.offsetHeight / 2) -
-                container.offsetTop);
-          },
-          setOrigin: container => {
-            mouse._x = container.offsetLeft + Math.floor(container.offsetWidth / 2);
-            mouse._y = container.offsetTop + Math.floor(container.offsetHeight / 2);
-          },
-        };
+      const mouse = {
+        _x: 0,
+        _y: 0,
+        x: 0,
+        y: 0,
+        updatePosition: e => {
+          const container = e.target.parentNode;
+          mouse.x =
+            e.pageX - container.offsetLeft - Math.floor(container.offsetWidth / 2);
+          mouse.y =
+            (e.pageY - container.offsetTop) * -1 +
+            (window.scrollY +
+              container.getBoundingClientRect().top +
+              Math.floor(container.offsetHeight / 2) -
+              container.offsetTop);
+        },
+        setOrigin: container => {
+          mouse._x = container.offsetLeft + Math.floor(container.offsetWidth / 2);
+          mouse._y = container.offsetTop + Math.floor(container.offsetHeight / 2);
+        },
+      };
 
-        mouse.setOrigin(container);
+      mouse.setOrigin(container);
 
-        const update = event => {
-          mouse.updatePosition(event);
-          updateTransformStyle((mouse.x / 20).toFixed(2), (mouse.y / 20).toFixed(2) * -1);
-        };
+      const update = event => {
+        mouse.updatePosition(event);
+        updateTransformStyle((mouse.x / 20).toFixed(2), (mouse.y / 20).toFixed(2) * -1);
+      };
 
-        const updateTransformStyle = (x, y) => {
-          inner.style.transform = `scale(1.025) translateX(${x}px) translateY(${y}px)`;
-        };
-      });
-    }, 0);
+      const updateTransformStyle = (x, y) => {
+        inner.style.transform = `scale(1.025) translateX(${x}px) translateY(${y}px)`;
+      };
+    });
   });
 
   return (
