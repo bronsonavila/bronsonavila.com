@@ -45,24 +45,83 @@ export default ({ data }) => {
     lazyLoad(observerCallback);
   });
 
+  useEffect(() => {
+    setTimeout(() => {
+      const containers = [...document.querySelectorAll('.gallery__card-container')];
+
+      containers.forEach(container => {
+        const inner = container.querySelector('.gallery__card');
+        const onMouseEnterHandler = event => update(event);
+        const onMouseLeaveHandler = () => (inner.style = '');
+        const onMouseMoveHandler = event => {
+          if (isTimeToUpdate()) {
+            update(event);
+          }
+        };
+
+        inner.onmouseenter = onMouseEnterHandler;
+        inner.onmouseleave = onMouseLeaveHandler;
+        inner.onmousemove = onMouseMoveHandler;
+
+        let counter = 0;
+        const updateRate = 10;
+        const isTimeToUpdate = () => counter++ % updateRate === 0;
+
+        const mouse = {
+          _x: 0,
+          _y: 0,
+          x: 0,
+          y: 0,
+          updatePosition: e => {
+            const container = e.target.parentNode;
+            mouse.x =
+              e.pageX - container.offsetLeft - Math.floor(container.offsetWidth / 2);
+            mouse.y =
+              (e.pageY - container.offsetTop) * -1 +
+              (window.scrollY +
+                container.getBoundingClientRect().top +
+                Math.floor(container.offsetHeight / 2) -
+                container.offsetTop);
+          },
+          setOrigin: container => {
+            mouse._x = container.offsetLeft + Math.floor(container.offsetWidth / 2);
+            mouse._y = container.offsetTop + Math.floor(container.offsetHeight / 2);
+          },
+        };
+
+        mouse.setOrigin(container);
+
+        const update = event => {
+          mouse.updatePosition(event);
+          updateTransformStyle((mouse.x / 20).toFixed(2), (mouse.y / 20).toFixed(2) * -1);
+        };
+
+        const updateTransformStyle = (x, y) => {
+          inner.style.transform = `scale(1.025) translateX(${x}px) translateY(${y}px)`;
+        };
+      });
+    }, 0);
+  });
+
   return (
     <section className="gallery">
       <div>
         <h1>{content.frontmatter.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: content.html }} />
       </div>
-      <div className="gallery__card-container">
+      <div className="gallery__cards">
         {data.allFile.edges.map((image, index) => (
-          <div
-            className="gallery__card observable"
-            data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
-            key={index}
-          >
-            <Img
-              alt={image.node.base.split('.')[0]}
-              className="h-full w-full"
-              fluid={image.node.childImageSharp.fluid}
-            />
+          <div className="gallery__card-container" key={index}>
+            <div
+              className="gallery__card observable"
+              data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
+            >
+              <Img
+                alt={image.node.base.split('.')[0]}
+                className="h-full w-full"
+                fluid={image.node.childImageSharp.fluid}
+              />
+            </div>
           </div>
         ))}
       </div>

@@ -1,72 +1,78 @@
-.gallery {
-  &__card {
-    @apply relative;
-    @apply hidden;
-    @apply cursor-pointer;
-    @apply h-0;
-    @apply bg-white;
-    @apply border;
-    @apply border-gray-300;
-    @apply shadow-md;
-    @apply transition;
+.gallery__card {
+  @apply relative;
+  @apply hidden;
+  @apply cursor-pointer;
+  @apply h-0;
+  @apply bg-white;
+  @apply border;
+  @apply border-gray-300;
+  @apply shadow-md;
+  @apply transition;
+  @apply duration-300;
+  @apply ease-in-out;
+  @apply opacity-0;
+  @apply z-10;
+  width: 275px;
+  transform: scale(0.9) translateY(100px);
+  transition: transform 0.5s;
+  will-change: transform;
+
+  // Performant box shadow animation.
+  // See: https://tobiasahlin.com/blog/how-to-animate-box-shadow/
+  &::after {
+    @apply absolute;
+    @apply top-0;
+    @apply left-0;
+    @apply h-full;
+    @apply w-full;
+    @apply opacity-0;
+    @apply transition-opacity;
     @apply duration-300;
     @apply ease-in-out;
-    @apply opacity-0;
-    @apply z-10;
-    width: 275px;
-    margin-bottom: 49px;
-    margin-right: 48px;
-    transform: scale(0.9) translateY(100px);
-    will-change: transform;
+    content: '';
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.025),
+      0 10px 10px -5px rgba(0, 0, 0, 0.01);
+  }
 
-    // Performant box shadow animation.
-    // See: https://tobiasahlin.com/blog/how-to-animate-box-shadow/
-    &::after {
-      @apply absolute;
-      @apply top-0;
-      @apply left-0;
-      @apply h-full;
-      @apply w-full;
-      @apply opacity-0;
-      @apply transition-opacity;
-      @apply duration-300;
-      @apply ease-in-out;
-      content: '';
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.025), 0 10px 10px -5px rgba(0, 0, 0, 0.01);
-    }
+  &.has-entered {
+    @apply opacity-100;
+    height: 275px;
+    transform: scale(1) translateY(0);
 
-    &.has-entered {
-      @apply opacity-100;
-      height: 275px;
-      transform: scale(1) translateY(0);
+    &:hover {
+      // transform: scale(1.025) translateY(-4px);
 
-      &:hover {
-        transform: scale(1.025) translateY(-4px);
-
-        &::after {
-          @apply opacity-100;
-        }
+      &::after {
+        @apply opacity-100;
       }
     }
-
-    &.is-visible {
-      @apply block;
-    }
-
-    img {
-      @apply border;
-      @apply border-solid;
-      @apply border-gray-300;
-      @apply bg-gray-200;
-      border-left-color: #cbd5e0;
-      border-top-color: #cbd5e0;
-      transform: scale(0.9);
-    }
   }
 
-  &__card-container {
-    @apply flex;
-    @apply flex-wrap;
-    width: 970px;
+  &.is-visible {
+    @apply block;
   }
+
+  img {
+    @apply border;
+    @apply border-solid;
+    @apply border-gray-300;
+    @apply bg-gray-200;
+    border-left-color: #cbd5e0;
+    border-top-color: #cbd5e0;
+    transform: scale(0.9);
+  }
+
+  &-container {
+    margin-bottom: 49px;
+    margin-right: 48px;
+    // perspective: 40px;
+    height: 275px;
+    width: 275px;
+  }
+}
+
+.gallery__cards {
+  @apply flex;
+  @apply flex-wrap;
+  width: 970px;
 }
