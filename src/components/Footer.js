@@ -9,7 +9,7 @@ import { Link } from 'gatsby';
  * to `2` for good measure.)
  *
  * @param {Object} footerRef - The footer's `ref` object.
- * @param {Integer} offset - A number of pixels substracted from `scrollHeight`.
+ * @param {Integer} [offset=2] - A number of pixels substracted from `scrollHeight`.
  */
 const toggleActiveFooterState = (footerRef, offset = 2) => {
   if (window.innerHeight + window.scrollY >= document.body.scrollHeight - offset) {
