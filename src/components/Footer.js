@@ -8,8 +8,8 @@ import { Link } from 'gatsby';
  * the footer to work correctly on Firefox on MacOS. The default value is set
  * to `2` for good measure.)
  *
- * @param {object} footerRef - The footer's `ref` object.
- * @param {int} offset - A number of pixels substracted from `scrollHeight`.
+ * @param {Object} footerRef - The footer's `ref` object.
+ * @param {Integer} offset - A number of pixels substracted from `scrollHeight`.
  */
 const toggleActiveFooterState = (footerRef, offset = 2) => {
   if (window.innerHeight + window.scrollY >= document.body.scrollHeight - offset) {
