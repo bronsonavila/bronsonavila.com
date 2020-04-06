@@ -32,8 +32,14 @@ h4,
 h5,
 h6,
 b,
-strong,
-dt,
-th {
+strong {
   @apply font-semibold;
+}
+
+header {
+  @apply border-b;
+  @apply border-gray-300;
+  @apply mx-6;
+  height: 72px;
+  margin-bottom: 15px;
 }
