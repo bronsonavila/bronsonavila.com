@@ -1,7 +1,9 @@
 $footer-height: 48px;
 
 footer {
-  @apply bg-gray-900;
+  @apply border-t;
+  @apply border-gray-300;
+  @apply mx-6;
   @apply opacity-0;
   @apply transition-all;
   @apply duration-300;

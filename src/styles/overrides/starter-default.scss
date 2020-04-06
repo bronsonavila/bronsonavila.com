@@ -3,6 +3,8 @@ body {
   @apply text-base;
   @apply h-full;
   @apply bg-gray-100;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -17,4 +19,7 @@ a,
 p,
 span {
   @apply text-gray-900;
+  @apply transition;
+  @apply duration-300;
+  @apply ease-in-out;
 }

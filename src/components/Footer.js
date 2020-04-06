@@ -46,9 +46,12 @@ const Footer = () => {
   return (
     <div className="footer-container">
       <footer ref={footerRef}>
-        <div className="container h-12 mx-auto px-4 py-4">
-          <Link to="/" className="font-sans text-white no-underline">
-            © {new Date().getFullYear()} Bronson Avila
+        <div className="container h-12 mx-auto px-4 pt-3 pb-5">
+          <Link to="/" className="inline-block font-sans no-underline pt-px hover:text-gray-900">
+            <span className="text-red-800">©</span>{' '}
+            <span className="text-gray-600 hover:text-gray-900">
+              {new Date().getFullYear()} Bronson Avila
+            </span>
           </Link>
         </div>
       </footer>
