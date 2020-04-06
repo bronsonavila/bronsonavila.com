@@ -19,7 +19,21 @@ a,
 p,
 span {
   @apply text-gray-900;
+  @apply font-sans;
   @apply transition;
   @apply duration-300;
   @apply ease-in-out;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+b,
+strong,
+dt,
+th {
+  @apply font-semibold;
 }

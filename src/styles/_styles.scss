@@ -4,6 +4,9 @@
 /* purgecss end ignore */
 @import "tailwindcss/utilities";
 
+// Typography
+@import "typography.scss";
+
 // `gatsby-starter-default` styles
 // See: https://github.com/gatsbyjs/gatsby-starter-default/
 @import "starter-default.scss";
