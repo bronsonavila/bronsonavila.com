@@ -11,8 +11,15 @@ $container-size: 35px;
   @apply absolute;
   @apply bg-gray-100;
   @apply bg-cover;
+  @apply transition-colors;
+  @apply duration-300;
+  @apply ease-in-out;
   height: $box-size;
   width: $box-size;
+
+  &.bg-white {
+    @apply bg-white;
+  }
 
   &:nth-of-type(1) {
     background-image: url(/logo-letter-b.svg);

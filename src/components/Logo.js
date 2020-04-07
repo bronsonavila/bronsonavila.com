@@ -2,38 +2,63 @@ import React from 'react';
 import posed from 'react-pose';
 import { Link } from 'gatsby';
 
-const duration = 150;
+const duration = 300;
 const ease = 'easeOut';
 const position = 17;
 const staggerChildren = duration / 4;
 
+/**
+ * @param {Integer} [x=0] - The initial `translateX` position of the logo box.
+ * @param {Integer} [y=0] - The initial `translateY` position of the logo box.
+ * @return {Object} - The initial pose of the logo box.
+ */
+const setLogoBoxInitPose = ({ x = 0, y = 0 } = {}) => {
+  return { x, y, transition: { duration, ease } };
+};
+
+/**
+ * @param {Integer} [x=0] - The new `translateX` position of the logo box.
+ * @param {Integer} [y=0] - The new `translateY` position of the logo box.
+ * @return {Object} - The pose that the logo box will change to on hover.
+ */
+const setLogoBoxHoverPose = ({ x = 0, y = 0 } = {}) => {
+  return {
+    x,
+    y,
+    onValueChange: e => e.element.classList.add('bg-white'),
+    transition: { duration, ease },
+  };
+};
+
 const Container = posed.div({
   hoverable: true,
-  hover: { staggerChildren },
+  hover: {
+    staggerChildren,
+  },
+  hoverEnd: {
+    onPoseComplete: e =>
+      [...e.element.childNodes].forEach(child => child.classList.remove('bg-white')),
+  },
 });
 
 const LetterB = posed.div({
-  init: { x: 0, y: 0, transition: { ease, duration } },
-  // Move right:
-  hover: { x: position, y: 0, transition: { ease, duration } },
+  init: setLogoBoxInitPose(), // Top left.
+  hover: setLogoBoxHoverPose({ x: position }), // Move right.
 });
 
 const Dot1 = posed.div({
-  init: { x: position, y: 0, transition: { ease, duration } },
-  // Move down:
-  hover: { x: position, y: position, transition: { ease, duration } },
+  init: setLogoBoxInitPose({ x: position }), // Top right.
+  hover: setLogoBoxHoverPose({ x: position, y: position }), // Move down.
 });
 
 const Dot2 = posed.div({
-  init: { x: 0, y: position, transition: { ease, duration } },
-  // Move up:
-  hover: { x: 0, y: 0, transition: { ease, duration } },
+  init: setLogoBoxInitPose({ y: position }), // Bottom left.
+  hover: setLogoBoxHoverPose(), // Move up.
 });
 
 const LetterA = posed.div({
-  init: { x: position, y: position, transition: { ease, duration } },
-  // Move left:
-  hover: { x: 0, y: position, transition: { ease, duration } },
+  init: setLogoBoxInitPose({ x: position, y: position }), // Bottom right.
+  hover: setLogoBoxHoverPose({ y: position }), // Move left.
 });
 
 const Logo = ({ siteTitle }) => (
