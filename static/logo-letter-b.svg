@@ -1,15 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
-    <title>Group 1</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group-1">
-            <text id="B" font-family="Inter-Medium, Inter" font-size="14" font-weight="400" fill="#666666">
-                <tspan x="5.42116477" y="15">B</tspan>
-            </text>
-            <rect id="Rectangle" stroke="#666666" x="0.5" y="0.5" width="19" height="19"></rect>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" fill-rule="evenodd"><path d="M6.54 15V4.818h3.73c2.168 0 3.212 1.168 3.212 2.675 0 1.273-.78 1.91-1.715 2.148v.1c1.01.055 2.113.945 2.113 2.52 0 1.56-1.07 2.74-3.435 2.74H6.54zm1.536-1.317h2.217c1.477 0 2.058-.64 2.058-1.496 0-.97-.77-1.765-2.004-1.765H8.076v3.26zm0-4.46h2.058c1.034 0 1.84-.626 1.84-1.61 0-.845-.582-1.487-1.8-1.487H8.076v3.097z" fill="#666"/><path stroke="#666" d="M.5.5h19v19H.5z"/></svg>
