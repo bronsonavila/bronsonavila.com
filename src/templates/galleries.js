@@ -97,8 +97,13 @@ export const query = graphql`
         node {
           base
           childImageSharp {
-            fluid(quality: 98) {
-              ...GatsbyImageSharpFluid
+            fluid(maxWidth: 960, quality: 98) {
+              aspectRatio
+              base64
+              originalImg
+              sizes
+              src
+              srcSet
             }
           }
         }
