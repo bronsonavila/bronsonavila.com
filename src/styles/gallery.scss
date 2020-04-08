@@ -6,7 +6,7 @@ $card-size: 275px;
   @apply h-0;
   @apply bg-white;
   @apply border;
-  @apply border-gray-300;
+  @apply border-gray-200;
   @apply shadow-md;
   @apply opacity-0;
   @apply cursor-pointer;
@@ -52,16 +52,15 @@ $card-size: 275px;
   img {
     @apply border;
     @apply border-solid;
-    @apply border-gray-300;
+    @apply border-gray-200;
     @apply bg-gray-200;
-    border-left-color: #cbd5e0;
-    border-top-color: #cbd5e0;
+    border-left-color: #ddd;
+    border-top-color: #ddd;
     transform: scale(0.9);
   }
 
   &-container {
-    margin-bottom: 49px;
-    margin-right: 48px;
+    margin-bottom: 51px;
     height: $card-size;
     width: $card-size;
   }
@@ -70,5 +69,6 @@ $card-size: 275px;
 .gallery__cards {
   @apply flex;
   @apply flex-wrap;
-  width: 970px;
+  @apply justify-between;
+  width: 929px;
 }
