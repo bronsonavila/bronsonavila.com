@@ -97,7 +97,7 @@ export const query = graphql`
         node {
           base
           childImageSharp {
-            fluid {
+            fluid(maxWidth: 500) {
               ...GatsbyImageSharpFluid
             }
           }
