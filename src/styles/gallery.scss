@@ -6,8 +6,8 @@ $card-size: 275px;
   @apply h-0;
   @apply bg-white;
   @apply border;
-  @apply border-gray-200;
-  @apply shadow-md;
+  @apply border-gray-400;
+  @apply shadow;
   @apply opacity-0;
   @apply cursor-pointer;
   @apply z-10;
@@ -29,8 +29,7 @@ $card-size: 275px;
     @apply duration-300;
     @apply ease-in-out;
     content: '';
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.025),
-      0 10px 10px -5px rgba(0, 0, 0, 0.01);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.025), 0 2px 4px -1px rgba(0, 0, 0, 0.015);
   }
 
   &.has-entered {
@@ -52,10 +51,10 @@ $card-size: 275px;
   img {
     @apply border;
     @apply border-solid;
-    @apply border-gray-200;
-    @apply bg-gray-200;
-    border-left-color: #ddd;
-    border-top-color: #ddd;
+    @apply border-gray-300;
+    @apply bg-gray-300;
+    border-left-color: #ccc;
+    border-top-color: #ccc;
     transform: scale(0.9);
   }
 
