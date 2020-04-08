@@ -25,7 +25,7 @@ const setLogoBoxHoverPose = ({ x = 0, y = 0 } = {}) => {
   return {
     x,
     y,
-    onValueChange: e => e.element.classList.add('bg-white'),
+    onValueChange: e => e.element.classList.add('is-hovered'),
     transition: { duration, ease },
   };
 };
@@ -37,7 +37,7 @@ const Container = posed.div({
   },
   hoverEnd: {
     onPoseComplete: e =>
-      [...e.element.childNodes].forEach(child => child.classList.remove('bg-white')),
+      [...e.element.childNodes].forEach(child => child.classList.remove('is-hovered')),
   },
 });
 
