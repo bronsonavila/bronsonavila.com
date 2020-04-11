@@ -16,6 +16,10 @@ $card-size: 275px;
   transition: opacity 0.3s ease-in-out, transform 0.5s; // `transform` for smooth `mouseover` animation.
   will-change: transform;
 
+  &:focus {
+    outline: none;
+  }
+
   // Performant box shadow animation.
   // See: https://tobiasahlin.com/blog/how-to-animate-box-shadow/
   &::after {
@@ -70,4 +74,29 @@ $card-size: 275px;
   @apply flex-wrap;
   @apply justify-between;
   width: 929px;
+}
+
+.gallery__modal {
+  @apply absolute;
+  @apply border;
+  @apply border-red-500;
+  @apply transition-all;
+  @apply duration-300;
+  @apply ease-in-out;
+  @apply z-20;
+  top: 0;
+  left: 0;
+
+  &-image {
+    @apply hidden;
+    @apply absolute;
+    width: 928px;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 0);
+
+    &.is-visible {
+      @apply block;
+    }
+  }
 }
