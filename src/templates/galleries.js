@@ -7,8 +7,63 @@ import GalleryModal from '../components/GalleryModal';
 import { lazyLoad } from '../utils/lazyLoad';
 import { moveElementsRelativeToMouse } from '../utils/moveElementsRelativeToMouse';
 
-const cardSize = 275;
-const delay = 300; // For animations.
+/**
+ * Handles lazy loading of gallery cards, and animates the position of cards on hover.
+ *
+ * @param {Integer} delay - The `setTimeout` delay value.
+ */
+const animateCards = delay => {
+  displayGalleryCards(delay);
+  lazyLoad(setObserverCallback(delay));
+  moveElementsRelativeToMouse({
+    additionalTransformValues: 'scale(1.025)',
+    containerSelector: '.gallery__card-container',
+  });
+};
+
+/**
+ * Moves the modal over a gallery card, and expands the modal to reveal the full image.
+ * By using the `transform` property and inverting the `scale` values of the modal and
+ * its inner image container, it is possible to animate the heights and widths of the
+ * modal images without the costs incurred by animating `height` and `width` properties.
+ * See: https://www.freecodecamp.org/news/animating-height-the-right-way/
+ *
+ * @param {Integer} delay - The `setTimeout` delay.
+ * @param {Node} modal - The modal element.
+ * @param {Node} modalParent - The modal's parent element.
+ * @param {Node} target - The element that the modal will initially move to.
+ */
+const animateModal = (delay, modal, modalParent, target) => {
+  if (!target) return;
+
+  const modalImageContainer = modal.childNodes[0];
+  const targetX = target.offsetLeft - modal.offsetWidth / 2 + target.offsetWidth / 2;
+  const targetY = target.offsetTop - modal.offsetHeight / 2 + target.offsetHeight / 2;
+
+  target.style = ''; // Ensure the `target` returns to its default styles.
+
+  // Move the modal over the `target` and scale the modal size down to the `target` size.
+  modal.style.transform = `
+      translate(${targetX}px, ${targetY}px)
+      scaleX(${target.offsetWidth / modal.offsetWidth})
+      scaleY(${target.offsetHeight / modal.offsetHeight})`;
+  modalImageContainer.style.transform = `
+      scaleX(${modal.offsetWidth / target.offsetWidth})
+      scaleY(${modal.offsetHeight / target.offsetHeight})`;
+
+  // Move the modal to the center of the screen and expand it to its full size:
+  setTimeout(() => {
+    const centerX = document.body.offsetWidth / 2 - modal.offsetWidth / 2;
+    const centerY =
+      document.body.offsetHeight / 2 -
+      modal.offsetHeight / 2 -
+      modalParent.getBoundingClientRect().top / 2 +
+      window.scrollY / 2;
+
+    modal.style.transform = `translate(${centerX + 0.5}px, ${centerY}px) scale(1)`;
+    modalImageContainer.style.transform = 'scale(1)';
+  }, delay * 2);
+};
 
 /**
  * Changes the display of `.gallery__card` elements from `none` to `block` at
@@ -16,12 +71,14 @@ const delay = 300; // For animations.
  * cards to be revealed in sequential order rather than all at once. This is
  * because the `lazyLoad` IntersectionObserver will not detect elements until
  * `display: none` has been changed to a visible value.
+ *
+ * @param {Integer} delay - The `setTimeout` delay value.
  */
-const displayGalleryCards = () => {
+const displayGalleryCards = delay => {
   const cards = [...document.querySelectorAll('.gallery__card')];
 
   cards.forEach((card, index) => {
-    // Must trigger before `observerCallback` runs:
+    // Must trigger before `setObserverCallback` runs:
     setTimeout(() => card.classList.add('is-visible'), (index * delay) / 3.666);
   });
 };
@@ -30,9 +87,10 @@ const displayGalleryCards = () => {
  * Callback for the `lazyLoad` IntersectionObserver. Animates the entrance of
  * each `.gallery__card` element.
  *
- * @param {Array} entries - An array of IntersectionObserverEntry objects.
+ * @param {Integer} delay - The `setTimeout` delay value.
+ * @return {Function} - An IntersectionObserver callback function.
  */
-const observerCallback = entries => {
+const setObserverCallback = delay => entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       setTimeout(() => entry.target.classList.add('has-entered'), delay / 3);
@@ -44,61 +102,21 @@ export default ({ data }) => {
   const content = data.markdownRemark;
   const images = data.allFile.edges;
 
+  const cardSize = 275;
+  const delay = 300; // For animations.
+  const modalWidth = 931; // Supports images with a 3:2 aspect ratio ONLY.
+  const modalHeight = modalWidth * (2 / 3);
+
   const [activeCard, setActiveCard] = useState(null);
   const cardRefs = images.map(image => useRef(null));
-  const galleryCardsRef = useRef(null);
+  const modalParentRef = useRef(null);
   const modalRef = useRef(null);
 
-  const modalHeight = 620.666; // height / width = 0.666...
-  const modalWidth = 931;
-
-  useEffect(() => {
-    // Handle lazy loading:
-    displayGalleryCards();
-    lazyLoad(observerCallback);
-
-    // Animate position of gallery cards on hover:
-    moveElementsRelativeToMouse({
-      additionalTransformValues: 'scale(1.025)',
-      containerSelector: '.gallery__card-container',
-    });
-  });
-
-  // Control modal:
-  useEffect(() => {
-    if (!activeCard) return;
-
-    const activeCardX =
-      activeCard.offsetLeft - modalWidth / 2 + activeCard.offsetWidth / 2;
-    const activeCardY =
-      activeCard.offsetTop - modalHeight / 2 + activeCard.offsetHeight / 2;
-    activeCard.style = '';
-
-    const modal = modalRef.current;
-    const modalImageContainer = modal.childNodes[0];
-    modal.style.transform = `
-      translate(${activeCardX}px, ${activeCardY}px)
-      scaleX(${cardSize / modalWidth})
-      scaleY(${cardSize / modalHeight})`;
-    modalImageContainer.style.transform = `
-      scaleX(${modalWidth / cardSize})
-      scaleY(${modalHeight / cardSize})`;
-
-    setTimeout(() => {
-      const body = document.body;
-      const centerX = body.offsetWidth / 2 - modalWidth / 2;
-      const centerY =
-        body.offsetHeight / 2 -
-        modalHeight / 2 -
-        galleryCardsRef.current.getBoundingClientRect().top / 2 +
-        window.scrollY / 2;
-
-      modal.style.transform = `
-        translate(${centerX + 0.5}px, ${centerY}px)
-        scaleX(1) scaleY(1)`;
-      modalImageContainer.style.transform = 'scaleX(1) scaleY(1)';
-    }, delay * 2);
-  }, [activeCard]);
+  useEffect(animateCards);
+  useEffect(
+    () => animateModal(delay, modalRef.current, modalParentRef.current, activeCard),
+    [activeCard]
+  );
 
   return (
     <section className="gallery">
@@ -106,7 +124,7 @@ export default ({ data }) => {
         <h1>{content.frontmatter.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: content.html }} />
       </div>
-      <div className="gallery__cards" ref={galleryCardsRef}>
+      <div className="gallery__cards" ref={modalParentRef}>
         <GalleryModal
           activeCardIndex={activeCard && Number(activeCard.dataset.index)}
           cardSize={cardSize}
