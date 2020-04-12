@@ -6,13 +6,13 @@ const GalleryModal = React.forwardRef(
     // `body` workaround required because Gatsby does not have `document` defined when
     // building production files. See: https://github.com/gatsbyjs/gatsby/issues/309
     const body = typeof document !== 'undefined' && document && document.body;
-    let initialX = 9999;
-    let initialY = 9999;
+    let initialX = -9999;
+    let initialY = 0;
 
     if (body) {
       // Move modal just outside the `body` boundaries for a slightly quicker entrance.
-      initialX = body.scrollWidth * 1.01;
-      initialY = body.scrollHeight * 1.01;
+      initialX = body.scrollWidth * -1.01;
+      initialY = body.scrollHeight / 2;
     }
 
     return (

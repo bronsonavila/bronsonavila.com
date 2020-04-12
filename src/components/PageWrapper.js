@@ -9,7 +9,7 @@ import Layout from './Layout';
 import Transition from './Transition';
 
 const PageWrapper = ({ children, location }) => (
-  <div className="overflow-hidden">
+  <>
     <Header />
     <PoseGroup
       // Use an `auto` height combined with a calculated `minHeight` to ensure
@@ -24,7 +24,7 @@ const PageWrapper = ({ children, location }) => (
         <Layout>{children}</Layout>
       </Transition>
     </PoseGroup>
-  </div>
+  </>
 );
 
 export default PageWrapper;
