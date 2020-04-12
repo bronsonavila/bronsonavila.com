@@ -40,8 +40,6 @@ const animateModal = (delay, modal, modalParent, target) => {
   const targetX = target.offsetLeft - modal.offsetWidth / 2 + target.offsetWidth / 2;
   const targetY = target.offsetTop - modal.offsetHeight / 2 + target.offsetHeight / 2;
 
-  target.style = ''; // Ensure the `target` returns to its default styles.
-
   // Move the modal over the `target` and scale the modal size down to the `target` size.
   modal.style.transform = `
       translate(${targetX}px, ${targetY}px)
