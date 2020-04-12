@@ -49,9 +49,8 @@ export default ({ data }) => {
   const galleryCardsRef = useRef(null);
   const modalRef = useRef(null);
 
-  const modalExpandedHeight = 619.333; // height / width = 0.666...
-  const modalExpandedWidth = 929;
-  const padding = 0;
+  const modalHeight = 620.666; // height / width = 0.666...
+  const modalWidth = 931;
 
   useEffect(() => {
     // Handle lazy loading:
@@ -69,32 +68,38 @@ export default ({ data }) => {
   useEffect(() => {
     if (!activeCard) return;
 
-    const activeX = activeCard.offsetLeft;
-    const activeY = activeCard.offsetTop;
+    const activeCardX =
+      activeCard.offsetLeft - modalWidth / 2 + activeCard.offsetWidth / 2;
+    const activeCardY =
+      activeCard.offsetTop - modalHeight / 2 + activeCard.offsetHeight / 2;
     activeCard.style = '';
 
     const modal = modalRef.current;
     const modalImageContainer = modal.childNodes[0];
-    modal.style.transform = `translate(${activeX}px, ${activeY}px)`;
-    modal.style.height = `${cardSize}px`;
-    modal.style.width = `${cardSize}px`;
-    modalImageContainer.style.height = `${cardSize}px`;
+    modal.classList.remove('is-active');
+    modal.style.transform = `
+      translate(${activeCardX}px, ${activeCardY}px)
+      scaleX(${cardSize / modalWidth})
+      scaleY(${cardSize / modalHeight})`;
+    modalImageContainer.style.transform = `
+      scaleX(${modalWidth / cardSize})
+      scaleY(${modalHeight / cardSize})`;
 
     setTimeout(() => {
       const body = document.querySelector('body');
-      const centerX = body.offsetWidth / 2 - modalExpandedWidth / 2 - padding;
+      const centerX = body.offsetWidth / 2 - modalWidth / 2;
       const centerY =
         body.offsetHeight / 2 -
-        modalExpandedHeight / 2 -
+        modalHeight / 2 -
         galleryCardsRef.current.getBoundingClientRect().top / 2 +
-        window.scrollY / 2 -
-        padding;
+        window.scrollY / 2;
 
-      modal.style.transform = `translate(${centerX}px, ${centerY}px)`;
-      modal.style.height = `${modalExpandedHeight}px`;
-      modal.style.width = `${modalExpandedWidth}px`;
-      modalImageContainer.style.height = `${modalExpandedHeight - 2}px`;
-    }, delay);
+      modal.classList.add('is-active');
+      modal.style.transform = `
+        translate(${centerX + 0.5}px, ${centerY}px)
+        scaleX(1) scaleY(1)`;
+      modalImageContainer.style.transform = 'scaleX(1) scaleY(1)';
+    }, delay * 2);
   }, [activeCard]);
 
   return (
@@ -107,8 +112,10 @@ export default ({ data }) => {
         <GalleryModal
           activeCardIndex={activeCard && Number(activeCard.dataset.index)}
           cardSize={cardSize}
+          height={modalHeight}
           images={images}
           ref={modalRef}
+          width={modalWidth}
         />
         {images.map((image, index) => (
           <div className="gallery__card-container" key={index}>
