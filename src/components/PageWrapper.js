@@ -17,7 +17,7 @@ const PageWrapper = ({ children, location }) => (
       // offset required for the header. This is especially necessary due to
       // problematic behavior associated with Flexbox on Safari. See, e.g.:
       // https://www.labsrc.com/safari-full-height-flexbox-children/
-      className="relative flex flex-col flex-grow h-auto"
+      className="relative flex flex-col flex-grow h-auto overflow-hidden"
       style={{ minHeight: 'calc(100% - 87px)' }}
     >
       <Transition key={location.pathname}>

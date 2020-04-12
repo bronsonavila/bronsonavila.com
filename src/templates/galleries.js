@@ -76,7 +76,6 @@ export default ({ data }) => {
 
     const modal = modalRef.current;
     const modalImageContainer = modal.childNodes[0];
-    modal.classList.remove('is-active');
     modal.style.transform = `
       translate(${activeCardX}px, ${activeCardY}px)
       scaleX(${cardSize / modalWidth})
@@ -86,7 +85,7 @@ export default ({ data }) => {
       scaleY(${modalHeight / cardSize})`;
 
     setTimeout(() => {
-      const body = document.querySelector('body');
+      const body = document.body;
       const centerX = body.offsetWidth / 2 - modalWidth / 2;
       const centerY =
         body.offsetHeight / 2 -
@@ -94,7 +93,6 @@ export default ({ data }) => {
         galleryCardsRef.current.getBoundingClientRect().top / 2 +
         window.scrollY / 2;
 
-      modal.classList.add('is-active');
       modal.style.transform = `
         translate(${centerX + 0.5}px, ${centerY}px)
         scaleX(1) scaleY(1)`;

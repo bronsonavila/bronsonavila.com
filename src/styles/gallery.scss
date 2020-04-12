@@ -82,16 +82,13 @@ $card-size: 275px;
   @apply border;
   @apply border-gray-400;
   @apply overflow-hidden;
+  @apply shadow-2xl;
   @apply transition-all;
   @apply duration-300;
   @apply ease-in-out;
   @apply z-20;
   top: 0;
   left: 0;
-
-  &.is-active {
-    @apply shadow-2xl;
-  }
 
   &-image {
     @apply hidden;
