@@ -90,6 +90,21 @@ $card-size: 275px;
   top: 0;
   left: 0;
 
+  &-close {
+    @apply absolute;
+    @apply top-0;
+    @apply right-0;
+    @apply text-red-800;
+    @apply transition-all;
+    @apply duration-300;
+    @apply ease-in-out;
+    @apply z-10;
+
+    &:hover {
+      @apply text-red-700;
+    }
+  }
+
   &-image {
     @apply hidden;
     @apply absolute;

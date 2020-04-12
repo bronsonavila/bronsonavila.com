@@ -1,6 +1,8 @@
 import React from 'react';
 import Img from 'gatsby-image/withIEPolyfill';
 
+import Close from '../../static/svg/close.svg';
+
 const GalleryModal = React.forwardRef(
   ({ activeCardIndex, cardSize, height, images, width }, ref) => {
     // `body` workaround required because Gatsby does not have `document` defined when
@@ -29,6 +31,10 @@ const GalleryModal = React.forwardRef(
           className="relative overflow-hidden transition-all duration-300 ease-in-out"
           style={{ height: `${height}px` }}
         >
+          <button className="gallery__modal-close">
+            <Close className="fill-current h-6 w-6 m-2" />
+          </button>
+
           {images.map((image, index) => (
             <div
               className={`gallery__modal-image ${
