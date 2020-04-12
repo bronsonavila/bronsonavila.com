@@ -9,7 +9,7 @@ import Layout from './Layout';
 import Transition from './Transition';
 
 const PageWrapper = ({ children, location }) => (
-  <>
+  <div className="overflow-hidden">
     <Header />
     <PoseGroup
       // Use an `auto` height combined with a calculated `minHeight` to ensure
@@ -17,14 +17,14 @@ const PageWrapper = ({ children, location }) => (
       // offset required for the header. This is especially necessary due to
       // problematic behavior associated with Flexbox on Safari. See, e.g.:
       // https://www.labsrc.com/safari-full-height-flexbox-children/
-      className="relative flex flex-col flex-grow h-auto overflow-hidden"
+      className="relative flex flex-col flex-grow h-auto"
       style={{ minHeight: 'calc(100% - 87px)' }}
     >
       <Transition key={location.pathname}>
         <Layout>{children}</Layout>
       </Transition>
     </PoseGroup>
-  </>
+  </div>
 );
 
 export default PageWrapper;
