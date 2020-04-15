@@ -120,12 +120,13 @@ export default ({ data }) => {
   const delay = 300; // For animations.
   const modalWidth = 931; // Supports images with a 3:2 aspect ratio ONLY.
   const modalHeight = modalWidth * (2 / 3);
-  let modalInitialTransform; // Initially position modal just outside the body boundaries.
+  let modalInitialTransform = `translate(-9999px, -9999px)`; // Required default.
 
   // `body` workaround required because Gatsby does not have `document` defined when
   // building production files. See: https://github.com/gatsbyjs/gatsby/issues/309
   if (typeof document !== 'undefined' && document && document.body) {
     const body = document.body;
+    // Position modal just outside the boundaries of the body.
     modalInitialTransform = `
         translate(${body.scrollWidth * -1}px, ${body.scrollHeight * -1}px)`;
   }
