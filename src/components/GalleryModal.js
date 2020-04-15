@@ -4,51 +4,40 @@ import Img from 'gatsby-image/withIEPolyfill';
 import Close from '../../static/svg/close.svg';
 
 const GalleryModal = React.forwardRef(
-  ({ activeCardIndex, cardSize, height, images, width }, ref) => {
-    // `body` workaround required because Gatsby does not have `document` defined when
-    // building production files. See: https://github.com/gatsbyjs/gatsby/issues/309
-    const body = typeof document !== 'undefined' && document && document.body;
-    let initialX = -9999;
-    let initialY = 0;
-
-    if (body) {
-      // Move modal just outside the `body` boundaries for a slightly quicker entrance.
-      initialX = body.scrollWidth * -1.01;
-      initialY = body.scrollHeight / 2;
-    }
-
-    return (
+  (
+    { activeCardIndex, cardSize, handleClose, height, images, initialTransform, width },
+    ref
+  ) => (
+    <div
+      className="gallery__modal"
+      ref={ref}
+      style={{
+        height: `${height}px`,
+        width: `${width}px`,
+        transform: initialTransform,
+      }}
+    >
       <div
-        className="gallery__modal"
-        ref={ref}
-        style={{
-          height: `${height}px`,
-          width: `${width}px`,
-          transform: `translate(${initialX}px, ${initialY}px)`,
-        }}
+        className="relative overflow-hidden transition-all duration-300 ease-in-out"
+        style={{ height: `${height}px` }}
       >
-        <div
-          className="relative overflow-hidden transition-all duration-300 ease-in-out"
-          style={{ height: `${height}px` }}
-        >
-          <button className="gallery__modal-close">
-            <Close className="fill-current h-6 w-6 m-2" />
-          </button>
+        <button className="gallery__modal-close" onClick={handleClose}>
+          <Close className="fill-current h-6 w-6 m-2" />
+        </button>
 
-          {images.map((image, index) => (
-            <div
-              className={`gallery__modal-image ${
-                activeCardIndex === index ? 'is-visible' : ''
-              }`}
-              key={index}
-            >
-              <Img fixed={image.node.childImageSharp.fixed} />
-            </div>
-          ))}
-        </div>
+        {images.map((image, index) => (
+          <div
+            className={`gallery__modal-image ${
+              activeCardIndex === index ? 'is-visible' : ''
+            }`}
+            key={index}
+          >
+            <Img fixed={image.node.childImageSharp.fixed} />
+          </div>
+        ))}
       </div>
-    );
-  }
+    </div>
+  )
 );
 
 export default GalleryModal;

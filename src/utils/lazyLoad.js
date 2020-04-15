@@ -8,7 +8,7 @@
  *
  * @param {Function} observerCallback - Called when element is visible.
  */
-export const lazyLoad = observerCallback => {
+const lazyLoad = observerCallback => {
   const elements = [...document.querySelectorAll('.observable')];
 
   elements.forEach(element => {
@@ -19,3 +19,5 @@ export const lazyLoad = observerCallback => {
     observer.observe(element);
   });
 };
+
+export default lazyLoad;

@@ -17,7 +17,7 @@ const defaultConfig = {
  * @param {String} [config.containerSelector=.movable-container] - The CSS selector for the target element's container.
  * @param {Integer} [config.intensityDivisor=32] - A positive integer that controls the intensity of the animation.
  */
-export const moveElementsRelativeToMouse = config => {
+const moveElementsRelativeToMouse = config => {
   // Set configuration values (overwriting any default parameters with passed in values):
   const {
     additionalTransformValues,
@@ -99,3 +99,5 @@ export const moveElementsRelativeToMouse = config => {
     };
   });
 };
+
+export default moveElementsRelativeToMouse;

@@ -17,7 +17,7 @@ $card-size: 275px;
   will-change: transform;
 
   &:focus {
-    outline: none;
+    @apply outline-none;
   }
 
   // Performant box shadow animation.
@@ -99,6 +99,10 @@ $card-size: 275px;
     @apply duration-300;
     @apply ease-in-out;
     @apply z-10;
+
+    &:focus {
+      @apply outline-none;
+    }
 
     &:hover {
       @apply text-red-700;

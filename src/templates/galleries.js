@@ -4,8 +4,9 @@ import Img from 'gatsby-image/withIEPolyfill';
 
 import GalleryModal from '../components/GalleryModal';
 
-import { lazyLoad } from '../utils/lazyLoad';
-import { moveElementsRelativeToMouse } from '../utils/moveElementsRelativeToMouse';
+import getTransformMatrixArray from '../utils/getTransformMatrixArray';
+import lazyLoad from '../utils/lazyLoad';
+import moveElementsRelativeToMouse from '../utils/moveElementsRelativeToMouse';
 
 /**
  * Handles lazy loading of gallery cards, and animates the position of cards on hover.
@@ -41,6 +42,7 @@ const animateModal = (delay, modal, modalParent, target) => {
   const targetY = target.offsetTop - modal.offsetHeight / 2 + target.offsetHeight / 2;
 
   // Move the modal over the `target` and scale the modal size down to the `target` size.
+  modal.style.opacity = 1;
   modal.style.transform = `
       translate(${targetX}px, ${targetY}px)
       scaleX(${target.offsetWidth / modal.offsetWidth})
@@ -61,6 +63,20 @@ const animateModal = (delay, modal, modalParent, target) => {
     modal.style.transform = `translate(${centerX + 0.5}px, ${centerY}px) scale(1)`;
     modalImageContainer.style.transform = 'scale(1)';
   }, delay * 2);
+};
+
+/**
+ * Slides the modal out of view before moving it back to its default position.
+ */
+const resetModal = (delay, modalInitialTransform, modal) => {
+  const transformMatrixArray = getTransformMatrixArray(modal);
+  const x = transformMatrixArray[4];
+  const y = Number(transformMatrixArray[5]);
+
+  modal.style.opacity = 0;
+  modal.style.transform = `translate(${x}px, ${y + window.innerHeight}px)`;
+
+  setTimeout(() => (modal.style.transform = modalInitialTransform), delay);
 };
 
 /**
@@ -104,6 +120,15 @@ export default ({ data }) => {
   const delay = 300; // For animations.
   const modalWidth = 931; // Supports images with a 3:2 aspect ratio ONLY.
   const modalHeight = modalWidth * (2 / 3);
+  let modalInitialTransform; // Initially position modal just outside the body boundaries.
+
+  // `body` workaround required because Gatsby does not have `document` defined when
+  // building production files. See: https://github.com/gatsbyjs/gatsby/issues/309
+  if (typeof document !== 'undefined' && document && document.body) {
+    const body = document.body;
+    modalInitialTransform = `
+        translate(${body.scrollWidth * -1}px, ${body.scrollHeight * -1}px)`;
+  }
 
   const [activeCard, setActiveCard] = useState(null);
   const cardRefs = images.map(image => useRef(null));
@@ -126,8 +151,13 @@ export default ({ data }) => {
         <GalleryModal
           activeCardIndex={activeCard && Number(activeCard.dataset.index)}
           cardSize={cardSize}
+          handleClose={() => {
+            resetModal(delay, modalInitialTransform, modalRef.current);
+            setTimeout(() => setActiveCard(null), delay);
+          }}
           height={modalHeight}
           images={images}
+          initialTransform={modalInitialTransform}
           ref={modalRef}
           width={modalWidth}
         />
@@ -138,7 +168,7 @@ export default ({ data }) => {
               data-index={index}
               data-node-base={image.node.base}
               data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
-              onClick={e => setActiveCard(cardRefs[index].current)}
+              onClick={() => setActiveCard(cardRefs[index].current)}
               onMouseDown={e => (cardRefs[index].current.style = '')}
               ref={cardRefs[index]}
             >
