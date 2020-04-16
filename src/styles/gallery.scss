@@ -78,17 +78,20 @@ $card-size: 275px;
 
 .gallery__modal {
   @apply absolute;
+  @apply top-0;
+  @apply left-0;
   @apply bg-white;
   @apply border;
   @apply border-gray-400;
   @apply overflow-hidden;
   @apply shadow-2xl;
-  @apply transition-all;
-  @apply duration-300;
-  @apply ease-in-out;
   @apply z-20;
-  top: 0;
-  left: 0;
+
+  &.is-smooth {
+    @apply transition-all;
+    @apply duration-300;
+    @apply ease-in-out;
+  }
 
   &-close {
     @apply absolute;
@@ -112,9 +115,9 @@ $card-size: 275px;
   &-image {
     @apply hidden;
     @apply absolute;
+    @apply top-0;
     width: 929px;
     left: 50%;
-    top: 0;
     transform: translate(-50%, 0);
 
     &.is-visible {

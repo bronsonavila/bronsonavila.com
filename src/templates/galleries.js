@@ -41,7 +41,7 @@ const animateModal = (delay, modal, modalParent, target) => {
   const targetX = target.offsetLeft - modal.offsetWidth / 2 + target.offsetWidth / 2;
   const targetY = target.offsetTop - modal.offsetHeight / 2 + target.offsetHeight / 2;
 
-  // Move the modal over the `target` and scale the modal size down to the `target` size.
+  // Immediately move the modal over `target`, and scale the modal down to `target` size:
   modal.style.opacity = 1;
   modal.style.transform = `
       translate(${targetX}px, ${targetY}px)
@@ -51,7 +51,7 @@ const animateModal = (delay, modal, modalParent, target) => {
       scaleX(${modal.offsetWidth / target.offsetWidth})
       scaleY(${modal.offsetHeight / target.offsetHeight})`;
 
-  // Move the modal to the center of the screen and expand it to its full size:
+  // Smoothly move the modal to the center of the screen and expand it to its full size:
   setTimeout(() => {
     const centerX = document.body.offsetWidth / 2 - modal.offsetWidth / 2;
     const centerY =
@@ -60,6 +60,7 @@ const animateModal = (delay, modal, modalParent, target) => {
       modalParent.getBoundingClientRect().top / 2 +
       window.scrollY / 2;
 
+    modal.classList.add('is-smooth');
     modal.style.transform = `translate(${centerX + 0.5}px, ${centerY}px) scale(1)`;
     modalImageContainer.style.transform = 'scale(1)';
   }, delay * 2);
@@ -76,7 +77,10 @@ const resetModal = (delay, modalInitialTransform, modal) => {
   modal.style.opacity = 0;
   modal.style.transform = `translate(${x}px, ${y + window.innerHeight}px)`;
 
-  setTimeout(() => (modal.style.transform = modalInitialTransform), delay);
+  setTimeout(() => {
+    modal.classList.remove('is-smooth');
+    modal.style.transform = modalInitialTransform;
+  }, delay);
 };
 
 /**
@@ -120,16 +124,7 @@ export default ({ data }) => {
   const delay = 300; // For animations.
   const modalWidth = 931; // Supports images with a 3:2 aspect ratio ONLY.
   const modalHeight = modalWidth * (2 / 3);
-  let modalInitialTransform = `translate(-9999px, -9999px)`; // Required default.
-
-  // `body` workaround required because Gatsby does not have `document` defined when
-  // building production files. See: https://github.com/gatsbyjs/gatsby/issues/309
-  if (typeof document !== 'undefined' && document && document.body) {
-    const body = document.body;
-    // Position modal just outside the boundaries of the body.
-    modalInitialTransform = `
-        translate(${body.scrollWidth * -1}px, ${body.scrollHeight * -1}px)`;
-  }
+  const modalInitialTransform = `translate(-9999px, -9999px)`;
 
   const [activeCard, setActiveCard] = useState(null);
   const cardRefs = images.map(image => useRef(null));
