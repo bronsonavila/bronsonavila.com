@@ -8,13 +8,17 @@ import getTransformMatrixArray from '../utils/getTransformMatrixArray';
 import lazyLoad from '../utils/lazyLoad';
 import moveElementsRelativeToMouse from '../utils/moveElementsRelativeToMouse';
 
+const delay = 300; // For animations.
+const cardSize = 275;
+const modalWidth = 931; // Supports images with a 3:2 aspect ratio ONLY.
+const modalHeight = modalWidth * (2 / 3);
+const modalInitialTransform = `translate(-9999px, -9999px)`;
+
 /**
  * Handles lazy loading of gallery cards, and animates the position of cards on hover.
- *
- * @param {Integer} delay - The `setTimeout` delay value.
  */
-const animateCards = delay => {
-  displayGalleryCards(delay);
+const animateCards = () => {
+  displayGalleryCards();
   lazyLoad(setObserverCallback(delay));
   moveElementsRelativeToMouse({
     additionalTransformValues: 'scale(1.025)',
@@ -29,12 +33,11 @@ const animateCards = delay => {
  * modal images without the costs incurred by animating `height` and `width` properties.
  * See: https://www.freecodecamp.org/news/animating-height-the-right-way/
  *
- * @param {Integer} delay - The `setTimeout` delay.
  * @param {Node} modal - The modal element.
  * @param {Node} modalParent - The modal's parent element.
  * @param {Node} target - The element that the modal will initially move to.
  */
-const animateModal = (delay, modal, modalParent, target) => {
+const animateModal = (modal, modalParent, target) => {
   if (!target) return;
 
   const modalImageContainer = modal.childNodes[0];
@@ -68,8 +71,10 @@ const animateModal = (delay, modal, modalParent, target) => {
 
 /**
  * Slides the modal out of view before moving it back to its default position.
+ *
+ * @param {Node} modal - The modal element.
  */
-const resetModal = (delay, modalInitialTransform, modal) => {
+const resetModal = modal => {
   const transformMatrixArray = getTransformMatrixArray(modal);
   const x = transformMatrixArray[4];
   const y = Number(transformMatrixArray[5]);
@@ -89,10 +94,8 @@ const resetModal = (delay, modalInitialTransform, modal) => {
  * cards to be revealed in sequential order rather than all at once. This is
  * because the `lazyLoad` IntersectionObserver will not detect elements until
  * `display: none` has been changed to a visible value.
- *
- * @param {Integer} delay - The `setTimeout` delay value.
  */
-const displayGalleryCards = delay => {
+const displayGalleryCards = () => {
   const cards = [...document.querySelectorAll('.gallery__card')];
 
   cards.forEach((card, index) => {
@@ -120,22 +123,15 @@ export default ({ data }) => {
   const content = data.markdownRemark;
   const images = data.allFile.edges;
 
-  const cardSize = 275;
-  const delay = 300; // For animations.
-  const modalWidth = 931; // Supports images with a 3:2 aspect ratio ONLY.
-  const modalHeight = modalWidth * (2 / 3);
-  const modalInitialTransform = `translate(-9999px, -9999px)`;
-
   const [activeCard, setActiveCard] = useState(null);
   const cardRefs = images.map(image => useRef(null));
   const modalParentRef = useRef(null);
   const modalRef = useRef(null);
 
   useEffect(animateCards);
-  useEffect(
-    () => animateModal(delay, modalRef.current, modalParentRef.current, activeCard),
-    [activeCard]
-  );
+  useEffect(() => animateModal(modalRef.current, modalParentRef.current, activeCard), [
+    activeCard,
+  ]);
 
   return (
     <section className="gallery">
@@ -148,7 +144,7 @@ export default ({ data }) => {
           activeCardIndex={activeCard && Number(activeCard.dataset.index)}
           cardSize={cardSize}
           handleClose={() => {
-            resetModal(delay, modalInitialTransform, modalRef.current);
+            resetModal(modalRef.current);
             setTimeout(() => setActiveCard(null), delay);
           }}
           height={modalHeight}
