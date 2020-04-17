@@ -103,11 +103,9 @@ $card-size: 275px;
     @apply ease-in-out;
     @apply z-10;
 
-    &:focus {
-      @apply outline-none;
-    }
-
+    &:focus,
     &:hover {
+      @apply outline-none;
       @apply text-red-700;
     }
   }
