@@ -76,7 +76,7 @@ $card-size: 275px;
   width: 929px;
 }
 
-.gallery__modal {
+.gallery-modal {
   @apply absolute;
   @apply top-0;
   @apply left-0;
@@ -93,11 +93,8 @@ $card-size: 275px;
     @apply ease-in-out;
   }
 
-  &-close {
+  &__button {
     @apply absolute;
-    @apply top-0;
-    @apply right-0;
-    @apply text-red-800;
     @apply transition-all;
     @apply duration-300;
     @apply ease-in-out;
@@ -106,11 +103,52 @@ $card-size: 275px;
     &:focus,
     &:hover {
       @apply outline-none;
-      @apply text-red-700;
+    }
+
+    svg {
+      @apply fill-current;
+      @apply h-6;
+      @apply w-6;
+      @apply m-2;
+    }
+
+    &--close {
+      @extend .gallery-modal__button;
+      @apply top-0;
+      @apply right-0;
+      @apply text-red-800;
+
+      &:focus,
+      &:hover {
+        @apply text-red-700;
+      }
+    }
+
+    &--next {
+      @extend .gallery-modal__button;
+      @apply right-0;
+      @apply text-gray-900;
+      bottom: 2px;
+
+      &:hover {
+        @apply text-gray-600;
+      }
+    }
+
+    &--previous {
+      @extend .gallery-modal__button;
+      @apply left-0;
+      @apply text-gray-900;
+      bottom: 2px;
+      transform: rotate(180deg);
+
+      &:hover {
+        @apply text-gray-600;
+      }
     }
   }
 
-  &-image {
+  &__image {
     @apply hidden;
     @apply absolute;
     @apply top-0;

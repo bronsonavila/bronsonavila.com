@@ -1,7 +1,8 @@
 import React from 'react';
 import Img from 'gatsby-image/withIEPolyfill';
 
-import Close from '../../static/svg/close.svg';
+import Caret from '../../static/svg/circle-caret.svg';
+import Close from '../../static/svg/circle-close.svg';
 
 const GalleryModal = React.forwardRef(
   (
@@ -9,7 +10,7 @@ const GalleryModal = React.forwardRef(
     ref
   ) => (
     <div
-      className="gallery__modal"
+      className="gallery-modal"
       ref={ref}
       style={{
         height: `${height}px`,
@@ -21,13 +22,21 @@ const GalleryModal = React.forwardRef(
         className="relative overflow-hidden transition-all duration-300 ease-in-out"
         style={{ height: `${height}px` }}
       >
-        <button className="gallery__modal-close" onClick={handleClose}>
-          <Close className="fill-current h-6 w-6 m-2" />
+        {/* Buttons */}
+        <button className="gallery-modal__button--close" onClick={handleClose}>
+          <Close />
+        </button>
+        <button className="gallery-modal__button--previous">
+          <Caret />
+        </button>
+        <button className="gallery-modal__button--next">
+          <Caret />
         </button>
 
+        {/* Images */}
         {images.map((image, index) => (
           <div
-            className={`gallery__modal-image ${
+            className={`gallery-modal__image ${
               activeCardIndex === index ? 'is-visible' : ''
             }`}
             key={index}
