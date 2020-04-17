@@ -8,8 +8,8 @@ import getTransformMatrixArray from '../utils/getTransformMatrixArray';
 import lazyLoad from '../utils/lazyLoad';
 import moveElementsRelativeToMouse from '../utils/moveElementsRelativeToMouse';
 
-const delay = 300; // For animations.
 const cardSize = 275;
+const delay = 300; // For animations.
 const modalWidth = 931; // Supports images with a 3:2 aspect ratio ONLY.
 const modalHeight = modalWidth * (2 / 3);
 const modalInitialTransform = `translate(-9999px, -9999px)`;
