@@ -33,8 +33,8 @@ const animateCards = () => {
  * modal images without the costs incurred by animating `height` and `width` properties.
  * See: https://www.freecodecamp.org/news/animating-height-the-right-way/
  *
- * @param {Node} modal - The modal element.
- * @param {Node} modalParent - The modal's parent element.
+ * @param {Node} modal
+ * @param {Node} modalParent - The modal's immediate parent element.
  * @param {Node} target - The element that the modal will initially move to.
  */
 const animateModal = (modal, modalParent, target) => {
@@ -44,7 +44,7 @@ const animateModal = (modal, modalParent, target) => {
   const targetX = target.offsetLeft - modal.offsetWidth / 2 + target.offsetWidth / 2;
   const targetY = target.offsetTop - modal.offsetHeight / 2 + target.offsetHeight / 2;
 
-  // Immediately move the modal over `target`, and scale the modal down to `target` size:
+  // Immediately move the modal over `target`, and scale the modal down to `target` size.
   modal.style.opacity = 1;
   modal.style.transform = `
       translate(${targetX}px, ${targetY}px)
@@ -54,7 +54,7 @@ const animateModal = (modal, modalParent, target) => {
       scaleX(${modal.offsetWidth / target.offsetWidth})
       scaleY(${modal.offsetHeight / target.offsetHeight})`;
 
-  // Smoothly move the modal to the center of the screen and expand it to its full size:
+  // Smoothly move the modal to the center of the screen and expand it to its full size.
   setTimeout(() => {
     const centerX = document.body.offsetWidth / 2 - modal.offsetWidth / 2;
     const centerY =
@@ -70,9 +70,59 @@ const animateModal = (modal, modalParent, target) => {
 };
 
 /**
+ * Changes the display of `.gallery__card` elements from `none` to `block` at
+ * staggered intervals. This allows the first batch of initially displayed
+ * cards to be revealed in sequential order rather than all at once. This is
+ * because the `lazyLoad` IntersectionObserver will not detect elements until
+ * `display: none` has been changed to a visible value.
+ */
+const displayGalleryCards = () => {
+  const cards = [...document.querySelectorAll('.gallery__card')];
+
+  cards.forEach((card, index) => {
+    // Must trigger before `setObserverCallback` runs.
+    setTimeout(() => card.classList.add('is-visible'), (index * delay) / 3.666);
+  });
+};
+
+/**
+ * Displays the next image in the gallery modal, or loops back to first image in the modal
+ * if the current `activeCard` is the last among all `cardRefs`.
+ *
+ * @param {Node} activeCard
+ * @param {Array} cardRefs
+ * @param {Function} setActiveCard
+ */
+const displayNextModalImage = (activeCard, cardRefs, setActiveCard) => {
+  const activeCardIndex = Number(activeCard.dataset.index);
+  const nextCard =
+    activeCardIndex === cardRefs.length - 1
+      ? cardRefs[0].current
+      : cardRefs[activeCardIndex + 1].current;
+  setActiveCard(nextCard);
+};
+
+/**
+ * Displays the previous image in the gallery modal, or displays the last image in the
+ * modal if the current `activeCard` is the first among all `cardRefs`.
+ *
+ * @param {Node} activeCard
+ * @param {Array} cardRefs
+ * @param {Function} setActiveCard
+ */
+const displayPreviousModalImage = (activeCard, cardRefs, setActiveCard) => {
+  const activeCardIndex = Number(activeCard.dataset.index);
+  const previousCard =
+    activeCardIndex === 0
+      ? cardRefs[cardRefs.length - 1].current
+      : cardRefs[activeCardIndex - 1].current;
+  setActiveCard(previousCard);
+};
+
+/**
  * Slides the modal out of view before moving it back to its default position.
  *
- * @param {Node} modal - The modal element.
+ * @param {Node} modal
  */
 const resetModal = modal => {
   const transformMatrixArray = getTransformMatrixArray(modal);
@@ -86,22 +136,6 @@ const resetModal = modal => {
     modal.classList.remove('is-smooth');
     modal.style.transform = modalInitialTransform;
   }, delay);
-};
-
-/**
- * Changes the display of `.gallery__card` elements from `none` to `block` at
- * staggered intervals. This allows the first batch of initially displayed
- * cards to be revealed in sequential order rather than all at once. This is
- * because the `lazyLoad` IntersectionObserver will not detect elements until
- * `display: none` has been changed to a visible value.
- */
-const displayGalleryCards = () => {
-  const cards = [...document.querySelectorAll('.gallery__card')];
-
-  cards.forEach((card, index) => {
-    // Must trigger before `setObserverCallback` runs:
-    setTimeout(() => card.classList.add('is-visible'), (index * delay) / 3.666);
-  });
 };
 
 /**
@@ -124,14 +158,19 @@ export default ({ data }) => {
   const images = data.allFile.edges;
 
   const [activeCard, setActiveCard] = useState(null);
+  const [lastActiveCardSetter, setLastActiveCardSetter] = useState({});
   const cardRefs = images.map(image => useRef(null));
   const modalParentRef = useRef(null);
   const modalRef = useRef(null);
 
   useEffect(animateCards);
-  useEffect(() => animateModal(modalRef.current, modalParentRef.current, activeCard), [
-    activeCard,
-  ]);
+  useEffect(() => {
+    // Prevent modal animation when clicking the `next` or `previous` modal buttons.
+    // The animation should only occur when clicking a gallery card.
+    if (lastActiveCardSetter.id !== 'next' && lastActiveCardSetter.id !== 'previous') {
+      animateModal(modalRef.current, modalParentRef.current, activeCard);
+    }
+  }, [activeCard, lastActiveCardSetter]);
 
   return (
     <section className="gallery">
@@ -142,10 +181,19 @@ export default ({ data }) => {
       <div className="gallery__cards" ref={modalParentRef}>
         <GalleryModal
           activeCardIndex={activeCard && Number(activeCard.dataset.index)}
-          cardSize={cardSize}
           handleClose={() => {
             resetModal(modalRef.current);
-            setTimeout(() => setActiveCard(null), delay);
+            setTimeout(() => {
+              setActiveCard(null);
+            }, delay);
+          }}
+          handleNextImage={e => {
+            displayNextModalImage(activeCard, cardRefs, setActiveCard);
+            setLastActiveCardSetter(e.currentTarget);
+          }}
+          handlePreviousImage={e => {
+            displayPreviousModalImage(activeCard, cardRefs, setActiveCard);
+            setLastActiveCardSetter(e.currentTarget);
           }}
           height={modalHeight}
           images={images}
@@ -160,7 +208,10 @@ export default ({ data }) => {
               data-index={index}
               data-node-base={image.node.base}
               data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
-              onClick={() => setActiveCard(cardRefs[index].current)}
+              onClick={e => {
+                setActiveCard(cardRefs[index].current);
+                setLastActiveCardSetter(e.currentTarget);
+              }}
               onMouseDown={e => (cardRefs[index].current.style = '')}
               ref={cardRefs[index]}
             >

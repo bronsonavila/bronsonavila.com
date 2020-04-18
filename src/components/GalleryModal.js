@@ -6,7 +6,16 @@ import Close from '../../static/svg/circle-close.svg';
 
 const GalleryModal = React.forwardRef(
   (
-    { activeCardIndex, cardSize, handleClose, height, images, initialTransform, width },
+    {
+      activeCardIndex,
+      handleNextImage,
+      handlePreviousImage,
+      handleClose,
+      height,
+      images,
+      initialTransform,
+      width,
+    },
     ref
   ) => (
     <div
@@ -26,10 +35,18 @@ const GalleryModal = React.forwardRef(
         <button className="gallery-modal__button--close" onClick={handleClose}>
           <Close />
         </button>
-        <button className="gallery-modal__button--previous">
+        <button
+          className="gallery-modal__button--previous"
+          id="previous"
+          onClick={handlePreviousImage}
+        >
           <Caret />
         </button>
-        <button className="gallery-modal__button--next">
+        <button
+          className="gallery-modal__button--next"
+          id="next"
+          onClick={handleNextImage}
+        >
           <Caret />
         </button>
 
