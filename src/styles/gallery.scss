@@ -87,10 +87,14 @@ $card-size: 275px;
   @apply shadow-2xl;
   @apply z-20;
 
-  &.is-smooth {
+  &.is-open {
     @apply transition-all;
     @apply duration-300;
     @apply ease-in-out;
+
+    button {
+      @apply opacity-100;
+    }
   }
 
   &__button {
@@ -98,6 +102,7 @@ $card-size: 275px;
     @apply transition-all;
     @apply duration-300;
     @apply ease-in-out;
+    @apply opacity-0;
     @apply z-10;
 
     &:focus,

@@ -13,13 +13,14 @@ const GalleryModal = React.forwardRef(
       handleClose,
       height,
       images,
+      isModalOpen,
       initialTransform,
       width,
     },
     ref
   ) => (
     <div
-      className="gallery-modal"
+      className={`gallery-modal ${isModalOpen ? 'is-open' : ''}`}
       ref={ref}
       style={{
         height: `${height}px`,

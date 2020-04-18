@@ -8,7 +8,6 @@ import getTransformMatrixArray from '../utils/getTransformMatrixArray';
 import lazyLoad from '../utils/lazyLoad';
 import moveElementsRelativeToMouse from '../utils/moveElementsRelativeToMouse';
 
-const cardSize = 275;
 const delay = 300; // For animations.
 const modalWidth = 931; // Supports images with a 3:2 aspect ratio ONLY.
 const modalHeight = modalWidth * (2 / 3);
@@ -37,7 +36,7 @@ const animateCards = () => {
  * @param {Node} modalParent - The modal's immediate parent element.
  * @param {Node} target - The element that the modal will initially move to.
  */
-const animateModal = (modal, modalParent, target) => {
+const animateModal = (modal, modalParent, setIsModalOpen, target) => {
   if (!target) return;
 
   const modalImageContainer = modal.childNodes[0];
@@ -63,7 +62,7 @@ const animateModal = (modal, modalParent, target) => {
       modalParent.getBoundingClientRect().top / 2 +
       window.scrollY / 2;
 
-    modal.classList.add('is-smooth');
+    setIsModalOpen(true);
     modal.style.transform = `translate(${centerX + 0.5}px, ${centerY}px) scale(1)`;
     modalImageContainer.style.transform = 'scale(1)';
   }, delay * 2);
@@ -99,6 +98,7 @@ const displayNextModalImage = (activeCard, cardRefs, setActiveCard) => {
     activeCardIndex === cardRefs.length - 1
       ? cardRefs[0].current
       : cardRefs[activeCardIndex + 1].current;
+
   setActiveCard(nextCard);
 };
 
@@ -116,6 +116,7 @@ const displayPreviousModalImage = (activeCard, cardRefs, setActiveCard) => {
     activeCardIndex === 0
       ? cardRefs[cardRefs.length - 1].current
       : cardRefs[activeCardIndex - 1].current;
+
   setActiveCard(previousCard);
 };
 
@@ -123,8 +124,10 @@ const displayPreviousModalImage = (activeCard, cardRefs, setActiveCard) => {
  * Slides the modal out of view before moving it back to its default position.
  *
  * @param {Node} modal
+ * @param {Function} setActiveCard
+ * @param {Function} setIsModalOpen
  */
-const resetModal = modal => {
+const resetModal = (modal, setActiveCard, setIsModalOpen) => {
   const transformMatrixArray = getTransformMatrixArray(modal);
   const x = transformMatrixArray[4];
   const y = Number(transformMatrixArray[5]);
@@ -133,7 +136,8 @@ const resetModal = modal => {
   modal.style.transform = `translate(${x}px, ${y + window.innerHeight}px)`;
 
   setTimeout(() => {
-    modal.classList.remove('is-smooth');
+    setActiveCard(null);
+    setIsModalOpen(false);
     modal.style.transform = modalInitialTransform;
   }, delay);
 };
@@ -159,6 +163,7 @@ export default ({ data }) => {
 
   const [activeCard, setActiveCard] = useState(null);
   const [lastActiveCardSetter, setLastActiveCardSetter] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const cardRefs = images.map(image => useRef(null));
   const modalParentRef = useRef(null);
   const modalRef = useRef(null);
@@ -168,7 +173,7 @@ export default ({ data }) => {
     // Prevent modal animation when clicking the `next` or `previous` modal buttons.
     // The animation should only occur when clicking a gallery card.
     if (lastActiveCardSetter.id !== 'next' && lastActiveCardSetter.id !== 'previous') {
-      animateModal(modalRef.current, modalParentRef.current, activeCard);
+      animateModal(modalRef.current, modalParentRef.current, setIsModalOpen, activeCard);
     }
   }, [activeCard, lastActiveCardSetter]);
 
@@ -181,12 +186,7 @@ export default ({ data }) => {
       <div className="gallery__cards" ref={modalParentRef}>
         <GalleryModal
           activeCardIndex={activeCard && Number(activeCard.dataset.index)}
-          handleClose={() => {
-            resetModal(modalRef.current);
-            setTimeout(() => {
-              setActiveCard(null);
-            }, delay);
-          }}
+          handleClose={() => resetModal(modalRef.current, setActiveCard, setIsModalOpen)}
           handleNextImage={e => {
             displayNextModalImage(activeCard, cardRefs, setActiveCard);
             setLastActiveCardSetter(e.currentTarget);
@@ -197,6 +197,7 @@ export default ({ data }) => {
           }}
           height={modalHeight}
           images={images}
+          isModalOpen={isModalOpen}
           initialTransform={modalInitialTransform}
           ref={modalRef}
           width={modalWidth}
