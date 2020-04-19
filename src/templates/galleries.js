@@ -228,6 +228,8 @@ export default ({ data }) => {
   );
 };
 
+// `quality: 91` appears to offer the best file size reduction for JPEGs without
+// noticeable loss in image quality for `GatsbyImageSharpFixed`.
 export const query = graphql`
   query($slug: String!, $relativeDirectory: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
@@ -247,7 +249,7 @@ export const query = graphql`
         node {
           base
           childImageSharp {
-            fixed(width: 929, quality: 100) {
+            fixed(width: 929, quality: 91) {
               ...GatsbyImageSharpFixed
             }
             fluid(maxWidth: 500) {
