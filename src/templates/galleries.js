@@ -137,6 +137,7 @@ const resetModal = (modal, setActiveCard, setIsModalOpen) => {
   setTimeout(() => {
     setActiveCard(null);
     setIsModalOpen(false);
+    modal.style.transform = '';
   }, delay);
 };
 
