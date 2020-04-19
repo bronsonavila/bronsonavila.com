@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { graphql } from 'gatsby';
-import Img from 'gatsby-image/withIEPolyfill';
+import Img from 'gatsby-image';
 
 import GalleryModal from '../components/GalleryModal';
 
@@ -11,7 +11,6 @@ import moveElementsRelativeToMouse from '../utils/moveElementsRelativeToMouse';
 const delay = 300; // For animations.
 const modalWidth = 931; // Supports images with a 3:2 aspect ratio ONLY.
 const modalHeight = modalWidth * (2 / 3);
-const modalInitialTransform = `translate(-9999px, -9999px)`;
 
 /**
  * Handles lazy loading of gallery cards, and animates the position of cards on hover.
@@ -39,7 +38,7 @@ const animateCards = () => {
 const animateModal = (modal, modalParent, setIsModalOpen, target) => {
   if (!target) return;
 
-  const modalImageContainer = modal.childNodes[0];
+  const modalImagesContainer = modal.childNodes[0];
   const targetX = target.offsetLeft - modal.offsetWidth / 2 + target.offsetWidth / 2;
   const targetY = target.offsetTop - modal.offsetHeight / 2 + target.offsetHeight / 2;
 
@@ -49,7 +48,7 @@ const animateModal = (modal, modalParent, setIsModalOpen, target) => {
       translate(${targetX}px, ${targetY}px)
       scaleX(${target.offsetWidth / modal.offsetWidth})
       scaleY(${target.offsetHeight / modal.offsetHeight})`;
-  modalImageContainer.style.transform = `
+  modalImagesContainer.style.transform = `
       scaleX(${modal.offsetWidth / target.offsetWidth})
       scaleY(${modal.offsetHeight / target.offsetHeight})`;
 
@@ -64,7 +63,7 @@ const animateModal = (modal, modalParent, setIsModalOpen, target) => {
 
     setIsModalOpen(true);
     modal.style.transform = `translate(${centerX + 0.5}px, ${centerY}px) scale(1)`;
-    modalImageContainer.style.transform = 'scale(1)';
+    modalImagesContainer.style.transform = 'scale(1)';
   }, delay * 2);
 };
 
@@ -138,7 +137,6 @@ const resetModal = (modal, setActiveCard, setIsModalOpen) => {
   setTimeout(() => {
     setActiveCard(null);
     setIsModalOpen(false);
-    modal.style.transform = modalInitialTransform;
   }, delay);
 };
 
@@ -162,8 +160,9 @@ export default ({ data }) => {
   const images = data.allFile.edges;
 
   const [activeCard, setActiveCard] = useState(null);
-  const [lastActiveCardSetter, setLastActiveCardSetter] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lastActiveCardSetter, setLastActiveCardSetter] = useState({});
+
   const cardRefs = images.map(image => useRef(null));
   const modalParentRef = useRef(null);
   const modalRef = useRef(null);
@@ -198,7 +197,6 @@ export default ({ data }) => {
           height={modalHeight}
           images={images}
           isModalOpen={isModalOpen}
-          initialTransform={modalInitialTransform}
           ref={modalRef}
           width={modalWidth}
         />

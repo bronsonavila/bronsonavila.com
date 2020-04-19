@@ -1,5 +1,5 @@
 import React from 'react';
-import Img from 'gatsby-image/withIEPolyfill';
+import Img from 'gatsby-image';
 
 import Caret from '../../static/svg/circle-caret.svg';
 import Close from '../../static/svg/circle-close.svg';
@@ -14,7 +14,6 @@ const GalleryModal = React.forwardRef(
       height,
       images,
       isModalOpen,
-      initialTransform,
       width,
     },
     ref
@@ -25,7 +24,6 @@ const GalleryModal = React.forwardRef(
       style={{
         height: `${height}px`,
         width: `${width}px`,
-        transform: initialTransform,
       }}
     >
       <div

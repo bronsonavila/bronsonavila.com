@@ -86,6 +86,7 @@ $card-size: 275px;
   @apply overflow-hidden;
   @apply shadow-2xl;
   @apply z-20;
+  transform: translate(-9999px, -9999px); // Hidden by default.
 
   &.is-open {
     @apply transition-all;
