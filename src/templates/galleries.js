@@ -228,8 +228,9 @@ export default ({ data }) => {
   );
 };
 
-// `quality: 91` appears to offer the best file size reduction for JPEGs without
-// noticeable loss in image quality for `GatsbyImageSharpFixed`.
+// `quality: 91` appears to offer the best file size reduction for JPEGs without any
+// noticeable loss in image quality for `GatsbyImageSharpFixed`. The width of such images
+// should be 2px smaller than the `modalWidth` value to account for a 1px border.
 export const query = graphql`
   query($slug: String!, $relativeDirectory: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
