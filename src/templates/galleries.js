@@ -93,12 +93,9 @@ const displayGalleryCards = () => {
  */
 const displayNextModalImage = (activeCard, cardRefs, setActiveCard) => {
   const activeCardIndex = Number(activeCard.dataset.index);
-  const nextCard =
-    activeCardIndex === cardRefs.length - 1
-      ? cardRefs[0].current
-      : cardRefs[activeCardIndex + 1].current;
+  const index = activeCardIndex === cardRefs.length - 1 ? 0 : activeCardIndex + 1;
 
-  setActiveCard(nextCard);
+  setActiveCard(cardRefs[index].current);
 };
 
 /**
@@ -111,12 +108,9 @@ const displayNextModalImage = (activeCard, cardRefs, setActiveCard) => {
  */
 const displayPreviousModalImage = (activeCard, cardRefs, setActiveCard) => {
   const activeCardIndex = Number(activeCard.dataset.index);
-  const previousCard =
-    activeCardIndex === 0
-      ? cardRefs[cardRefs.length - 1].current
-      : cardRefs[activeCardIndex - 1].current;
+  const index = activeCardIndex === 0 ? cardRefs.length - 1 : activeCardIndex - 1;
 
-  setActiveCard(previousCard);
+  setActiveCard(cardRefs[index].current);
 };
 
 /**
@@ -198,6 +192,7 @@ export default ({ data }) => {
           height={modalHeight}
           images={images}
           isModalOpen={isModalOpen}
+          lastActiveCardSetter={lastActiveCardSetter}
           ref={modalRef}
           width={modalWidth}
         />

@@ -158,12 +158,36 @@ $card-size: 275px;
     @apply hidden;
     @apply absolute;
     @apply top-0;
+    @apply transition-all;
+    @apply duration-300;
+    @apply ease-in; // Looks better than `ease-in-out`.
     width: 929px;
     left: 50%;
-    transform: translate(-50%, 0);
 
-    &.is-visible {
+    &.is-displayed {
       @apply block;
+      @apply opacity-100;
+      transform: translateX(-50%);
+    }
+
+    // By assigning the `translateX` value to 49.9% rather than an even 50%, the image
+    // element will have a small (but otherwise invisible) fraction of its bounding box
+    // within the modal element. By having a portion of the image within the modal, the
+    // modal's `.overflow-hidden` class will no longer block the loading of the resource.
+    // The end result is that the next image will be "pre-loaded" and ready for viewing
+    // when the user clicks the "next" button. The same applies to `.is-previous` below.
+    &.is-next {
+      @apply block;
+      transform: translateX(49.9%);
+    }
+
+    &.is-previous {
+      @apply block;
+      transform: translateX(-149.9%);
+    }
+
+    &.will-fade-in {
+      @apply opacity-0;
     }
 
     img {
