@@ -24,7 +24,7 @@ import Close from '../../static/svg/circle-close.svg';
  * of `setTimeout` resulted in suboptimal performance and "chunky" transitions.
  *
  * Another alternative may be to apply `.will-fade-in` conditionally depending on whether
- * the user is hovering over the "next" or "previous" button. Perhaps some other time...
+ * the user is hovering over the "next" or "previous" buttons. Perhaps...
  *
  * @param {Integer} activeCardIndex
  * @param {Integer} imagesLength - The total number of images in the gallery.
