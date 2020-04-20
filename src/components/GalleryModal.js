@@ -99,7 +99,8 @@ const GalleryModal = React.forwardRef(
         {/* Images */}
         {images.map((image, index) => (
           <div
-            className={`gallery-modal__image ${setImageClasses(
+            // Prevent `null + 1 === 1` scenario from occurring in `setImageClasses()`.
+            className={`gallery-modal__image ${activeCardIndex !== null && setImageClasses(
               activeCardIndex,
               images.length,
               index,
