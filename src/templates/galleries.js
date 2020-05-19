@@ -25,6 +25,28 @@ const animateCards = () => {
 };
 
 /**
+ * Displays the next/previous image in the gallery modal, or loops back to the
+ * beginning/end of the modal where appropriate (based ) on the `activeCard` position).
+ *
+ * @param {Node} activeCard
+ * @param {Array} cardRefs
+ * @param {String} direction - `next` or `previous`
+ * @param {Function} setActiveCard
+ */
+const changeModalImage = (activeCard, cardRefs, direction, setActiveCard) => {
+  const activeCardIndex = Number(activeCard.dataset.index);
+  let index;
+
+  if (direction === 'next') {
+    index = activeCardIndex === cardRefs.length - 1 ? 0 : activeCardIndex + 1;
+  } else {
+    index = activeCardIndex === 0 ? cardRefs.length - 1 : activeCardIndex - 1;
+  }
+
+  setActiveCard(cardRefs[index].current);
+};
+
+/**
  * Moves the modal over a gallery card, and expands the modal to reveal the full image.
  * By using the `transform` property and inverting the `scale` values of the modal and
  * its inner image container, it is possible to animate the heights and widths of the
@@ -81,36 +103,6 @@ const displayGalleryCards = () => {
     // Must trigger before `setObserverCallback` runs.
     setTimeout(() => card.classList.add('is-visible'), (index * delay) / 3.666);
   });
-};
-
-/**
- * Displays the next image in the gallery modal, or loops back to first image in the modal
- * if the current `activeCard` is the last among all `cardRefs`.
- *
- * @param {Node} activeCard
- * @param {Array} cardRefs
- * @param {Function} setActiveCard
- */
-const displayNextModalImage = (activeCard, cardRefs, setActiveCard) => {
-  const activeCardIndex = Number(activeCard.dataset.index);
-  const index = activeCardIndex === cardRefs.length - 1 ? 0 : activeCardIndex + 1;
-
-  setActiveCard(cardRefs[index].current);
-};
-
-/**
- * Displays the previous image in the gallery modal, or displays the last image in the
- * modal if the current `activeCard` is the first among all `cardRefs`.
- *
- * @param {Node} activeCard
- * @param {Array} cardRefs
- * @param {Function} setActiveCard
- */
-const displayPreviousModalImage = (activeCard, cardRefs, setActiveCard) => {
-  const activeCardIndex = Number(activeCard.dataset.index);
-  const index = activeCardIndex === 0 ? cardRefs.length - 1 : activeCardIndex - 1;
-
-  setActiveCard(cardRefs[index].current);
 };
 
 /**
@@ -201,11 +193,11 @@ export default ({ data }) => {
               resetModal(modalRef.current, setActiveCard, setIsModalOpen)
             }
             handleNextImage={e => {
-              displayNextModalImage(activeCard, cardRefs, setActiveCard);
+              changeModalImage(activeCard, cardRefs, 'next', setActiveCard);
               setLastActiveCardSetter(e.currentTarget);
             }}
             handlePreviousImage={e => {
-              displayPreviousModalImage(activeCard, cardRefs, setActiveCard);
+              changeModalImage(activeCard, cardRefs, 'previous', setActiveCard);
               setLastActiveCardSetter(e.currentTarget);
             }}
             height={modalHeight}
