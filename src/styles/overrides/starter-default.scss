@@ -7,6 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a,
 h1,
 h2,
 h3,
@@ -14,8 +15,8 @@ h4,
 h5,
 h6,
 header,
+figcaption,
 footer,
-a,
 p,
 span {
   @apply text-gray-900;
@@ -25,13 +26,13 @@ span {
   @apply ease-in-out;
 }
 
+b,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
-b,
 strong {
   @apply font-semibold;
 }

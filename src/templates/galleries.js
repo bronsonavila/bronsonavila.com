@@ -136,6 +136,19 @@ const resetModal = (modal, setActiveCard, setIsModalOpen) => {
 };
 
 /**
+ * Transforms the GraphQL `image_metadata` array into an object where each image's
+ * `name` is a key.
+ *
+ * @param {Array} imageMetadata - `image_metadata` with `name` and `caption` subfields.
+ * @return {Object}
+ */
+const setImageMetadata = imageMetadata =>
+  imageMetadata.reduce((map, image) => {
+    map[image.name] = { caption: image.caption };
+    return map;
+  }, {});
+
+/**
  * Callback for the `lazyLoad` IntersectionObserver. Animates the entrance of
  * each `.gallery__card` element.
  *
@@ -190,8 +203,9 @@ export default ({ data }) => {
             setLastActiveCardSetter(e.currentTarget);
           }}
           height={modalHeight}
+          imageMetadata={setImageMetadata(content.frontmatter.image_metadata)}
           images={images}
-          isModalOpen={isModalOpen}
+          isOpen={isModalOpen}
           lastActiveCardSetter={lastActiveCardSetter}
           ref={modalRef}
           width={modalWidth}
@@ -231,6 +245,10 @@ export const query = graphql`
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {
+        image_metadata {
+          name
+          caption
+        }
         title
       }
     }

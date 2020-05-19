@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Img from 'gatsby-image';
 
 import Caret from '../../static/svg/circle-caret.svg';
@@ -58,62 +58,79 @@ const GalleryModal = React.forwardRef(
       handlePreviousImage,
       handleClose,
       height,
+      imageMetadata,
       images,
-      isModalOpen,
+      isOpen,
       lastActiveCardSetter,
       width,
     },
     ref
-  ) => (
-    <div
-      className={`gallery-modal ${isModalOpen ? 'is-open' : ''}`}
-      ref={ref}
-      style={{
-        height: `${height}px`,
-        width: `${width}px`,
-      }}
-    >
-      <div
-        className="relative overflow-hidden transition-all duration-300 ease-in-out"
-        style={{ height: `${height}px` }}
-      >
-        {/* Buttons */}
-        <button className="gallery-modal__button--close" onClick={handleClose}>
-          <Close />
-        </button>
-        <button
-          className="gallery-modal__button--previous"
-          id="previous"
-          onClick={handlePreviousImage}
-        >
-          <Caret />
-        </button>
-        <button
-          className="gallery-modal__button--next"
-          id="next"
-          onClick={handleNextImage}
-        >
-          <Caret />
-        </button>
+  ) => {
+    const [isHovered, setIsHovered] = useState(null);
+    const modalStateClasses =
+      `${isHovered ? 'is-hovered ' : ''}` + `${isOpen ? 'is-open ' : ''}`;
 
-        {/* Images */}
-        {images.map((image, index) => (
-          <div
-            // Prevent `null + 1 === 1` scenario from occurring in `setImageClasses()`.
-            className={`gallery-modal__image ${activeCardIndex !== null && setImageClasses(
-              activeCardIndex,
-              images.length,
-              index,
-              lastActiveCardSetter
-            )}`}
-            key={index}
+    return (
+      <div
+        className={`gallery-modal ${modalStateClasses}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        ref={ref}
+        style={{
+          height: `${height}px`,
+          width: `${width}px`,
+        }}
+      >
+        <div
+          className="relative overflow-hidden transition-all duration-300 ease-in-out"
+          style={{ height: `${height}px` }}
+        >
+          {/* Buttons */}
+          <button className="gallery-modal__button--close" onClick={handleClose}>
+            <Close />
+          </button>
+          <button
+            className="gallery-modal__button--previous"
+            id="previous"
+            onClick={handlePreviousImage}
           >
-            <Img fixed={image.node.childImageSharp.fixed} />
-          </div>
-        ))}
+            <Caret />
+          </button>
+          <button
+            className="gallery-modal__button--next"
+            id="next"
+            onClick={handleNextImage}
+          >
+            <Caret />
+          </button>
+
+          {/* Images */}
+          {images.map((image, index) => {
+            const imageName = image.node.base;
+
+            return (
+              <figure
+                // Prevent `null + 1 === 1` scenario from occurring in `setImageClasses()`.
+                className={`gallery-modal__image ${activeCardIndex !== null &&
+                  setImageClasses(
+                    activeCardIndex,
+                    images.length,
+                    index,
+                    lastActiveCardSetter
+                  )}`}
+                key={index}
+              >
+                <Img fixed={image.node.childImageSharp.fixed} />
+                {imageMetadata[imageName] && imageMetadata[imageName].caption && (
+                  <figcaption>{imageMetadata[imageName].caption}</figcaption>
+                )}
+              </figure>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  )
+    );
+  }
 );
 
 export default GalleryModal;

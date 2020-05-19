@@ -88,14 +88,28 @@ $card-size: 275px;
   @apply z-20;
   transform: translate(-9999px, -9999px); // Hidden by default.
 
+  &.is-hovered {
+    figcaption {
+      @apply opacity-100;
+      transform: scaleY(1);
+    }
+
+    .gallery-modal__button--close,
+    .gallery-modal__button--next {
+      @apply opacity-100;
+      transform: translateY(0);
+    }
+
+    .gallery-modal__button--previous {
+      @apply opacity-100;
+      transform: rotate(180deg) translateY(0);
+    }
+  }
+
   &.is-open {
     @apply transition-all;
     @apply duration-300;
     @apply ease-in-out;
-
-    button {
-      @apply opacity-100;
-    }
   }
 
   &__button {
@@ -123,6 +137,7 @@ $card-size: 275px;
       @apply top-0;
       @apply right-0;
       @apply text-red-800;
+      transform: translateY(-20px);
 
       &:focus,
       &:hover {
@@ -135,7 +150,9 @@ $card-size: 275px;
       @apply right-0;
       @apply text-gray-900;
       bottom: 2px;
+      transform: translateY(20px);
 
+      &:focus,
       &:hover {
         @apply text-gray-600;
       }
@@ -146,8 +163,9 @@ $card-size: 275px;
       @apply left-0;
       @apply text-gray-900;
       bottom: 2px;
-      transform: rotate(180deg);
+      transform: rotate(180deg) translateY(-20px);
 
+      &:focus,
       &:hover {
         @apply text-gray-600;
       }
@@ -188,6 +206,25 @@ $card-size: 275px;
 
     &.will-fade-in {
       @apply opacity-0;
+    }
+
+    figcaption {
+      @apply absolute;
+      @apply text-white;
+      @apply leading-normal;
+      @apply transition-all;
+      @apply duration-300;
+      @apply ease-in-out;
+      @apply m-4;
+      @apply px-8;
+      @apply py-6;
+      @apply opacity-0;
+      @apply w-full;
+      background: rgba(0, 0, 0, 0.55);
+      bottom: 4px;
+      max-width: calc(100% - 32px);
+      transform: scaleY(0);
+      transform-origin: bottom;
     }
 
     img {
