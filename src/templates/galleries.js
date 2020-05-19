@@ -185,53 +185,61 @@ export default ({ data }) => {
   }, [activeCard, lastActiveCardSetter]);
 
   return (
-    <section className="gallery">
-      <div>
-        <h1>{content.frontmatter.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: content.html }} />
-      </div>
-      <div className="gallery__cards" ref={modalParentRef}>
-        <GalleryModal
-          activeCardIndex={activeCard && Number(activeCard.dataset.index)}
-          handleClose={() => resetModal(modalRef.current, setActiveCard, setIsModalOpen)}
-          handleNextImage={e => {
-            displayNextModalImage(activeCard, cardRefs, setActiveCard);
-            setLastActiveCardSetter(e.currentTarget);
-          }}
-          handlePreviousImage={e => {
-            displayPreviousModalImage(activeCard, cardRefs, setActiveCard);
-            setLastActiveCardSetter(e.currentTarget);
-          }}
-          height={modalHeight}
-          imageMetadata={setImageMetadata(content.frontmatter.image_metadata)}
-          images={images}
-          isOpen={isModalOpen}
-          lastActiveCardSetter={lastActiveCardSetter}
-          ref={modalRef}
-          width={modalWidth}
-        />
-        {images.map((image, index) => (
-          <div className="gallery__card-container" key={index}>
-            <div
-              className="gallery__card observable"
-              data-index={index}
-              data-node-base={image.node.base}
-              data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
-              onClick={e => {
-                setActiveCard(cardRefs[index].current);
-                setLastActiveCardSetter(e.currentTarget);
-              }}
-              onMouseDown={e => (cardRefs[index].current.style = '')}
-              ref={cardRefs[index]}
-            >
-              <Img
-                alt={image.node.base.split('.')[0]}
-                className="h-full w-full"
-                fluid={image.node.childImageSharp.fluid}
-              />
+    <section
+      className="gallery"
+      onClick={() => resetModal(modalRef.current, setActiveCard, setIsModalOpen)}
+    >
+      <div className="container mx-auto px-4">
+        <div>
+          <h1>{content.frontmatter.title}</h1>
+          <div dangerouslySetInnerHTML={{ __html: content.html }} />
+        </div>
+        <div className="gallery__cards" ref={modalParentRef}>
+          <GalleryModal
+            activeCardIndex={activeCard && Number(activeCard.dataset.index)}
+            handleClose={() =>
+              resetModal(modalRef.current, setActiveCard, setIsModalOpen)
+            }
+            handleNextImage={e => {
+              displayNextModalImage(activeCard, cardRefs, setActiveCard);
+              setLastActiveCardSetter(e.currentTarget);
+            }}
+            handlePreviousImage={e => {
+              displayPreviousModalImage(activeCard, cardRefs, setActiveCard);
+              setLastActiveCardSetter(e.currentTarget);
+            }}
+            height={modalHeight}
+            imageMetadata={setImageMetadata(content.frontmatter.image_metadata)}
+            images={images}
+            isOpen={isModalOpen}
+            lastActiveCardSetter={lastActiveCardSetter}
+            ref={modalRef}
+            width={modalWidth}
+          />
+          {images.map((image, index) => (
+            <div className="gallery__card-container" key={index}>
+              <div
+                className="gallery__card observable"
+                data-index={index}
+                data-node-base={image.node.base}
+                data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
+                onClick={e => {
+                  e.stopPropagation();
+                  setActiveCard(cardRefs[index].current);
+                  setLastActiveCardSetter(e.currentTarget);
+                }}
+                onMouseDown={e => (cardRefs[index].current.style = '')}
+                ref={cardRefs[index]}
+              >
+                <Img
+                  alt={image.node.base.split('.')[0]}
+                  className="h-full w-full"
+                  fluid={image.node.childImageSharp.fluid}
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -6,8 +6,10 @@ export default ({ data }) => {
 
   return (
     <article className="post">
-      <h1>{content.frontmatter.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: content.html }} />
+      <div className="container mx-auto px-4">
+        <h1>{content.frontmatter.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: content.html }} />
+      </div>
     </article>
   );
 };

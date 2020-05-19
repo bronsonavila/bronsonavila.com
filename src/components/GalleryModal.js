@@ -73,6 +73,7 @@ const GalleryModal = React.forwardRef(
     return (
       <div
         className={`gallery-modal ${modalStateClasses}`}
+        onClick={e => e.stopPropagation()}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         ref={ref}

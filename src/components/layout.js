@@ -11,7 +11,7 @@ import Footer from './Footer';
 
 const Layout = ({ children }) => (
   <>
-    <div className="container h-full mx-auto px-4 py-6">
+    <div className="h-full py-6">
       <main className="mb-16">{children}</main>
     </div>
     <Footer />
