@@ -1,4 +1,5 @@
-$card-size: 275px;
+$card-size--lg: 275px;
+$image-width--lg: 929px;
 
 .gallery__card {
   @apply relative;
@@ -11,10 +12,14 @@ $card-size: 275px;
   @apply opacity-0;
   @apply cursor-pointer;
   @apply z-10;
-  width: $card-size;
+  width: $card-size--lg * 0.794403;
   transform: scale(0.9) translateY(100px);
   transition: opacity 0.3s ease-in-out, transform 0.5s; // `transform` for smooth `mouseover` animation.
   will-change: transform;
+
+  @screen lg {
+    width: $card-size--lg;
+  }
 
   &:focus {
     @apply outline-none;
@@ -38,8 +43,12 @@ $card-size: 275px;
 
   &.has-entered {
     @apply opacity-100;
-    height: $card-size;
+    height: $card-size--lg * 0.794403;
     transform: scale(1) translateY(0);
+
+    @screen lg {
+      height: $card-size--lg;
+    }
 
     &:hover {
       &::after {
@@ -63,9 +72,15 @@ $card-size: 275px;
   }
 
   &-container {
-    margin-bottom: 51px;
-    height: $card-size;
-    width: $card-size;
+    height: $card-size--lg * 0.794403;
+    width: $card-size--lg * 0.794403;
+    margin-bottom: 40px;
+
+    @screen lg {
+      height: $card-size--lg;
+      width: $card-size--lg;
+      margin-bottom: 51px;
+    }
   }
 }
 
@@ -73,7 +88,11 @@ $card-size: 275px;
   @apply flex;
   @apply flex-wrap;
   @apply justify-between;
-  width: 929px;
+  width: $image-width--lg * 0.794403;
+
+  @screen lg {
+    width: $image-width--lg;
+  }
 }
 
 .gallery-modal {
@@ -87,6 +106,14 @@ $card-size: 275px;
   @apply shadow-2xl;
   @apply z-20;
   transform: translate(-9999px, -9999px); // Hidden by default.
+
+  &.has-smooth-transition {
+    .gallery-modal__image {
+      @apply transition-all;
+      @apply duration-300;
+      @apply ease-in; // Looks better than `ease-in-out`.
+    }
+  }
 
   &.is-hovered {
     figcaption {
@@ -176,11 +203,12 @@ $card-size: 275px;
     @apply hidden;
     @apply absolute;
     @apply top-0;
-    @apply transition-all;
-    @apply duration-300;
-    @apply ease-in; // Looks better than `ease-in-out`.
-    width: 929px;
+    width: $image-width--lg * 0.794403;
     left: 50%;
+
+    @screen lg {
+      width: $image-width--lg;
+    }
 
     &.is-displayed {
       @apply block;
@@ -211,8 +239,10 @@ $card-size: 275px;
 
     figcaption {
       @apply absolute;
+      @apply bottom-0;
       @apply text-white;
-      @apply leading-normal;
+      @apply leading-relaxed;
+      @apply tracking-tight;
       @apply transition-all;
       @apply duration-300;
       @apply ease-in-out;
@@ -222,8 +252,7 @@ $card-size: 275px;
       @apply opacity-0;
       @apply w-full;
       background: rgba(0, 0, 0, 0.55);
-      bottom: 4px;
-      max-width: calc(100% - 32px);
+      max-width: calc(100% - 30px);
       transform: scaleY(0);
       transform-origin: bottom;
     }

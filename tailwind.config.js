@@ -277,7 +277,7 @@ module.exports = {
     },
     letterSpacing: {
       tighter: '-0.05em',
-      tight: '-0.025em',
+      tight: '-0.00879776em',
       normal: '0',
       wide: '0.025em',
       wider: '0.05em',
@@ -288,7 +288,7 @@ module.exports = {
       tight: '1.25',
       snug: '1.375',
       normal: '1.5',
-      relaxed: '1.625',
+      relaxed: '1.6',
       loose: '2',
       '3': '.75rem',
       '4': '1rem',

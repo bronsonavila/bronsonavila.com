@@ -9,8 +9,6 @@ import lazyLoad from '../utils/lazyLoad';
 import moveElementsRelativeToMouse from '../utils/moveElementsRelativeToMouse';
 
 const delay = 300; // For animations.
-const modalWidth = 931; // Supports images with a 3:2 aspect ratio ONLY.
-const modalHeight = modalWidth * (2 / 3);
 
 /**
  * Handles lazy loading of gallery cards, and animates the position of cards on hover.
@@ -35,7 +33,7 @@ const animateCards = () => {
  * @param {Node} modalParent - The modal's immediate parent element.
  * @param {Node} target - The element that the modal will initially move to.
  */
-const animateModal = (modal, modalParent, setIsModalOpen, target) => {
+const animateModal = (modal, modalParent, setModalIsOpen, target) => {
   if (!target) return;
 
   const modalImagesContainer = modal.childNodes[0];
@@ -61,8 +59,8 @@ const animateModal = (modal, modalParent, setIsModalOpen, target) => {
       modalParent.getBoundingClientRect().top / 2 +
       window.scrollY / 2;
 
-    setIsModalOpen(true);
-    modal.style.transform = `translate(${centerX + 0.5}px, ${centerY}px) scale(1)`;
+    setModalIsOpen(true);
+    modal.style.transform = `translate(${centerX}px, ${centerY}px) scale(1)`;
     modalImagesContainer.style.transform = 'scale(1)';
   }, delay * 2);
 };
@@ -117,8 +115,9 @@ const displayGalleryCards = () => {
  * @param {Node} modal
  * @param {Function} resetModal
  * @param {Function} setActiveCard
- * @param {Function} setIsModalOpen
  * @param {Fucntion} setLastNavigationDirection
+ * @param {Function} setModalHasSmoothTransition
+ * @param {Function} setModalIsOpen
  */
 const handleKeyboardNavigation = (
   activeCard,
@@ -127,8 +126,9 @@ const handleKeyboardNavigation = (
   modal,
   resetModal,
   setActiveCard,
-  setIsModalOpen,
-  setLastNavigationDirection
+  setLastNavigationDirection,
+  setModalHasSmoothTransition,
+  setModalIsOpen
 ) => {
   if (lastKeyboardEvent) {
     let direction;
@@ -137,12 +137,29 @@ const handleKeyboardNavigation = (
     } else if (lastKeyboardEvent.key === 'ArrowRight') {
       direction = 'next';
     } else if (lastKeyboardEvent.key === 'Escape') {
-      resetModal(modal, setActiveCard, setIsModalOpen);
+      setModalHasSmoothTransition(false);
+      resetModal(modal, setActiveCard, setModalIsOpen);
     }
     if (direction) {
+      setModalHasSmoothTransition(true);
       changeModalImage(activeCard, cardRefs, direction, setActiveCard);
       setLastNavigationDirection(direction); // Prevents unnecessary modal animation.
     }
+  }
+};
+
+/**
+ * Sets the modal width when the window is resized.
+ *
+ * @param {Function} setModalWidth
+ */
+const handleModalResize = setModalWidth => {
+  const innerWidth = window.innerWidth;
+
+  if (innerWidth >= 1024) {
+    setModalWidth(931);
+  } else if (innerWidth >= 768) {
+    setModalWidth(740);
   }
 };
 
@@ -151,9 +168,9 @@ const handleKeyboardNavigation = (
  *
  * @param {Node} modal
  * @param {Function} setActiveCard
- * @param {Function} setIsModalOpen
+ * @param {Function} setModalIsOpen
  */
-const resetModal = (modal, setActiveCard, setIsModalOpen) => {
+const resetModal = (modal, setActiveCard, setModalIsOpen) => {
   const transformMatrixArray = getTransformMatrixArray(modal);
 
   if (transformMatrixArray) {
@@ -165,7 +182,7 @@ const resetModal = (modal, setActiveCard, setIsModalOpen) => {
 
     setTimeout(() => {
       setActiveCard(null);
-      setIsModalOpen(false);
+      setModalIsOpen(false);
       modal.style.transform = '';
     }, delay);
   }
@@ -230,10 +247,14 @@ export default ({ data }) => {
   const images = data.allFile.edges;
 
   const [activeCard, setActiveCard] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [lastInnerWidth, setLastInnerWidth] = useState(window.innerWidth);
+  const [lastInnerWidth, setLastInnerWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : null
+  );
   const [lastKeyboardEvent, setLastKeyboardEvent] = useState(null);
   const [lastNavigationDirection, setLastNavigationDirection] = useState('');
+  const [modalHasSmoothTransition, setModalHasSmoothTransition] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalWidth, setModalWidth] = useState(null);
 
   const cardRefs = images.map(image => useRef(null));
   const modalParentRef = useRef(null);
@@ -245,7 +266,7 @@ export default ({ data }) => {
     // Prevent modal animation when user presses next/previous buttons or left/right
     // arrow keys. The animation should only occur when clicking a gallery card.
     if (lastNavigationDirection !== 'next' && lastNavigationDirection !== 'previous') {
-      animateModal(modalRef.current, modalParentRef.current, setIsModalOpen, activeCard);
+      animateModal(modalRef.current, modalParentRef.current, setModalIsOpen, activeCard);
     }
   }, [activeCard, lastNavigationDirection]);
 
@@ -261,8 +282,9 @@ export default ({ data }) => {
       modalRef.current,
       resetModal,
       setActiveCard,
-      setIsModalOpen,
-      setLastNavigationDirection
+      setLastNavigationDirection,
+      setModalHasSmoothTransition,
+      setModalIsOpen
     );
   }, [lastKeyboardEvent]);
 
@@ -271,13 +293,18 @@ export default ({ data }) => {
     setResizeEventListener(setLastInnerWidth);
   }, []);
   useEffect(() => {
-    resetModal(modalRef.current, setActiveCard, setIsModalOpen);
+    handleModalResize(setModalWidth);
+    setModalHasSmoothTransition(false);
+    resetModal(modalRef.current, setActiveCard, setModalIsOpen);
   }, [lastInnerWidth]);
 
   return (
     <section
       className="gallery"
-      onClick={() => resetModal(modalRef.current, setActiveCard, setIsModalOpen)}
+      onClick={() => {
+        setModalHasSmoothTransition(false);
+        resetModal(modalRef.current, setActiveCard, setModalIsOpen);
+      }}
     >
       <div className="container mx-auto px-4">
         <div>
@@ -287,21 +314,28 @@ export default ({ data }) => {
         <div className="gallery__cards" ref={modalParentRef}>
           <GalleryModal
             activeCardIndex={activeCard && Number(activeCard.dataset.index)}
-            handleClose={() =>
-              resetModal(modalRef.current, setActiveCard, setIsModalOpen)
-            }
+            handleClose={() => {
+              setModalHasSmoothTransition(false);
+              resetModal(modalRef.current, setActiveCard, setModalIsOpen);
+            }}
             handleNextImage={e => {
+              // The smooth slideshow transition between images should only occur when
+              // changing images via next/previous buttons or left/right arrows. The
+              // transition should otherwise be immediate when clicking a gallery card.
+              setModalHasSmoothTransition(true);
               changeModalImage(activeCard, cardRefs, 'next', setActiveCard);
               setLastNavigationDirection('next');
             }}
             handlePreviousImage={e => {
+              setModalHasSmoothTransition(true);
               changeModalImage(activeCard, cardRefs, 'previous', setActiveCard);
               setLastNavigationDirection('previous');
             }}
-            height={modalHeight}
+            hasSmoothTransition={modalHasSmoothTransition}
+            height={modalWidth * (2 / 3)} // Supports images with a 3:2 aspect ratio ONLY.
             imageMetadata={setImageMetadata(content.frontmatter.image_metadata)}
             images={images}
-            isOpen={isModalOpen}
+            isOpen={modalIsOpen}
             lastNavigationDirection={lastNavigationDirection}
             ref={modalRef}
             width={modalWidth}
@@ -315,6 +349,7 @@ export default ({ data }) => {
                 data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
                 onClick={e => {
                   e.stopPropagation();
+                  setModalHasSmoothTransition(false);
                   setActiveCard(cardRefs[index].current);
                   setLastNavigationDirection('');
                 }}
@@ -336,8 +371,8 @@ export default ({ data }) => {
 };
 
 // `quality: 91` appears to offer the best file size reduction for JPEGs without any
-// noticeable loss in image quality for `GatsbyImageSharpFixed`. The width of such images
-// should be 2px smaller than the `modalWidth` value to account for a 1px border.
+// noticeable loss in image quality. The `maxWidth` of images should be 2px smaller
+// than the `modalWidth` value to account for a 1px border.
 export const query = graphql`
   query($slug: String!, $relativeDirectory: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
@@ -361,10 +396,7 @@ export const query = graphql`
         node {
           base
           childImageSharp {
-            fixed(width: 929, quality: 91) {
-              ...GatsbyImageSharpFixed
-            }
-            fluid(maxWidth: 500) {
+            fluid(maxWidth: 929, quality: 91) {
               ...GatsbyImageSharpFluid
             }
           }

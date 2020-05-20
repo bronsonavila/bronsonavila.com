@@ -56,6 +56,7 @@ const GalleryModal = React.forwardRef(
       handleNextImage,
       handlePreviousImage,
       handleClose,
+      hasSmoothTransition,
       height,
       imageMetadata,
       images,
@@ -67,7 +68,9 @@ const GalleryModal = React.forwardRef(
   ) => {
     const [isHovered, setIsHovered] = useState(null);
     const modalStateClasses =
-      `${isHovered ? 'is-hovered ' : ''}` + `${isOpen ? 'is-open ' : ''}`;
+      `${hasSmoothTransition ? 'has-smooth-transition ' : ''}` +
+      `${isHovered ? 'is-hovered ' : ''}` +
+      `${isOpen ? 'is-open ' : ''}`;
 
     return (
       <div
@@ -75,6 +78,10 @@ const GalleryModal = React.forwardRef(
         onClick={e => e.stopPropagation()}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={e => {
+          // Only toggle overlay elements when an image (rather than a button) is tapped.
+          if (e.target.nodeName === 'IMG') setIsHovered(!isHovered);
+        }}
         ref={ref}
         style={{
           height: `${height}px`,
@@ -124,7 +131,7 @@ const GalleryModal = React.forwardRef(
                   )}`}
                 key={index}
               >
-                <Img fixed={image.node.childImageSharp.fixed} />
+                <Img fluid={image.node.childImageSharp.fluid} />
                 {imageMetadata[imageName] && imageMetadata[imageName].caption && (
                   <figcaption>{imageMetadata[imageName].caption}</figcaption>
                 )}
