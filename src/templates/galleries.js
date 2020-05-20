@@ -209,12 +209,26 @@ const setObserverCallback = delay => entries => {
   });
 };
 
+/**
+ * Sets a `resize` event listener on the `window` object. Used to track the
+ * last value of `window.innerWidth`.
+ *
+ * @param {Function} setLastInnerWidth
+ * @return {Function} - Cleanup function.
+ */
+const setResizeEventListener = setLastInnerWidth => {
+  const onResize = e => setLastInnerWidth(window.innerWidth);
+  window.addEventListener('resize', onResize);
+  return () => window.removeEventListener('resize', onResize);
+};
+
 export default ({ data }) => {
   const content = data.markdownRemark;
   const images = data.allFile.edges;
 
   const [activeCard, setActiveCard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lastInnerWidth, setLastInnerWidth] = useState(window.innerWidth);
   const [lastKeyboardEvent, setLastKeyboardEvent] = useState(null);
   const [lastNavigationDirection, setLastNavigationDirection] = useState('');
 
@@ -248,6 +262,14 @@ export default ({ data }) => {
       setLastNavigationDirection
     );
   }, [lastKeyboardEvent]);
+
+  // Resize effects (reset modal whenever the screen width changes).
+  useEffect(() => {
+    setResizeEventListener(setLastInnerWidth);
+  }, []);
+  useEffect(() => {
+    resetModal(modalRef.current, setActiveCard, setIsModalOpen);
+  }, [lastInnerWidth]);
 
   return (
     <section
