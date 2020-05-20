@@ -155,17 +155,20 @@ const handleKeyboardNavigation = (
  */
 const resetModal = (modal, setActiveCard, setIsModalOpen) => {
   const transformMatrixArray = getTransformMatrixArray(modal);
-  const x = transformMatrixArray[4];
-  const y = Number(transformMatrixArray[5]);
 
-  modal.style.opacity = 0;
-  modal.style.transform = `translate(${x}px, ${y + window.innerHeight}px)`;
+  if (transformMatrixArray) {
+    const x = transformMatrixArray[4];
+    const y = Number(transformMatrixArray[5]);
 
-  setTimeout(() => {
-    setActiveCard(null);
-    setIsModalOpen(false);
-    modal.style.transform = '';
-  }, delay);
+    modal.style.opacity = 0;
+    modal.style.transform = `translate(${x}px, ${y + window.innerHeight}px)`;
+
+    setTimeout(() => {
+      setActiveCard(null);
+      setIsModalOpen(false);
+      modal.style.transform = '';
+    }, delay);
+  }
 };
 
 /**
