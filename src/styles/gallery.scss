@@ -184,6 +184,7 @@ $card-size: 275px;
 
     &.is-displayed {
       @apply block;
+      @apply bg-white;
       @apply opacity-100;
       transform: translateX(-50%);
     }

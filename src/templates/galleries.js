@@ -25,28 +25,6 @@ const animateCards = () => {
 };
 
 /**
- * Displays the next/previous image in the gallery modal, or loops back to the
- * beginning/end of the modal where appropriate (based ) on the `activeCard` position).
- *
- * @param {Node} activeCard
- * @param {Array} cardRefs
- * @param {String} direction - `next` or `previous`
- * @param {Function} setActiveCard
- */
-const changeModalImage = (activeCard, cardRefs, direction, setActiveCard) => {
-  const activeCardIndex = Number(activeCard.dataset.index);
-  let index;
-
-  if (direction === 'next') {
-    index = activeCardIndex === cardRefs.length - 1 ? 0 : activeCardIndex + 1;
-  } else {
-    index = activeCardIndex === 0 ? cardRefs.length - 1 : activeCardIndex - 1;
-  }
-
-  setActiveCard(cardRefs[index].current);
-};
-
-/**
  * Moves the modal over a gallery card, and expands the modal to reveal the full image.
  * By using the `transform` property and inverting the `scale` values of the modal and
  * its inner image container, it is possible to animate the heights and widths of the
@@ -90,6 +68,30 @@ const animateModal = (modal, modalParent, setIsModalOpen, target) => {
 };
 
 /**
+ * Displays the next/previous image in the gallery modal, or loops back to the
+ * beginning/end of the modal where appropriate (based on the `activeCard` position).
+ *
+ * @param {Node} activeCard
+ * @param {Array} cardRefs
+ * @param {String} direction - `next` or `previous`
+ * @param {Function} setActiveCard
+ */
+const changeModalImage = (activeCard, cardRefs, direction, setActiveCard) => {
+  if (activeCard) {
+    const activeCardIndex = Number(activeCard.dataset.index);
+    let index;
+
+    if (direction === 'next') {
+      index = activeCardIndex === cardRefs.length - 1 ? 0 : activeCardIndex + 1;
+    } else {
+      index = activeCardIndex === 0 ? cardRefs.length - 1 : activeCardIndex - 1;
+    }
+
+    setActiveCard(cardRefs[index].current);
+  }
+};
+
+/**
  * Changes the display of `.gallery__card` elements from `none` to `block` at
  * staggered intervals. This allows the first batch of initially displayed
  * cards to be revealed in sequential order rather than all at once. This is
@@ -103,6 +105,45 @@ const displayGalleryCards = () => {
     // Must trigger before `setObserverCallback` runs.
     setTimeout(() => card.classList.add('is-visible'), (index * delay) / 3.666);
   });
+};
+
+/**
+ * Allows the user to navigate the modal via the `ArrowLeft`, `ArrowRight`, and
+ * `Escape` keys.
+ *
+ * @param {Node} activeCard
+ * @param {Array} cardRefs
+ * @param {Event} lastKeyboardEvent
+ * @param {Node} modal
+ * @param {Function} resetModal
+ * @param {Function} setActiveCard
+ * @param {Function} setIsModalOpen
+ * @param {Fucntion} setLastNavigationDirection
+ */
+const handleKeyboardNavigation = (
+  activeCard,
+  cardRefs,
+  lastKeyboardEvent,
+  modal,
+  resetModal,
+  setActiveCard,
+  setIsModalOpen,
+  setLastNavigationDirection
+) => {
+  if (lastKeyboardEvent) {
+    let direction;
+    if (lastKeyboardEvent.key === 'ArrowLeft') {
+      direction = 'previous';
+    } else if (lastKeyboardEvent.key === 'ArrowRight') {
+      direction = 'next';
+    } else if (lastKeyboardEvent.key === 'Escape') {
+      resetModal(modal, setActiveCard, setIsModalOpen);
+    }
+    if (direction) {
+      changeModalImage(activeCard, cardRefs, direction, setActiveCard);
+      setLastNavigationDirection(direction); // Prevents unnecessary modal animation.
+    }
+  }
 };
 
 /**
@@ -134,11 +175,24 @@ const resetModal = (modal, setActiveCard, setIsModalOpen) => {
  * @param {Array} imageMetadata - `image_metadata` with `name` and `caption` subfields.
  * @return {Object}
  */
-const setImageMetadata = imageMetadata =>
-  imageMetadata.reduce((map, image) => {
+const setImageMetadata = imageMetadata => {
+  return imageMetadata.reduce((map, image) => {
     map[image.name] = { caption: image.caption };
     return map;
   }, {});
+};
+
+/**
+ * Adds an event listener to the `document` object to track keyboard events.
+ *
+ * @param {Function} setLastKeyboardEvent
+ * @return {Function} - Cleanup function.
+ */
+const setKeyboardEventListeners = setLastKeyboardEvent => {
+  const onKeyDown = e => setLastKeyboardEvent(e);
+  document.addEventListener('keydown', onKeyDown);
+  return () => document.removeEventListener('keydown', onKeyDown);
+};
 
 /**
  * Callback for the `lazyLoad` IntersectionObserver. Animates the entrance of
@@ -161,20 +215,39 @@ export default ({ data }) => {
 
   const [activeCard, setActiveCard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [lastActiveCardSetter, setLastActiveCardSetter] = useState({});
+  const [lastKeyboardEvent, setLastKeyboardEvent] = useState(null);
+  const [lastNavigationDirection, setLastNavigationDirection] = useState('');
 
   const cardRefs = images.map(image => useRef(null));
   const modalParentRef = useRef(null);
   const modalRef = useRef(null);
 
+  // Animation effects.
   useEffect(animateCards);
   useEffect(() => {
-    // Prevent modal animation when clicking the `next` or `previous` modal buttons.
-    // The animation should only occur when clicking a gallery card.
-    if (lastActiveCardSetter.id !== 'next' && lastActiveCardSetter.id !== 'previous') {
+    // Prevent modal animation when user presses next/previous buttons or left/right
+    // arrow keys. The animation should only occur when clicking a gallery card.
+    if (lastNavigationDirection !== 'next' && lastNavigationDirection !== 'previous') {
       animateModal(modalRef.current, modalParentRef.current, setIsModalOpen, activeCard);
     }
-  }, [activeCard, lastActiveCardSetter]);
+  }, [activeCard, lastNavigationDirection]);
+
+  // Keyboard effects.
+  useEffect(() => {
+    setKeyboardEventListeners(setLastKeyboardEvent);
+  }, []);
+  useEffect(() => {
+    handleKeyboardNavigation(
+      activeCard,
+      cardRefs,
+      lastKeyboardEvent,
+      modalRef.current,
+      resetModal,
+      setActiveCard,
+      setIsModalOpen,
+      setLastNavigationDirection
+    );
+  }, [lastKeyboardEvent]);
 
   return (
     <section
@@ -194,17 +267,17 @@ export default ({ data }) => {
             }
             handleNextImage={e => {
               changeModalImage(activeCard, cardRefs, 'next', setActiveCard);
-              setLastActiveCardSetter(e.currentTarget);
+              setLastNavigationDirection('next');
             }}
             handlePreviousImage={e => {
               changeModalImage(activeCard, cardRefs, 'previous', setActiveCard);
-              setLastActiveCardSetter(e.currentTarget);
+              setLastNavigationDirection('previous');
             }}
             height={modalHeight}
             imageMetadata={setImageMetadata(content.frontmatter.image_metadata)}
             images={images}
             isOpen={isModalOpen}
-            lastActiveCardSetter={lastActiveCardSetter}
+            lastNavigationDirection={lastNavigationDirection}
             ref={modalRef}
             width={modalWidth}
           />
@@ -218,7 +291,7 @@ export default ({ data }) => {
                 onClick={e => {
                   e.stopPropagation();
                   setActiveCard(cardRefs[index].current);
-                  setLastActiveCardSetter(e.currentTarget);
+                  setLastNavigationDirection('');
                 }}
                 onMouseDown={e => (cardRefs[index].current.style = '')}
                 ref={cardRefs[index]}
