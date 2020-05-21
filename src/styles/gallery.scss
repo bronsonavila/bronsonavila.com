@@ -1,5 +1,9 @@
 $card-size--lg: 275px;
+$card-size--md: $card-size--lg * 0.794403;
+$card-size--sm: $card-size--lg * 0.65662002;
 $image-width--lg: 929px;
+$image-width--md: $image-width--lg * 0.794403;
+$image-width--sm: $image-width--lg * 0.65662002;
 
 .gallery__card {
   @apply relative;
@@ -12,10 +16,14 @@ $image-width--lg: 929px;
   @apply opacity-0;
   @apply cursor-pointer;
   @apply z-10;
-  width: $card-size--lg * 0.794403;
+  width: $card-size--sm;
   transform: scale(0.9) translateY(100px);
   transition: opacity 0.3s ease-in-out, transform 0.5s; // `transform` for smooth `mouseover` animation.
   will-change: transform;
+
+  @screen md {
+    width: $card-size--md;
+  }
 
   @screen lg {
     width: $card-size--lg;
@@ -43,8 +51,12 @@ $image-width--lg: 929px;
 
   &.has-entered {
     @apply opacity-100;
-    height: $card-size--lg * 0.794403;
+    height: $card-size--sm;
     transform: scale(1) translateY(0);
+
+    @screen md {
+      height: $card-size--md;
+    }
 
     @screen lg {
       height: $card-size--lg;
@@ -72,9 +84,15 @@ $image-width--lg: 929px;
   }
 
   &-container {
-    height: $card-size--lg * 0.794403;
-    width: $card-size--lg * 0.794403;
-    margin-bottom: 40px;
+    height: $card-size--sm;
+    width: $card-size--sm;
+    margin-bottom: 33px;
+
+    @screen md {
+      height: $card-size--md;
+      width: $card-size--md;
+      margin-bottom: 40px;
+    }
 
     @screen lg {
       height: $card-size--lg;
@@ -89,7 +107,11 @@ $image-width--lg: 929px;
   @apply flex-wrap;
   @apply justify-between;
   @apply w-full;
-  max-width: $image-width--lg * 0.794403;
+  max-width: $image-width--sm;
+
+  @screen md {
+    max-width: $image-width--md;
+  }
 
   @screen lg {
     max-width: $image-width--lg;
@@ -209,8 +231,12 @@ $image-width--lg: 929px;
     @apply hidden;
     @apply absolute;
     @apply top-0;
-    width: $image-width--lg * 0.794403;
+    width: $image-width--sm;
     left: 50%;
+
+    @screen md {
+      width: $image-width--md;
+    }
 
     @screen lg {
       width: $image-width--lg;
@@ -246,25 +272,38 @@ $image-width--lg: 929px;
     figcaption {
       @apply absolute;
       @apply bottom-0;
+      @apply text-sm;
       @apply text-white;
       @apply leading-relaxed;
-      @apply tracking-tight;
+      @apply tracking-tighter;
       @apply transition-all;
       @apply duration-300;
       @apply ease-in-out;
-      @apply m-4;
-      @apply px-8;
-      @apply py-6;
+      @apply m-3;
+      @apply px-6;
+      @apply py-4;
       @apply opacity-0;
       @apply w-full;
       background: rgba(0, 0, 0, 0.55);
-      max-width: calc(100% - 30px);
+      max-width: calc(100% - 22.5px);
       transform: scaleY(0);
       transform-origin: bottom;
+
+      @screen md {
+        @apply text-base;
+        @apply m-4;
+        @apply px-8;
+        @apply py-6;
+        max-width: calc(100% - 30px);
+      }
     }
 
     img {
-      @apply p-4;
+      @apply p-3;
+
+      @screen md {
+        @apply p-4;
+      }
     }
   }
 }

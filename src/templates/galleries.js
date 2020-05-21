@@ -157,9 +157,11 @@ const handleModalResize = setModalWidth => {
   const innerWidth = window.innerWidth;
 
   if (innerWidth >= 1024) {
-    setModalWidth(931);
+    setModalWidth(931); // 2px wider than `$image-width--lg` in `src/styles/gallery.scss`.
   } else if (innerWidth >= 768) {
     setModalWidth(740);
+  } else if (innerWidth >= 640) {
+    setModalWidth(612);
   }
 };
 

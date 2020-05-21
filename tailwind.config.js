@@ -244,7 +244,7 @@ module.exports = {
     },
     fontSize: {
       xs: '0.75rem',
-      sm: '0.875rem',
+      sm: '0.815625rem',
       base: '1rem',
       lg: '1.125rem',
       xl: '1.25rem',
@@ -276,8 +276,8 @@ module.exports = {
       auto: 'auto',
     },
     letterSpacing: {
-      tighter: '-0.05em',
-      tight: '-0.00879776em',
+      tighter: '-0.00879776em',
+      tight: '-0.00315856em',
       normal: '0',
       wide: '0.025em',
       wider: '0.05em',
