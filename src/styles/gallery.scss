@@ -88,10 +88,11 @@ $image-width--lg: 929px;
   @apply flex;
   @apply flex-wrap;
   @apply justify-between;
-  width: $image-width--lg * 0.794403;
+  @apply w-full;
+  max-width: $image-width--lg * 0.794403;
 
   @screen lg {
-    width: $image-width--lg;
+    max-width: $image-width--lg;
   }
 }
 
@@ -157,6 +158,11 @@ $image-width--lg: 929px;
       @apply h-6;
       @apply w-6;
       @apply m-2;
+
+      // Specific `starter-default` override for this case only.
+      &:not(:root) {
+        overflow: initial;
+      }
     }
 
     &--close {
