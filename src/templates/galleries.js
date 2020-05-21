@@ -271,9 +271,7 @@ export default ({ data }) => {
   }, [activeCard, lastNavigationDirection]);
 
   // Keyboard effects.
-  useEffect(() => {
-    setKeyboardEventListeners(setLastKeyboardEvent);
-  }, []);
+  useEffect(() => setKeyboardEventListeners(setLastKeyboardEvent), []);
   useEffect(() => {
     handleKeyboardNavigation(
       activeCard,
@@ -289,9 +287,7 @@ export default ({ data }) => {
   }, [lastKeyboardEvent]);
 
   // Resize effects (reset modal whenever the screen width changes).
-  useEffect(() => {
-    setResizeEventListener(setLastInnerWidth);
-  }, []);
+  useEffect(() => setResizeEventListener(setLastInnerWidth), []);
   useEffect(() => {
     handleModalResize(setModalWidth);
     setModalHasSmoothTransition(false);
