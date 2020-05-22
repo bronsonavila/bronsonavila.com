@@ -28,13 +28,18 @@ $container-size: 35px;
 
   &:nth-of-type(2) {
     background-image: url('/svg/logo-dot.svg');
+    // `transform` required in CSS in addition to `init` pose in JS to prevent
+    // jumping logo boxes after DOM content has loaded.
+    transform: translateX(17px);
   }
 
   &:nth-of-type(3) {
     background-image: url('/svg/logo-dot.svg');
+    transform: translateY(17px);
   }
 
   &:nth-of-type(4) {
     background-image: url('/svg/logo-letter-a.svg');
+    transform: translate(17px, 17px);
   }
 }
