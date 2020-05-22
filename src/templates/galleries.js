@@ -162,6 +162,8 @@ const handleModalResize = setModalWidth => {
     setModalWidth(740);
   } else if (innerWidth >= 640) {
     setModalWidth(612);
+  } else {
+    setModalWidth(innerWidth - 28);
   }
 };
 

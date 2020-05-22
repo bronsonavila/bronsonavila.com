@@ -1,9 +1,11 @@
 $card-size--lg: 275px;
 $card-size--md: $card-size--lg * 0.794403;
 $card-size--sm: $card-size--lg * 0.65662002;
+$card-size--xs: $card-size--lg * 0.94752912;
 $image-width--lg: 929px;
 $image-width--md: $image-width--lg * 0.794403;
 $image-width--sm: $image-width--lg * 0.65662002;
+$image-width--xs: $image-width--lg * 0.94752912;
 
 .gallery__card {
   @apply relative;
@@ -15,18 +17,23 @@ $image-width--sm: $image-width--lg * 0.65662002;
   @apply shadow;
   @apply opacity-0;
   @apply cursor-pointer;
+  @apply w-full;
   @apply z-10;
-  width: $card-size--sm;
+  max-width: $card-size--xs;
   transform: scale(0.9) translateY(100px);
   transition: opacity 0.3s ease-in-out, transform 0.5s; // `transform` for smooth `mouseover` animation.
   will-change: transform;
 
+  @screen sm {
+    max-width: $card-size--md;
+  }
+
   @screen md {
-    width: $card-size--md;
+    max-width: $card-size--md;
   }
 
   @screen lg {
-    width: $card-size--lg;
+    max-width: $card-size--lg;
   }
 
   &:focus {
@@ -50,16 +57,21 @@ $image-width--sm: $image-width--lg * 0.65662002;
   }
 
   &.has-entered {
+    @apply h-full;
     @apply opacity-100;
-    height: $card-size--sm;
+    max-height: $card-size--xs;
     transform: scale(1) translateY(0);
 
+    @screen sm {
+      max-height: $card-size--sm;
+    }
+
     @screen md {
-      height: $card-size--md;
+      max-height: $card-size--md;
     }
 
     @screen lg {
-      height: $card-size--lg;
+      max-height: $card-size--lg;
     }
 
     &:hover {
@@ -73,6 +85,15 @@ $image-width--sm: $image-width--lg * 0.65662002;
     @apply block;
   }
 
+  // Requires that all images have a 3:2 aspect ratio.
+  & .gatsby-image-wrapper > div {
+    padding-bottom: 100% !important;
+
+    @screen sm {
+      padding-bottom: 66.6667%;
+    }
+  }
+
   img {
     @apply border;
     @apply border-solid;
@@ -84,19 +105,28 @@ $image-width--sm: $image-width--lg * 0.65662002;
   }
 
   &-container {
-    height: $card-size--sm;
-    width: $card-size--sm;
+    @apply h-full;
+    max-height: $card-size--xs;
+    max-width: $card-size--xs;
     margin-bottom: 33px;
+    width: 46%;
+
+    @screen sm {
+      @apply w-full;
+      max-height: $card-size--sm;
+      max-width: $card-size--sm;
+      margin-bottom: 33px;
+    }
 
     @screen md {
-      height: $card-size--md;
-      width: $card-size--md;
+      max-height: $card-size--md;
+      max-width: $card-size--md;
       margin-bottom: 40px;
     }
 
     @screen lg {
-      height: $card-size--lg;
-      width: $card-size--lg;
+      max-height: $card-size--lg;
+      max-width: $card-size--lg;
       margin-bottom: 51px;
     }
   }
@@ -231,15 +261,16 @@ $image-width--sm: $image-width--lg * 0.65662002;
     @apply hidden;
     @apply absolute;
     @apply top-0;
-    width: $image-width--sm;
+    @apply w-full;
+    max-width: $image-width--sm;
     left: 50%;
 
     @screen md {
-      width: $image-width--md;
+      max-width: $image-width--md;
     }
 
     @screen lg {
-      width: $image-width--lg;
+      max-width: $image-width--lg;
     }
 
     &.is-displayed {
