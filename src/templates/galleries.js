@@ -313,7 +313,10 @@ export default ({ data }) => {
           <h1>{content.frontmatter.title}</h1>
           <div dangerouslySetInnerHTML={{ __html: content.html }} />
         </div>
-        <div className="gallery__cards" ref={modalParentRef}>
+        <div
+          className="gallery__cards flex flex-wrap justify-between w-full"
+          ref={modalParentRef}
+        >
           <GalleryModal
             activeCardIndex={activeCard && Number(activeCard.dataset.index)}
             handleClose={() => {
@@ -343,9 +346,10 @@ export default ({ data }) => {
             width={modalWidth}
           />
           {images.map((image, index) => (
-            <div className="gallery__card-container" key={index}>
+            <div className="gallery__card-container h-full sm:w-full" key={index}>
               <div
-                className="gallery__card observable"
+                className="gallery__card observable relative hidden h-0 bg-white
+                  border border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
                 data-index={index}
                 data-node-base={image.node.base}
                 data-observer-root-margin="0px 0px 25%" // Best with bottom margin.

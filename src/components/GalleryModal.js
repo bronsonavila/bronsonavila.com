@@ -74,7 +74,10 @@ const GalleryModal = React.forwardRef(
 
     return (
       <div
-        className={`gallery-modal ${modalStateClasses}`}
+        className={
+          `gallery-modal absolute top-0 left-0 bg-white border border-gray-400 ` +
+          `overflow-hidden shadow-2xl z-20 ${modalStateClasses}`
+        }
         onClick={e => e.stopPropagation()}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -94,21 +97,27 @@ const GalleryModal = React.forwardRef(
         >
           {/* Buttons */}
           <button
-            className="gallery-modal__button--close"
+            className="gallery-modal__button--close absolute top-0 right-0 text-red-800
+              transition-all duration-300 ease-in-out opacity-0 z-10
+              focus:text-red-700 focus:outline-none hover:text-red-700 hover:outline-none"
             onClick={handleClose}
             tabIndex={isHovered ? 0 : -1}
           >
             <Close />
           </button>
           <button
-            className="gallery-modal__button--previous"
+            className="gallery-modal__button--previous absolute left-0 text-gray-900
+              transition-all duration-300 ease-in-out opacity-0 z-10
+              focus:text-gray-600 focus:outline-none hover:text-gray-600 hover:outline-none"
             onClick={handlePreviousImage}
             tabIndex={isHovered ? 0 : -1}
           >
             <Caret />
           </button>
           <button
-            className="gallery-modal__button--next"
+            className="gallery-modal__button--next absolute right-0 text-gray-900
+              transition-all duration-300 ease-in-out opacity-0 z-10
+              focus:text-gray-600 focus:outline-none hover:text-gray-600 hover:outline-none"
             onClick={handleNextImage}
             tabIndex={isHovered ? 0 : -1}
           >
@@ -121,19 +130,28 @@ const GalleryModal = React.forwardRef(
 
             return (
               <figure
-                // Prevent `null + 1 === 1` scenario from occurring in `setImageClasses()`.
-                className={`gallery-modal__image ${activeCardIndex !== null &&
-                  setImageClasses(
-                    activeCardIndex,
-                    images.length,
-                    index,
-                    lastNavigationDirection
-                  )}`}
+                className={
+                  `gallery-modal__image hidden absolute top-0 w-full ` +
+                  // Prevent `null + 1 === 1` scenario from occurring in `setImageClasses()`.
+                  `${activeCardIndex !== null &&
+                    setImageClasses(
+                      activeCardIndex,
+                      images.length,
+                      index,
+                      lastNavigationDirection
+                    )}`
+                }
                 key={index}
               >
                 <Img fluid={image.node.childImageSharp.fluid} />
                 {imageMetadata[imageName] && imageMetadata[imageName].caption && (
-                  <figcaption>{imageMetadata[imageName].caption}</figcaption>
+                  <figcaption
+                    className="absolute bottom-0 text-sm md:text-base text-white
+                      leading-relaxed tracking-tighter transition-all duration-300 ease-in-out
+                      m-3 md:m-4 px-6 md:px-8 py-4 md:py-6 opacity-0 w-full"
+                  >
+                    {imageMetadata[imageName].caption}
+                  </figcaption>
                 )}
               </figure>
             );

@@ -8,17 +8,6 @@ $image-width--sm: $image-width--lg * 0.65662002;
 $image-width--xs: $image-width--lg * 0.94752912;
 
 .gallery__card {
-  @apply relative;
-  @apply hidden;
-  @apply h-0;
-  @apply bg-white;
-  @apply border;
-  @apply border-gray-400;
-  @apply shadow;
-  @apply opacity-0;
-  @apply cursor-pointer;
-  @apply w-full;
-  @apply z-10;
   max-width: $card-size--xs;
   transform: scale(0.9) translateY(100px);
   transition: opacity 0.3s ease-in-out, transform 0.5s; // `transform` for smooth `mouseover` animation.
@@ -36,29 +25,25 @@ $image-width--xs: $image-width--lg * 0.94752912;
     max-width: $card-size--lg;
   }
 
-  &:focus {
-    @apply outline-none;
-  }
-
   // Performant box shadow animation.
   // See: https://tobiasahlin.com/blog/how-to-animate-box-shadow/
   &::after {
-    @apply absolute;
-    @apply top-0;
-    @apply left-0;
-    @apply h-full;
-    @apply w-full;
-    @apply opacity-0;
-    @apply transition-opacity;
-    @apply duration-300;
-    @apply ease-in-out;
+    @apply .absolute;
+    @apply .top-0;
+    @apply .left-0;
+    @apply .h-full;
+    @apply .w-full;
+    @apply .opacity-0;
+    @apply .transition-opacity;
+    @apply .duration-300;
+    @apply .ease-in-out;
     content: '';
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.025), 0 2px 4px -1px rgba(0, 0, 0, 0.015);
   }
 
   &.has-entered {
-    @apply h-full;
-    @apply opacity-100;
+    @apply .h-full;
+    @apply .opacity-100;
     max-height: $card-size--xs;
     transform: scale(1) translateY(0);
 
@@ -76,13 +61,13 @@ $image-width--xs: $image-width--lg * 0.94752912;
 
     &:hover {
       &::after {
-        @apply opacity-100;
+        @apply .opacity-100;
       }
     }
   }
 
   &.is-visible {
-    @apply block;
+    @apply .block;
   }
 
   // Requires that all images have a 3:2 aspect ratio.
@@ -95,24 +80,22 @@ $image-width--xs: $image-width--lg * 0.94752912;
   }
 
   img {
-    @apply border;
-    @apply border-solid;
-    @apply border-gray-300;
-    @apply bg-gray-300;
+    @apply .border;
+    @apply .border-solid;
+    @apply .border-gray-300;
+    @apply .bg-gray-300;
     border-left-color: #ccc;
     border-top-color: #ccc;
     transform: scale(0.9);
   }
 
   &-container {
-    @apply h-full;
     max-height: $card-size--xs;
     max-width: $card-size--xs;
     margin-bottom: 33px;
     width: 46%;
 
     @screen sm {
-      @apply w-full;
       max-height: $card-size--sm;
       max-width: $card-size--sm;
       margin-bottom: 33px;
@@ -133,10 +116,6 @@ $image-width--xs: $image-width--lg * 0.94752912;
 }
 
 .gallery__cards {
-  @apply flex;
-  @apply flex-wrap;
-  @apply justify-between;
-  @apply w-full;
   max-width: $image-width--sm;
 
   @screen md {
@@ -149,67 +128,46 @@ $image-width--xs: $image-width--lg * 0.94752912;
 }
 
 .gallery-modal {
-  @apply absolute;
-  @apply top-0;
-  @apply left-0;
-  @apply bg-white;
-  @apply border;
-  @apply border-gray-400;
-  @apply overflow-hidden;
-  @apply shadow-2xl;
-  @apply z-20;
   transform: translate(-9999px, -9999px); // Hidden by default.
 
   &.has-smooth-transition {
     .gallery-modal__image {
-      @apply transition-all;
-      @apply duration-300;
-      @apply ease-in; // Looks better than `ease-in-out`.
+      @apply .transition-all;
+      @apply .duration-300;
+      @apply .ease-in; // Looks better than `ease-in-out`.
     }
   }
 
   &.is-hovered {
     figcaption {
-      @apply opacity-100;
+      @apply .opacity-100;
       transform: scaleY(1);
     }
 
     .gallery-modal__button--close,
     .gallery-modal__button--next {
-      @apply opacity-100;
+      @apply .opacity-100;
       transform: translateY(0);
     }
 
     .gallery-modal__button--previous {
-      @apply opacity-100;
+      @apply .opacity-100;
       transform: rotate(180deg) translateY(0);
     }
   }
 
   &.is-open {
-    @apply transition-all;
-    @apply duration-300;
-    @apply ease-in-out;
+    @apply .transition-all;
+    @apply .duration-300;
+    @apply .ease-in-out;
   }
 
   &__button {
-    @apply absolute;
-    @apply transition-all;
-    @apply duration-300;
-    @apply ease-in-out;
-    @apply opacity-0;
-    @apply z-10;
-
-    &:focus,
-    &:hover {
-      @apply outline-none;
-    }
-
     svg {
-      @apply fill-current;
-      @apply h-6;
-      @apply w-6;
-      @apply m-2;
+      @apply .fill-current;
+      @apply .h-6;
+      @apply .w-6;
+      @apply .m-2;
 
       // Specific `starter-default` override for this case only.
       &:not(:root) {
@@ -219,49 +177,23 @@ $image-width--xs: $image-width--lg * 0.94752912;
 
     &--close {
       @extend .gallery-modal__button;
-      @apply top-0;
-      @apply right-0;
-      @apply text-red-800;
       transform: translateY(-20px);
-
-      &:focus,
-      &:hover {
-        @apply text-red-700;
-      }
     }
 
     &--next {
       @extend .gallery-modal__button;
-      @apply right-0;
-      @apply text-gray-900;
       bottom: 2px;
       transform: translateY(20px);
-
-      &:focus,
-      &:hover {
-        @apply text-gray-600;
-      }
     }
 
     &--previous {
       @extend .gallery-modal__button;
-      @apply left-0;
-      @apply text-gray-900;
       bottom: 2px;
       transform: rotate(180deg) translateY(-20px);
-
-      &:focus,
-      &:hover {
-        @apply text-gray-600;
-      }
     }
   }
 
   &__image {
-    @apply hidden;
-    @apply absolute;
-    @apply top-0;
-    @apply w-full;
     max-width: $image-width--sm;
     left: 50%;
 
@@ -274,9 +206,9 @@ $image-width--xs: $image-width--lg * 0.94752912;
     }
 
     &.is-displayed {
-      @apply block;
-      @apply bg-white;
-      @apply opacity-100;
+      @apply .block;
+      @apply .bg-white;
+      @apply .opacity-100;
       transform: translateX(-50%);
     }
 
@@ -287,53 +219,35 @@ $image-width--xs: $image-width--lg * 0.94752912;
     // The end result is that the next image will be "pre-loaded" and ready for viewing
     // when the user clicks the "next" button. The same applies to `.is-previous` below.
     &.is-next {
-      @apply block;
+      @apply .block;
       transform: translateX(49.9%);
     }
 
     &.is-previous {
-      @apply block;
+      @apply .block;
       transform: translateX(-149.9%);
     }
 
     &.will-fade-in {
-      @apply opacity-0;
+      @apply .opacity-0;
     }
 
     figcaption {
-      @apply absolute;
-      @apply bottom-0;
-      @apply text-sm;
-      @apply text-white;
-      @apply leading-relaxed;
-      @apply tracking-tighter;
-      @apply transition-all;
-      @apply duration-300;
-      @apply ease-in-out;
-      @apply m-3;
-      @apply px-6;
-      @apply py-4;
-      @apply opacity-0;
-      @apply w-full;
       background: rgba(0, 0, 0, 0.55);
       max-width: calc(100% - 22.5px);
       transform: scaleY(0);
       transform-origin: bottom;
 
       @screen md {
-        @apply text-base;
-        @apply m-4;
-        @apply px-8;
-        @apply py-6;
         max-width: calc(100% - 30px);
       }
     }
 
     img {
-      @apply p-3;
+      @apply .p-3;
 
       @screen md {
-        @apply p-4;
+        @apply .p-4;
       }
     }
   }
