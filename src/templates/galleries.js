@@ -265,7 +265,9 @@ export default ({ data }) => {
   const modalRef = useRef(null);
 
   // Animation effects.
-  useEffect(animateCards);
+  useEffect(() => {
+    setTimeout(() => animateCards(), delay); // Initial load is sluggish without delay.
+  });
   useEffect(() => {
     // Prevent modal animation when user presses next/previous buttons or left/right
     // arrow keys. The animation should only occur when clicking a gallery card.
