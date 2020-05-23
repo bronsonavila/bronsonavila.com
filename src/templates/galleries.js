@@ -24,16 +24,14 @@ const animateCards = () => {
 
 /**
  * Moves the modal over a gallery card, and expands the modal to reveal the full image.
- * By using the `transform` property and inverting the `scale` values of the modal and
- * its inner image container, it is possible to animate the heights and widths of the
- * modal images without the costs incurred by animating `height` and `width` properties.
  * See: https://www.freecodecamp.org/news/animating-height-the-right-way/
  *
+ * @param {Node} galleryRef
  * @param {Node} modal
- * @param {Node} modalParent - The modal's immediate parent element.
+ * @param {Function} setModalIsOpen
  * @param {Node} target - The element that the modal will initially move to.
  */
-const animateModal = (modal, modalParent, setModalIsOpen, target) => {
+const animateModal = (galleryRef, modal, setModalIsOpen, target) => {
   if (!target) return;
 
   const modalImagesContainer = modal.childNodes[0];
@@ -56,8 +54,9 @@ const animateModal = (modal, modalParent, setModalIsOpen, target) => {
     const centerY =
       document.body.offsetHeight / 2 -
       modal.offsetHeight / 2 -
-      modalParent.getBoundingClientRect().top / 2 +
-      window.scrollY / 2;
+      galleryRef.getBoundingClientRect().top / 2 +
+      window.scrollY / 2 -
+      33.5; // Necessary offset (basis for calculation unknown).
 
     setModalIsOpen(true);
     modal.style.transform = `translate(${centerX}px, ${centerY}px) scale(1)`;
@@ -261,7 +260,7 @@ export default ({ data }) => {
   const [modalWidth, setModalWidth] = useState(null);
 
   const cardRefs = images.map(image => useRef(null));
-  const modalParentRef = useRef(null);
+  const galleryRef = useRef(null);
   const modalRef = useRef(null);
 
   // Animation effects.
@@ -272,7 +271,7 @@ export default ({ data }) => {
     // Prevent modal animation when user presses next/previous buttons or left/right
     // arrow keys. The animation should only occur when clicking a gallery card.
     if (lastNavigationDirection !== 'next' && lastNavigationDirection !== 'previous') {
-      animateModal(modalRef.current, modalParentRef.current, setModalIsOpen, activeCard);
+      animateModal(galleryRef.current, modalRef.current, setModalIsOpen, activeCard);
     }
   }, [activeCard, lastNavigationDirection]);
 
@@ -307,16 +306,18 @@ export default ({ data }) => {
         setModalHasSmoothTransition(false);
         resetModal(modalRef.current, setActiveCard, setModalIsOpen);
       }}
+      ref={galleryRef}
     >
       <div className="container mx-auto px-4">
         <div>
-          <h1>{content.frontmatter.title}</h1>
-          <div dangerouslySetInnerHTML={{ __html: content.html }} />
+          <h1 className="text-center pt-8 pb-1">{content.frontmatter.title}</h1>
+          <h6 className="text-center text-red-700 mb-16">{content.frontmatter.year}</h6>
+          <div
+            className="global-editor mb-12 pb-1"
+            dangerouslySetInnerHTML={{ __html: content.html }}
+          />
         </div>
-        <div
-          className="gallery__cards flex flex-wrap justify-between w-full"
-          ref={modalParentRef}
-        >
+        <div className="gallery__cards flex flex-wrap justify-between w-full">
           <GalleryModal
             activeCardIndex={activeCard && Number(activeCard.dataset.index)}
             handleClose={() => {
@@ -389,6 +390,7 @@ export const query = graphql`
           caption
         }
         title
+        year
       }
     }
     allFile(

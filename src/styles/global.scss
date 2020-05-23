@@ -1,0 +1,12 @@
+.global-editor {
+  @apply .max-w-2xl;
+  @apply .mx-auto;
+
+  a {
+    @apply .underline;
+  }
+
+  p {
+    @apply .leading-relaxed;
+  }
+}

@@ -1,8 +1,8 @@
 html,
 body {
-  @apply text-base;
-  @apply h-full;
-  @apply bg-gray-100;
+  @apply .text-base;
+  @apply .h-full;
+  @apply .bg-gray-100;
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -20,25 +20,28 @@ figcaption,
 footer,
 p,
 span {
-  @apply text-gray-900;
-  @apply font-sans;
-  @apply transition;
-  @apply duration-300;
-  @apply ease-in-out;
+  @apply .text-gray-900;
+  @apply .font-sans;
+  @apply .transition;
+  @apply .duration-300;
+  @apply .ease-in-out;
 }
 
 b,
-h1,
-h2,
-h3,
 h4,
 h5,
 h6,
 strong {
-  @apply font-semibold;
+  @apply .font-semibold;
 }
 
-header {
-  height: 72px;
-  margin-bottom: 15px;
+h1,
+h2,
+h3 {
+  @apply .font-medium;
+  @apply .tracking-tighter;
+}
+
+h6 {
+  @apply .text-sm;
 }

@@ -17,8 +17,12 @@
 @import "overrides/tailwind.scss";
 
 // Component-specific styles
+@import "header.scss";
 @import "footer.scss";
 @import "logo.scss";
 
 // Page/template-specific styles
 @import "gallery.scss";
+
+// Global styles
+@import "global.scss";

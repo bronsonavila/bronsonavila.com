@@ -82,8 +82,9 @@ const GalleryModal = React.forwardRef(
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={e => {
-          // Only toggle overlay elements when an image (rather than a button) is tapped.
-          if (e.target.nodeName === 'IMG') setIsHovered(!isHovered);
+          const nodeName = e.target.nodeName;
+          // Only toggle overlay when elements other than SVG icons/buttons are tapped.
+          if (nodeName === 'IMG' || nodeName === 'FIGCAPTION') setIsHovered(!isHovered);
         }}
         ref={ref}
         style={{
