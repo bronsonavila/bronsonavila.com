@@ -7,9 +7,7 @@ import MarkdownList from '../components/MarkdownList';
 const IndexPage = () => (
   <div className="container mx-auto px-4">
     <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
+    <h1 className="text-center pt-8 pb-1">Hello</h1>
     <MarkdownList />
     <Link to="/page-2/">Go to page 2</Link>
   </div>
