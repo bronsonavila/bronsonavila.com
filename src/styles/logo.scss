@@ -18,7 +18,6 @@ $container-size: 35px;
   width: $box-size;
 
   &.is-hovered {
-    @apply bg-white;
     @apply shadow-sm;
   }
 
