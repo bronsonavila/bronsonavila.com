@@ -1,1 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" fill-rule="evenodd"><circle fill="#a90000" cx="10" cy="10" r="3.333"/><path stroke="#aaa" d="M.5.5h19v19H.5z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" xmlns:v="https://vecta.io/nano"><defs><path id="A" d="M0 0h20v20H0z"/></defs><g fill="none" fill-rule="evenodd"><use fill="#fff" xlink:href="#A"/><path stroke="#aaa" d="M.5.5h19v19H.5z"/><circle fill="#cf3b3b" cx="10" cy="10" r="3.333"/></g></svg>
