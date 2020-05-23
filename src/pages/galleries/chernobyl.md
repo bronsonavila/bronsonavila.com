@@ -2,6 +2,7 @@
 title: "Chernobyl"
 date: "2020-03-28"
 description: "Chernobyl 2014"
+year: 2014
 image_metadata:
 - name: "chernobyl_entrance_01.JPG"
   caption: "A shrine near the entrance of the Chernobyl Exclusion Zone."
@@ -10,21 +11,21 @@ image_metadata:
 - name: "chernobyl_town_01.JPG"
   caption: ""
 - name: "cnpp_01.JPG"
-  caption: "The semicylinder to the far left is known as the New Safe Confinement (NSC). In 2016, the NSC was under construction to cover the aging sarcophagus which contained radiation from the exploded reactor. In 2018, the NSC had been slid over the reactor via railway, and the original sarcophagus can no longer be seen."
+  caption: "The Cherynobyl Nuclear Power Plant."
 - name: "cnpp_02.JPG"
-  caption: ""
+  caption: "The NSC (left) remained under construction to cover the aging sarcophagus which contained the exploded reactor."
 - name: "cnpp_03.JPG"
   caption: ""
 - name: "cnpp_04.JPG"
-  caption: ""
+  caption: "One of two railways eventually used to slide the NSC over the exploded reactor."
 - name: "cnpp_05.JPG"
   caption: "The Chernobyl Memorial, located approximately 200 yards away from the exploded reactor."
 - name: "cnpp_06.JPG"
   caption: ""
 - name: "cnpp_catfish_01.JPG"
-  caption: "Catfish thrive in the river next to the Chernobyl Nuclear Power Plant. Some have lived long enough to reach six feet in length."
+  caption: "Catfish thrive in a river next to the Chernobyl Nuclear Power Plant. Some have lived long enough to reach six feet in length."
 - name: "kindergarten_01.JPG"
-  caption: "On the outskirts of the kindergarten of Kopachi."
+  caption: "On the outskirts of the Kopachi kindergarten."
 - name: "kindergarten_02.JPG"
   caption: ""
 - name: "kindergarten_03.JPG"
@@ -34,7 +35,7 @@ image_metadata:
 - name: "kindergarten_05.JPG"
   caption: ""
 - name: "pripyat_01.JPG"
-  caption: "Pripyat was the largest city located near the Chernobyl Nuclear Power Plant. Prior to the disaster, approximately 50,000 people resided in the city. It is now entirely abandoned."
+  caption: "The city of Pripyat once housed approximately 50,000 residents. It is now entirely abandoned."
 - name: "pripyat_gymnasium_01.JPG"
   caption: "Inside a ruined gymnasium in Pripyat."
 - name: "pripyat_gymnasium_02.JPG"
@@ -50,7 +51,7 @@ image_metadata:
 - name: "pripyat_park_01.JPG"
   caption: "Bumper cars at the Pripyat amusement park."
 - name: "pripyat_park_02.JPG"
-  caption: "The park was scheduled to open on May 1, 1986, just five days after the disaster on April 26, 1986. The Ferris wheel has never been ridden."
+  caption: "The park was scheduled to open on May 1, 1986, just five days after the disaster on April 26, 1986."
 - name: "pripyat_town_01.JPG"
   caption: "One of many buildings reclaimed by nature in the city of Pripyat."
 - name: "pripyat_town_02.JPG"
@@ -77,3 +78,5 @@ image_metadata:
   caption: "The Star of Wormwood Memorial Complex commemorates the towns that were evacuated after the disaster."
 
 ---
+
+The following photos were taken from within the Cherynobyl Exclusion Zone in Ukraine on June 27, 2014. These photos predate the completion of the <a href="https://en.wikipedia.org/wiki/Chernobyl_New_Safe_Confinement">New Safe Confinement</a> (NSC), which now covers the original Chernobyl Nuclear Power Plant sarcophagus constructed in 1986.
