@@ -5,7 +5,6 @@ import { Link } from 'gatsby';
 const duration = 300;
 const ease = 'easeOut';
 const position = 17;
-const staggerChildren = duration / 4;
 
 /**
  * @param {Integer} [x=0] - The initial `translateX` position of the logo box.
@@ -33,7 +32,7 @@ const setLogoBoxHoverPose = ({ x = 0, y = 0 } = {}) => {
 const Container = posed.div({
   hoverable: true,
   hover: {
-    staggerChildren,
+    staggerChildren: duration / 4,
   },
   hoverEnd: {
     onPoseComplete: e =>
