@@ -57,9 +57,14 @@ const animateModal = (galleryRef, modal, setModalIsOpen, target) => {
       galleryRef.getBoundingClientRect().top / 2 +
       window.scrollY / 2 -
       33.5; // Necessary offset (basis for calculation unknown).
+    // `scale` ensures the modal height does not exceed the screen height.
+    const scale =
+      modal.offsetHeight + 45 > window.innerHeight
+        ? window.innerHeight / (modal.offsetHeight + 45)
+        : 1;
 
     setModalIsOpen(true);
-    modal.style.transform = `translate(${centerX}px, ${centerY}px) scale(1)`;
+    modal.style.transform = `translate(${centerX}px, ${centerY}px) scale(${scale})`;
     modalImagesContainer.style.transform = 'scale(1)';
   }, delay * 2);
 };
@@ -150,11 +155,10 @@ const handleKeyboardNavigation = (
 /**
  * Sets the modal width when the window is resized.
  *
+ * @param {Integer} innerWidth - value of `lastInnerDimensions.width`
  * @param {Function} setModalWidth
  */
-const handleModalResize = setModalWidth => {
-  const innerWidth = window.innerWidth;
-
+const handleModalResize = (innerWidth, setModalWidth) => {
   if (innerWidth >= 1024) {
     setModalWidth(931); // 2px wider than `$image-width--lg` in `src/styles/gallery.scss`.
   } else if (innerWidth >= 768) {
@@ -243,14 +247,14 @@ const setObserverCallback = delay => entries => {
 };
 
 /**
- * Sets a `resize` event listener on the `window` object. Used to track the
- * last value of `window.innerWidth`.
+ * Sets a `resize` event listener on the `window` object.
  *
- * @param {Function} setLastInnerWidth
+ * @param {Function} setLastInnerDimensions
  * @return {Function} - Cleanup function.
  */
-const setResizeEventListener = setLastInnerWidth => {
-  const onResize = e => setLastInnerWidth(window.innerWidth);
+const setResizeEventListener = setLastInnerDimensions => {
+  const onResize = () =>
+    setLastInnerDimensions({ height: window.innerHeight, width: window.innerWidth });
   window.addEventListener('resize', onResize);
   return () => window.removeEventListener('resize', onResize);
 };
@@ -261,8 +265,10 @@ export default ({ data }) => {
 
   const [activeCard, setActiveCard] = useState(null);
   const [isThrottled, setIsThrottled] = useState(false);
-  const [lastInnerWidth, setLastInnerWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : null
+  const [lastInnerDimensions, setLastInnerDimensions] = useState(
+    typeof window !== 'undefined'
+      ? { height: window.innerHeight, width: window.innerWidth }
+      : null
   );
   const [lastKeyboardEvent, setLastKeyboardEvent] = useState(null);
   const [lastNavigationDirection, setLastNavigationDirection] = useState('');
@@ -305,26 +311,20 @@ export default ({ data }) => {
     }
   }, [lastKeyboardEvent]);
 
-  // Resize effects (reset modal whenever the screen width changes).
-  useEffect(() => setResizeEventListener(setLastInnerWidth), []);
+  // Resize effects (reset modal whenever the screen size changes).
+  useEffect(() => setResizeEventListener(setLastInnerDimensions), []);
   useEffect(() => {
-    if (!isThrottled) {
-      handleThrottle(setIsThrottled);
-      handleModalResize(setModalWidth);
-      setModalHasSmoothTransition(false);
-      resetModal(modalRef.current, setActiveCard, setModalIsOpen);
-    }
-  }, [lastInnerWidth]);
+    handleModalResize(lastInnerDimensions.width, setModalWidth);
+    setModalHasSmoothTransition(false);
+    resetModal(modalRef.current, setActiveCard, setModalIsOpen);
+  }, [lastInnerDimensions]);
 
   return (
     <section
       className="gallery"
       onClick={() => {
-        if (!isThrottled) {
-          handleThrottle(setIsThrottled);
-          setModalHasSmoothTransition(false);
-          resetModal(modalRef.current, setActiveCard, setModalIsOpen);
-        }
+        setModalHasSmoothTransition(false);
+        resetModal(modalRef.current, setActiveCard, setModalIsOpen);
       }}
       ref={galleryRef}
     >
@@ -340,13 +340,10 @@ export default ({ data }) => {
           <GalleryModal
             activeCardIndex={activeCard && Number(activeCard.dataset.index)}
             handleClose={() => {
-              if (!isThrottled) {
-                handleThrottle(setIsThrottled);
-                setModalHasSmoothTransition(false);
-                resetModal(modalRef.current, setActiveCard, setModalIsOpen);
-              }
+              setModalHasSmoothTransition(false);
+              resetModal(modalRef.current, setActiveCard, setModalIsOpen);
             }}
-            handleNextImage={e => {
+            handleNextImage={() => {
               if (!isThrottled) {
                 handleThrottle(setIsThrottled);
                 // The smooth slideshow transition between images should only occur when
@@ -357,7 +354,7 @@ export default ({ data }) => {
                 setLastNavigationDirection('next');
               }
             }}
-            handlePreviousImage={e => {
+            handlePreviousImage={() => {
               if (!isThrottled) {
                 handleThrottle(setIsThrottled);
                 setModalHasSmoothTransition(true);
