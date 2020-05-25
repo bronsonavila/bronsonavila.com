@@ -8,7 +8,7 @@ import getTransformMatrixArray from '../utils/getTransformMatrixArray';
 import lazyLoad from '../utils/lazyLoad';
 import moveElementsRelativeToMouse from '../utils/moveElementsRelativeToMouse';
 
-const delay = 300; // For animations.
+const delay = 300; // For animations and transitions.
 
 /**
  * Handles lazy loading of gallery cards, and animates the position of cards on hover.
@@ -167,6 +167,16 @@ const handleModalResize = setModalWidth => {
 };
 
 /**
+ * Throttles gallery navigation via next/previous buttons and left/right arrows.
+ *
+ * @param {Function} setIsThrottled
+ */
+const handleThrottle = setIsThrottled => {
+  setIsThrottled(true);
+  setTimeout(() => setIsThrottled(false), delay * 1.25);
+};
+
+/**
  * Slides the modal out of view before moving it back to its default position.
  *
  * @param {Node} modal
@@ -250,6 +260,7 @@ export default ({ data }) => {
   const images = data.allFile.edges;
 
   const [activeCard, setActiveCard] = useState(null);
+  const [isThrottled, setIsThrottled] = useState(false);
   const [lastInnerWidth, setLastInnerWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : null
   );
@@ -278,42 +289,50 @@ export default ({ data }) => {
   // Keyboard effects.
   useEffect(() => setKeyboardEventListeners(setLastKeyboardEvent), []);
   useEffect(() => {
-    handleKeyboardNavigation(
-      activeCard,
-      cardRefs,
-      lastKeyboardEvent,
-      modalRef.current,
-      resetModal,
-      setActiveCard,
-      setLastNavigationDirection,
-      setModalHasSmoothTransition,
-      setModalIsOpen
-    );
+    if (!isThrottled) {
+      handleThrottle(setIsThrottled);
+      handleKeyboardNavigation(
+        activeCard,
+        cardRefs,
+        lastKeyboardEvent,
+        modalRef.current,
+        resetModal,
+        setActiveCard,
+        setLastNavigationDirection,
+        setModalHasSmoothTransition,
+        setModalIsOpen
+      );
+    }
   }, [lastKeyboardEvent]);
 
   // Resize effects (reset modal whenever the screen width changes).
   useEffect(() => setResizeEventListener(setLastInnerWidth), []);
   useEffect(() => {
-    handleModalResize(setModalWidth);
-    setModalHasSmoothTransition(false);
-    resetModal(modalRef.current, setActiveCard, setModalIsOpen);
+    if (!isThrottled) {
+      handleThrottle(setIsThrottled);
+      handleModalResize(setModalWidth);
+      setModalHasSmoothTransition(false);
+      resetModal(modalRef.current, setActiveCard, setModalIsOpen);
+    }
   }, [lastInnerWidth]);
 
   return (
     <section
       className="gallery"
       onClick={() => {
-        setModalHasSmoothTransition(false);
-        resetModal(modalRef.current, setActiveCard, setModalIsOpen);
+        if (!isThrottled) {
+          handleThrottle(setIsThrottled);
+          setModalHasSmoothTransition(false);
+          resetModal(modalRef.current, setActiveCard, setModalIsOpen);
+        }
       }}
       ref={galleryRef}
     >
       <div className="container mx-auto px-4">
         <div>
-          <h1 className="text-center pt-8 pb-1">{content.frontmatter.title}</h1>
-          <h6 className="text-center text-red-700 mb-16">{content.frontmatter.year}</h6>
+          <h1 className="text-center mb-16 pb-1 pt-8">{content.frontmatter.title}</h1>
           <div
-            className="global-editor mb-12 pb-1"
+            className="global-editor mb-16 pb-1"
             dangerouslySetInnerHTML={{ __html: content.html }}
           />
         </div>
@@ -321,21 +340,30 @@ export default ({ data }) => {
           <GalleryModal
             activeCardIndex={activeCard && Number(activeCard.dataset.index)}
             handleClose={() => {
-              setModalHasSmoothTransition(false);
-              resetModal(modalRef.current, setActiveCard, setModalIsOpen);
+              if (!isThrottled) {
+                handleThrottle(setIsThrottled);
+                setModalHasSmoothTransition(false);
+                resetModal(modalRef.current, setActiveCard, setModalIsOpen);
+              }
             }}
             handleNextImage={e => {
-              // The smooth slideshow transition between images should only occur when
-              // changing images via next/previous buttons or left/right arrows. The
-              // transition should otherwise be immediate when clicking a gallery card.
-              setModalHasSmoothTransition(true);
-              changeModalImage(activeCard, cardRefs, 'next', setActiveCard);
-              setLastNavigationDirection('next');
+              if (!isThrottled) {
+                handleThrottle(setIsThrottled);
+                // The smooth slideshow transition between images should only occur when
+                // changing images via next/previous buttons or left/right arrows. The
+                // transition should otherwise be immediate when clicking a gallery card.
+                setModalHasSmoothTransition(true);
+                changeModalImage(activeCard, cardRefs, 'next', setActiveCard);
+                setLastNavigationDirection('next');
+              }
             }}
             handlePreviousImage={e => {
-              setModalHasSmoothTransition(true);
-              changeModalImage(activeCard, cardRefs, 'previous', setActiveCard);
-              setLastNavigationDirection('previous');
+              if (!isThrottled) {
+                handleThrottle(setIsThrottled);
+                setModalHasSmoothTransition(true);
+                changeModalImage(activeCard, cardRefs, 'previous', setActiveCard);
+                setLastNavigationDirection('previous');
+              }
             }}
             hasSmoothTransition={modalHasSmoothTransition}
             height={modalWidth * (2 / 3)} // Supports images with a 3:2 aspect ratio ONLY.
@@ -355,10 +383,13 @@ export default ({ data }) => {
                 data-node-base={image.node.base}
                 data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
                 onClick={e => {
-                  e.stopPropagation();
-                  setModalHasSmoothTransition(false);
-                  setActiveCard(cardRefs[index].current);
-                  setLastNavigationDirection('');
+                  if (!isThrottled) {
+                    e.stopPropagation();
+                    handleThrottle(setIsThrottled);
+                    setModalHasSmoothTransition(false);
+                    setActiveCard(cardRefs[index].current);
+                    setLastNavigationDirection('');
+                  }
                 }}
                 onMouseDown={e => (cardRefs[index].current.style = '')}
                 ref={cardRefs[index]}
@@ -390,7 +421,6 @@ export const query = graphql`
           caption
         }
         title
-        year
       }
     }
     allFile(

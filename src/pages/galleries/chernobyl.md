@@ -2,7 +2,6 @@
 title: "Chernobyl"
 date: "2020-03-28"
 description: "Chernobyl 2014"
-year: 2014
 image_metadata:
 - name: "chernobyl_entrance_01.JPG"
   caption: "A shrine near the entrance of the Chernobyl Exclusion Zone."
