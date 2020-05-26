@@ -145,15 +145,17 @@ const GalleryModal = React.forwardRef(
                 key={index}
               >
                 <Img fluid={image.node.childImageSharp.fluid} />
-                {imageMetadata[imageName] && imageMetadata[imageName].caption && (
-                  <figcaption
-                    className="absolute bottom-0 text-sm md:text-base text-white
+                {imageMetadata &&
+                  imageMetadata[imageName] &&
+                  imageMetadata[imageName].caption && (
+                    <figcaption
+                      className="absolute bottom-0 text-sm md:text-base text-white
                       leading-relaxed tracking-tighter transition-all duration-300 ease-in-out
                       m-3 md:m-4 px-6 md:px-8 py-4 md:py-6 opacity-0 w-full"
-                  >
-                    {imageMetadata[imageName].caption}
-                  </figcaption>
-                )}
+                    >
+                      {imageMetadata[imageName].caption}
+                    </figcaption>
+                  )}
               </figure>
             );
           })}

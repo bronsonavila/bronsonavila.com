@@ -364,7 +364,11 @@ export default ({ data }) => {
             }}
             hasSmoothTransition={modalHasSmoothTransition}
             height={modalWidth * (2 / 3)} // Supports images with a 3:2 aspect ratio ONLY.
-            imageMetadata={setImageMetadata(content.frontmatter.image_metadata)}
+            imageMetadata={
+              content.frontmatter.image_metadata
+                ? setImageMetadata(content.frontmatter.image_metadata)
+                : null
+            }
             images={images}
             isOpen={modalIsOpen}
             lastNavigationDirection={lastNavigationDirection}
