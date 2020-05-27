@@ -10,15 +10,15 @@ image_metadata:
 - name: "chernobyl_town_01.JPG"
   caption: ""
 - name: "cnpp_01.JPG"
-  caption: "The Cherynobyl Nuclear Power Plant."
+  caption: "The Chernobyl Nuclear Power Plant."
 - name: "cnpp_02.JPG"
-  caption: "The NSC (left) remained under construction to cover the aging sarcophagus which contained the exploded reactor."
+  caption: "The NSC (left) was constructed to cover the aging sarcophagus which contained the exploded reactor."
 - name: "cnpp_03.JPG"
   caption: ""
 - name: "cnpp_04.JPG"
   caption: "One of two railways eventually used to slide the NSC over the exploded reactor."
 - name: "cnpp_05.JPG"
-  caption: "The Chernobyl Memorial, located approximately 200 yards away from the exploded reactor."
+  caption: "The Chernobyl Memorial—located approximately 200 yards away from the exploded reactor."
 - name: "cnpp_06.JPG"
   caption: ""
 - name: "cnpp_catfish_01.JPG"
@@ -78,4 +78,4 @@ image_metadata:
 
 ---
 
-The following photos were taken from within the Cherynobyl Exclusion Zone in Ukraine on June 27, 2014. These photos predate the completion of the <a href="https://en.wikipedia.org/wiki/Chernobyl_New_Safe_Confinement">New Safe Confinement</a> (NSC), which now covers the original Chernobyl Nuclear Power Plant sarcophagus constructed in 1986.
+The following photos were taken from within the Chernobyl Exclusion Zone in Ukraine on June 27, 2014. These photos predate the completion of the <a href="https://en.wikipedia.org/wiki/Chernobyl_New_Safe_Confinement">New Safe Confinement</a> (NSC), which now covers the original Chernobyl Nuclear Power Plant sarcophagus constructed in 1986.
