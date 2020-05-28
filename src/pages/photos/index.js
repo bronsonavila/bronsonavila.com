@@ -58,33 +58,33 @@ export default ({ data }) => {
       <SEO title="Photos" />
       <h1 className="text-center mb-20 pb-3 pt-8">Photos</h1>
       <div className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-between w-full">
-        {photoGalleries[0] &&
-          featuredImages.map((image, index) => (
-            <div
-              className="photo-gallery-index__card-container h-full sm:w-full"
-              key={index}
-            >
-              <Link
-                className="photo-gallery-index__card observable relative hidden h-0 bg-white
+        {featuredImages.map((image, index) => (
+          <React.Fragment key={index}>
+            {photoGalleries[index] && (
+              <div className="photo-gallery-index__card-container h-full sm:w-full">
+                <Link
+                  className="photo-gallery-index__card observable relative hidden h-0 bg-white
                   border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
-                data-index={index}
-                data-node-base={image.node.base}
-                data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
-                onMouseDown={e => (cardRefs[index].current.style = '')}
-                ref={cardRefs[index]}
-                to={photoGalleries[index].node.fields.slug}
-              >
-                <Img
-                  alt={image.node.base.split('.')[0]}
-                  className="h-full w-full"
-                  fluid={image.node.childImageSharp.fluid}
-                />
-                <p className="photo-gallery-index__card-label absolute whitespace-pre mt-10 hover:text-gray-600">
-                  {photoGalleries[index].node.frontmatter.title}
-                </p>
-              </Link>
-            </div>
-          ))}
+                  data-index={index}
+                  data-node-base={image.node.base}
+                  data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
+                  onMouseDown={e => (cardRefs[index].current.style = '')}
+                  ref={cardRefs[index]}
+                  to={photoGalleries[index].node.fields.slug}
+                >
+                  <Img
+                    alt={image.node.base.split('.')[0]}
+                    className="h-full w-full"
+                    fluid={image.node.childImageSharp.fluid}
+                  />
+                  <p className="photo-gallery-index__card-label absolute whitespace-pre mt-10 hover:text-gray-600">
+                    {photoGalleries[index].node.frontmatter.title}
+                  </p>
+                </Link>
+              </div>
+            )}
+          </React.Fragment>
+        ))}
       </div>
     </div>
   );
