@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { graphql, Link } from 'gatsby';
+import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 
 import Metadata from '../../components/Metadata';
@@ -43,7 +43,49 @@ const setObserverCallback = delay => entries => {
   });
 };
 
-export default ({ data }) => {
+export default () => {
+  // TODO: Configure `featuredImages` to use dynamic (rather than hardcoded) values.
+  const data = useStaticQuery(
+    graphql`
+      query {
+        featuredImages: allFile(
+          filter: {
+            base: {
+              in: ["statue_01.JPG", "10_maine_moxie-bald-mountain.jpg", "cnpp_05.JPG"]
+            }
+          }
+          sort: { fields: base }
+        ) {
+          edges {
+            node {
+              base
+              childImageSharp {
+                fluid(maxWidth: 929, quality: 91) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+          }
+        }
+        photosMarkdown: allMarkdownRemark(
+          filter: { fields: { template: { eq: "photos" } } }
+          sort: { fields: frontmatter___featured_image }
+        ) {
+          edges {
+            node {
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+              }
+            }
+          }
+        }
+      }
+    `
+  );
+
   const featuredImages = data.featuredImages.edges;
   const photoGalleries = data.photosMarkdown.edges;
 
@@ -90,37 +132,3 @@ export default ({ data }) => {
   );
 };
 
-export const query = graphql`
-  query($featuredImages: [String]) {
-    featuredImages: allFile(
-      filter: { base: { in: $featuredImages } }
-      sort: { fields: base }
-    ) {
-      edges {
-        node {
-          base
-          childImageSharp {
-            fluid(maxWidth: 929, quality: 91) {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-      }
-    }
-    photosMarkdown: allMarkdownRemark(
-      filter: { fields: { template: { eq: "photos" } } }
-      sort: { fields: frontmatter___featured_image }
-    ) {
-      edges {
-        node {
-          fields {
-            slug
-          }
-          frontmatter {
-            title
-          }
-        }
-      }
-    }
-  }
-`;
