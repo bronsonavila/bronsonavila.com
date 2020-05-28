@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 
-import SEO from '../../components/SEO';
+import Metadata from '../../components/Metadata';
 
 import lazyLoad from '../../utils/lazyLoad';
 
@@ -55,7 +55,7 @@ export default ({ data }) => {
 
   return (
     <div className="container mx-auto px-4">
-      <SEO title="Photos" />
+      <Metadata title="Photos" />
       <h1 className="text-center mb-20 pb-3 pt-8">Photos</h1>
       <div className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-between w-full">
         {featuredImages.map((image, index) => (

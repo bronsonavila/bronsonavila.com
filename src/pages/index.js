@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
-import SEO from '../components/SEO';
+import Metadata from '../components/Metadata';
 
 const IndexPage = () => (
   <div className="container mx-auto px-4">
-    <SEO title="Home" />
-    <h1 className="text-center pt-8 pb-1">Hello</h1>
-    <Link to="/photos/">Go to photos</Link>
+    <Metadata title="Welcome" />
+    <h1 className="text-center pt-8 pb-1">Welcome</h1>
   </div>
 );
 
