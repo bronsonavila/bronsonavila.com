@@ -2,6 +2,7 @@
 title: "Kyiv"
 date: "2020-05-25"
 description: "Kyiv 2016"
+featured_image: "statue_01.JPG"
 image_metadata:
 - name: "apc_01.JPG"
   caption: "A surreal moment in which a militiaman casually shares his firearm with a child on an APC parked in Maidan Square. The crowd was entirely unphased."

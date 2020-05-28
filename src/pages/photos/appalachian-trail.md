@@ -2,6 +2,7 @@
 title: "Appalachian Trail"
 date: "2020-05-25"
 description: "Appalachian Trail 2016"
+featured_image: "10_maine_moxie-bald-mountain.jpg"
 image_metadata:
 - name: "01_maine_baxter-state-park.jpg"
   caption: "Katahdin Stream. Maine, July 7, 2016."

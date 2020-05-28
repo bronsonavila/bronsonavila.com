@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
-import GalleryModal from '../components/GalleryModal';
+import PhotoGalleryModal from '../components/PhotoGalleryModal';
 
 import getTransformMatrixArray from '../utils/getTransformMatrixArray';
 import lazyLoad from '../utils/lazyLoad';
@@ -14,11 +14,11 @@ const delay = 300; // For animations and transitions.
  * Handles lazy loading of gallery cards, and animates the position of cards on hover.
  */
 const animateCards = () => {
-  displayGalleryCards();
+  displayPhotoGalleryCards();
   lazyLoad(setObserverCallback(delay));
   moveElementsRelativeToMouse({
     additionalTransformValues: 'scale(1.025)',
-    containerSelector: '.gallery__card-container',
+    containerSelector: '.photo-gallery__card-container',
   });
 };
 
@@ -26,12 +26,12 @@ const animateCards = () => {
  * Moves the modal over a gallery card, and expands the modal to reveal the full image.
  * See: https://www.freecodecamp.org/news/animating-height-the-right-way/
  *
- * @param {Node} galleryRef
+ * @param {Node} photoGalleryRef
  * @param {Node} modal
  * @param {Function} setModalIsOpen
  * @param {Node} target - The element that the modal will initially move to.
  */
-const animateModal = (galleryRef, modal, setModalIsOpen, target) => {
+const animateModal = (photoGalleryRef, modal, setModalIsOpen, target) => {
   if (!target) return;
 
   const modalImagesContainer = modal.childNodes[0];
@@ -54,7 +54,7 @@ const animateModal = (galleryRef, modal, setModalIsOpen, target) => {
     const centerY =
       document.body.offsetHeight / 2 -
       modal.offsetHeight / 2 -
-      galleryRef.getBoundingClientRect().top / 2 +
+      photoGalleryRef.getBoundingClientRect().top / 2 +
       window.scrollY / 2 -
       33.5; // Necessary offset (basis for calculation unknown).
     // `scale` ensures the modal height does not exceed the screen height.
@@ -94,14 +94,14 @@ const changeModalImage = (activeCard, cardRefs, direction, setActiveCard) => {
 };
 
 /**
- * Changes the display of `.gallery__card` elements from `none` to `block` at
+ * Changes the display of `.photo-gallery__card` elements from `none` to `block` at
  * staggered intervals. This allows the first batch of initially displayed
  * cards to be revealed in sequential order rather than all at once. This is
  * because the `lazyLoad` IntersectionObserver will not detect elements until
  * `display: none` has been changed to a visible value.
  */
-const displayGalleryCards = () => {
-  const cards = [...document.querySelectorAll('.gallery__card')];
+const displayPhotoGalleryCards = () => {
+  const cards = [...document.querySelectorAll('.photo-gallery__card')];
 
   cards.forEach((card, index) => {
     // Must trigger before `setObserverCallback` runs.
@@ -233,7 +233,7 @@ const setKeyboardEventListeners = setLastKeyboardEvent => {
 
 /**
  * Callback for the `lazyLoad` IntersectionObserver. Animates the entrance of
- * each `.gallery__card` element.
+ * each `.photo-gallery__card` element.
  *
  * @param {Integer} delay - The `setTimeout` delay value.
  * @return {Function} - An IntersectionObserver callback function.
@@ -277,8 +277,8 @@ export default ({ data }) => {
   const [modalWidth, setModalWidth] = useState(null);
 
   const cardRefs = images.map(image => useRef(null));
-  const galleryRef = useRef(null);
   const modalRef = useRef(null);
+  const photoGalleryRef = useRef(null);
 
   // Animation effects.
   useEffect(() => {
@@ -288,7 +288,7 @@ export default ({ data }) => {
     // Prevent modal animation when user presses next/previous buttons or left/right
     // arrow keys. The animation should only occur when clicking a gallery card.
     if (lastNavigationDirection !== 'next' && lastNavigationDirection !== 'previous') {
-      animateModal(galleryRef.current, modalRef.current, setModalIsOpen, activeCard);
+      animateModal(photoGalleryRef.current, modalRef.current, setModalIsOpen, activeCard);
     }
   }, [activeCard, lastNavigationDirection]);
 
@@ -321,12 +321,12 @@ export default ({ data }) => {
 
   return (
     <section
-      className="gallery"
+      className="photo-gallery"
       onClick={() => {
         setModalHasSmoothTransition(false);
         resetModal(modalRef.current, setActiveCard, setModalIsOpen);
       }}
-      ref={galleryRef}
+      ref={photoGalleryRef}
     >
       <div className="container mx-auto px-4">
         <div>
@@ -336,8 +336,8 @@ export default ({ data }) => {
             dangerouslySetInnerHTML={{ __html: content.html }}
           />
         </div>
-        <div className="gallery__cards flex flex-wrap justify-between w-full">
-          <GalleryModal
+        <div className="photo-gallery__cards flex flex-wrap justify-between w-full">
+          <PhotoGalleryModal
             activeCardIndex={activeCard && Number(activeCard.dataset.index)}
             handleClose={() => {
               setModalHasSmoothTransition(false);
@@ -376,9 +376,9 @@ export default ({ data }) => {
             width={modalWidth}
           />
           {images.map((image, index) => (
-            <div className="gallery__card-container h-full sm:w-full" key={index}>
+            <div className="photo-gallery__card-container h-full sm:w-full" key={index}>
               <div
-                className="gallery__card observable relative hidden h-0 bg-white
+                className="photo-gallery__card observable relative hidden h-0 bg-white
                   border border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
                 data-index={index}
                 data-node-base={image.node.base}

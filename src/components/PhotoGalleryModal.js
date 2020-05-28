@@ -49,7 +49,7 @@ const setImageClasses = (
   }
 };
 
-const GalleryModal = React.forwardRef(
+const PhotoGalleryModal = React.forwardRef(
   (
     {
       activeCardIndex,
@@ -75,7 +75,7 @@ const GalleryModal = React.forwardRef(
     return (
       <div
         className={
-          `gallery-modal absolute top-0 left-0 bg-white border border-gray-400 ` +
+          `photo-gallery-modal absolute top-0 left-0 bg-white border border-gray-400 ` +
           `overflow-hidden shadow-2xl z-20 ${modalStateClasses}`
         }
         onClick={e => e.stopPropagation()}
@@ -98,7 +98,7 @@ const GalleryModal = React.forwardRef(
         >
           {/* Buttons */}
           <button
-            className="gallery-modal__button--close absolute top-0 right-0 text-red-800
+            className="photo-gallery-modal__button--close absolute top-0 right-0 text-red-800
               transition-all duration-300 ease-in-out opacity-0 z-10
               focus:text-red-700 focus:outline-none hover:text-red-700 hover:outline-none"
             onClick={handleClose}
@@ -107,7 +107,7 @@ const GalleryModal = React.forwardRef(
             <Close />
           </button>
           <button
-            className="gallery-modal__button--previous absolute left-0 text-gray-900
+            className="photo-gallery-modal__button--previous absolute left-0 text-gray-900
               transition-all duration-300 ease-in-out opacity-0 z-10
               focus:text-gray-600 focus:outline-none hover:text-gray-600 hover:outline-none"
             onClick={handlePreviousImage}
@@ -116,7 +116,7 @@ const GalleryModal = React.forwardRef(
             <Caret />
           </button>
           <button
-            className="gallery-modal__button--next absolute right-0 text-gray-900
+            className="photo-gallery-modal__button--next absolute right-0 text-gray-900
               transition-all duration-300 ease-in-out opacity-0 z-10
               focus:text-gray-600 focus:outline-none hover:text-gray-600 hover:outline-none"
             onClick={handleNextImage}
@@ -132,7 +132,7 @@ const GalleryModal = React.forwardRef(
             return (
               <figure
                 className={
-                  `gallery-modal__image hidden absolute top-0 w-full ` +
+                  `photo-gallery-modal__image hidden absolute top-0 w-full ` +
                   // Prevent `null + 1 === 1` scenario from occurring in `setImageClasses()`.
                   `${activeCardIndex !== null &&
                     setImageClasses(
@@ -165,4 +165,4 @@ const GalleryModal = React.forwardRef(
   }
 );
 
-export default GalleryModal;
+export default PhotoGalleryModal;

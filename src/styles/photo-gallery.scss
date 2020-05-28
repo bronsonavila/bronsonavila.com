@@ -7,7 +7,7 @@ $image-width--md: $image-width--lg * 0.794403;
 $image-width--sm: $image-width--lg * 0.65662002;
 $image-width--xs: $image-width--lg * 0.94752912;
 
-.gallery__card {
+.photo-gallery__card {
   max-width: $card-size--xs;
   transform: scale(0.9) translateY(100px);
   transition: opacity 0.3s ease-in-out, transform 0.5s; // `transform` for smooth `mouseover` animation.
@@ -115,7 +115,7 @@ $image-width--xs: $image-width--lg * 0.94752912;
   }
 }
 
-.gallery__cards {
+.photo-gallery__cards {
   max-width: $image-width--sm;
 
   @screen md {
@@ -127,11 +127,11 @@ $image-width--xs: $image-width--lg * 0.94752912;
   }
 }
 
-.gallery-modal {
+.photo-gallery-modal {
   transform: translate(-9999px, -9999px); // Hidden by default.
 
   &.has-smooth-transition {
-    .gallery-modal__image {
+    .photo-gallery-modal__image {
       @apply .transition-all;
       @apply .duration-300;
       @apply .ease-in; // Looks better than `ease-in-out`.
@@ -144,13 +144,13 @@ $image-width--xs: $image-width--lg * 0.94752912;
       transform: scaleY(1);
     }
 
-    .gallery-modal__button--close,
-    .gallery-modal__button--next {
+    .photo-gallery-modal__button--close,
+    .photo-gallery-modal__button--next {
       @apply .opacity-100;
       transform: translateY(0);
     }
 
-    .gallery-modal__button--previous {
+    .photo-gallery-modal__button--previous {
       @apply .opacity-100;
       transform: rotate(180deg) translateY(0);
     }
@@ -176,18 +176,18 @@ $image-width--xs: $image-width--lg * 0.94752912;
     }
 
     &--close {
-      @extend .gallery-modal__button;
+      @extend .photo-gallery-modal__button;
       transform: translateY(-20px);
     }
 
     &--next {
-      @extend .gallery-modal__button;
+      @extend .photo-gallery-modal__button;
       bottom: 2px;
       transform: translateY(20px);
     }
 
     &--previous {
-      @extend .gallery-modal__button;
+      @extend .photo-gallery-modal__button;
       bottom: 2px;
       transform: rotate(180deg) translateY(-20px);
     }
@@ -250,5 +250,159 @@ $image-width--xs: $image-width--lg * 0.94752912;
         @apply .p-4;
       }
     }
+  }
+}
+
+.photo-gallery-index {
+  &__card {
+    @extend .photo-gallery__card;
+    @apply .block;
+    max-width: $card-size--lg;
+
+    @screen sm {
+      max-width: $card-size--lg;
+    }
+
+    @screen md {
+      max-width: $card-size--md;
+    }
+
+    @screen lg {
+      max-width: $card-size--lg;
+    }
+
+    &::after {
+      @apply .absolute;
+      @apply .block;
+      @apply .h-full;
+      @apply .w-full;
+      @apply .bg-red-600;
+      @apply .transition-opacity;
+      @apply .duration-300;
+      @apply .ease-in-out;
+      content: "";
+      left: 1px;
+      top: 1px;
+      max-height: $card-size--lg - 4;
+      max-width: $card-size--lg - 4;
+      opacity: 0.0667;
+      transform: scale(0.9);
+
+      @media screen and (max-width: 348px) {
+        left: 0px;
+        top: 0px;
+        transform: scale(0.893);
+      }
+
+      @screen md {
+        left: 1px;
+        top: 1px;
+        max-height: $card-size--md - 4;
+        max-width: $card-size--md - 4;
+        transform: scale(0.9);
+      }
+
+      @screen lg {
+        max-height: $card-size--lg - 4;
+        max-width: $card-size--lg - 4;
+      }
+    }
+
+    &.has-entered {
+      @apply .h-full;
+      @apply .opacity-100;
+      @apply .border;
+      max-height: $card-size--lg;
+      transform: scale(1) translateY(0);
+
+      @screen sm {
+        max-height: $card-size--lg;
+      }
+
+      @screen md {
+        max-height: $card-size--md;
+      }
+
+      @screen lg {
+        max-height: $card-size--lg;
+      }
+
+      &:hover {
+        &::after {
+          @apply .opacity-100;
+        }
+      }
+    }
+
+    &-container {
+      @extend .photo-gallery__card-container;
+      @apply .w-full;
+      max-height: $card-size--lg;
+      max-width: $card-size--lg;
+      margin-bottom: 143px;
+
+      @screen sm {
+        max-height: $card-size--lg;
+        max-width: $card-size--lg;
+        margin-bottom: 143px;
+      }
+
+      @screen md {
+        max-height: $card-size--md;
+        max-width: $card-size--md;
+        margin-bottom: 40px;
+      }
+
+      @screen lg {
+        max-height: $card-size--lg;
+        max-width: $card-size--lg;
+        margin-bottom: 51px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 113px;
+
+        @screen sm {
+          margin-bottom: 113px;
+        }
+
+        @screen md {
+          margin-bottom: 40px;
+        }
+
+        @screen lg {
+          margin-bottom: 51px;
+        }
+      }
+
+      &:focus,
+      &:hover {
+        p {
+          @apply .text-gray-600;
+        }
+
+        .gatsby-image-wrapper {
+          filter: grayscale(0);
+        }
+
+        .photo-gallery-index__card::after {
+          @apply .opacity-0;
+        }
+      }
+
+      .gatsby-image-wrapper {
+        filter: grayscale(1);
+        transition: filter 0.3s ease-in-out;
+      }
+    }
+
+    &-label {
+      transform: translateX(-50%);
+      left: 50%;
+    }
+  }
+
+  &__cards {
+    @extend .photo-gallery__cards;
   }
 }
