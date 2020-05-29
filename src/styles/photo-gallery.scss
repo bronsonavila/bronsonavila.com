@@ -285,7 +285,7 @@ $image-width--xs: $image-width--lg * 0.94752912;
       top: 1px;
       max-height: $card-size--lg - 4;
       max-width: $card-size--lg - 4;
-      opacity: 0.0667;
+      opacity: 0.05;
       transform: scale(0.9);
 
       @media screen and (max-width: 348px) {
