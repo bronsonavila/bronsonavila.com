@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 import posed from 'react-pose';
@@ -12,6 +12,8 @@ const PosedText = posed.div({
 });
 
 export default () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const data = useStaticQuery(
     graphql`
       query {
@@ -33,6 +35,10 @@ export default () => {
 
   const image = data.allFile.edges[0];
 
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   return (
     <>
       <Metadata title="Welcome" />
@@ -53,11 +59,9 @@ export default () => {
             </Link>
           </div>
         </div>
-        {/* Text */}
         <PosedText
-          className="global-editor mb-8 pb-1"
-          initialPose="hidden"
-          pose="visible"
+          className="global-editor mb-8 pb-1 opacity-0"
+          pose={isLoaded ? 'visible' : 'hidden'}
         >
           <p>
             Hi, I'm Bronson Avila—an attorney-turned-software developer residing in
