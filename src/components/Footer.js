@@ -47,7 +47,7 @@ const Footer = () => {
     <div className="footer-container">
       <footer ref={footerRef}>
         <div className="container h-12 mx-auto px-4 pt-3 pb-5">
-          <Link to="/" className="inline-block font-sans no-underline pt-px">
+          <Link to="/" className="inline-block font-sans text-sm xs:text-base no-underline pt-px">
             <span className="text-red-700">©</span>{' '}
             <span className="text-gray-600 hover:text-gray-900">
               {new Date().getFullYear()} Bronson Avila
