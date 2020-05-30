@@ -329,13 +329,11 @@ export default ({ data }) => {
       ref={photoGalleryRef}
     >
       <div className="container mx-auto px-4">
-        <div>
-          <h1 className="text-center mb-16 pb-1 pt-8">{content.frontmatter.title}</h1>
-          <div
-            className="global-editor mb-16 pb-1"
-            dangerouslySetInnerHTML={{ __html: content.html }}
-          />
-        </div>
+        <h1 className="text-center mb-16 pb-1 pt-8">{content.frontmatter.title}</h1>
+        <div
+          className="global-editor mb-16 pb-1"
+          dangerouslySetInnerHTML={{ __html: content.html }}
+        />
         <div className="photo-gallery__cards flex flex-wrap justify-between w-full">
           <PhotoGalleryModal
             activeCardIndex={activeCard && Number(activeCard.dataset.index)}
