@@ -333,73 +333,93 @@ $image-width--xs: $image-width--lg * 0.94752912;
         }
       }
     }
+  }
 
-    &-container {
-      @extend .photo-gallery__card-container;
-      @apply .w-full;
+  &__card-container {
+    @extend .photo-gallery__card-container;
+    @apply .w-full;
+    max-height: $card-size--lg;
+    max-width: $card-size--lg;
+    margin-bottom: 143px;
+
+    @screen sm {
       max-height: $card-size--lg;
       max-width: $card-size--lg;
       margin-bottom: 143px;
+    }
+
+    @screen md {
+      max-height: $card-size--md;
+      max-width: $card-size--md;
+      margin-bottom: 40px;
+    }
+
+    @screen lg {
+      max-height: $card-size--lg;
+      max-width: $card-size--lg;
+      margin-bottom: 51px;
+    }
+
+    &:last-of-type {
+      margin-bottom: 113px;
 
       @screen sm {
-        max-height: $card-size--lg;
-        max-width: $card-size--lg;
-        margin-bottom: 143px;
+        margin-bottom: 113px;
       }
 
       @screen md {
-        max-height: $card-size--md;
-        max-width: $card-size--md;
         margin-bottom: 40px;
       }
 
       @screen lg {
-        max-height: $card-size--lg;
-        max-width: $card-size--lg;
         margin-bottom: 51px;
       }
+    }
+
+    &:focus,
+    &:hover {
+      p {
+        @apply .text-gray-600;
+      }
+
+      .gatsby-image-wrapper {
+        filter: grayscale(0);
+      }
+
+      .photo-gallery-index__card::after {
+        @apply .opacity-0;
+      }
+    }
+
+    &--single {
+      @extend .photo-gallery-index__card-container;
 
       &:last-of-type {
-        margin-bottom: 113px;
+        margin-bottom: 51px;
 
         @screen sm {
-          margin-bottom: 113px;
+          margin-bottom: 51px;
         }
 
         @screen md {
-          margin-bottom: 40px;
+          margin-bottom: 51px;
         }
 
         @screen lg {
           margin-bottom: 51px;
         }
       }
-
-      &:focus,
-      &:hover {
-        p {
-          @apply .text-gray-600;
-        }
-
-        .gatsby-image-wrapper {
-          filter: grayscale(0);
-        }
-
-        .photo-gallery-index__card::after {
-          @apply .opacity-0;
-        }
-      }
-
-      .gatsby-image-wrapper {
-        filter: grayscale(1);
-        transition: filter 0.3s ease-in-out;
-      }
     }
 
-    &-label {
-      transform: translateX(-50%);
-      left: 50%;
+    .gatsby-image-wrapper {
+      filter: grayscale(1);
+      transition: filter 0.3s ease-in-out;
     }
+  }
+
+  &__card-label {
+    transform: translateX(-50%);
+    left: 50%;
   }
 
   &__cards {
