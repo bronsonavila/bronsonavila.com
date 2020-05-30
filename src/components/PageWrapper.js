@@ -10,7 +10,7 @@ import Transition from './Transition';
 
 const PageWrapper = ({ children, location }) => (
   <>
-    <Header />
+    <Header pathname={location.pathname} />
     <PoseGroup
       // Use an `auto` height combined with a calculated `minHeight` to ensure
       // that the container fills the available screen height, minus any
