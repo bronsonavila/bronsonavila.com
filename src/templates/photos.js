@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
+import Metadata from '../components/Metadata';
 import PhotoGalleryModal from '../components/PhotoGalleryModal';
 
 import getTransformMatrixArray from '../utils/getTransformMatrixArray';
@@ -320,90 +321,93 @@ export default ({ data }) => {
   }, [lastInnerDimensions]);
 
   return (
-    <section
-      className="photo-gallery"
-      onClick={() => {
-        setModalHasSmoothTransition(false);
-        resetModal(modalRef.current, setActiveCard, setModalIsOpen);
-      }}
-      ref={photoGalleryRef}
-    >
-      <div className="container mx-auto px-4">
-        <h1 className="text-center mb-16 pb-1 pt-8">{content.frontmatter.title}</h1>
-        <div
-          className="global-editor mb-16 pb-1"
-          dangerouslySetInnerHTML={{ __html: content.html }}
-        />
-        <div className="photo-gallery__cards flex flex-wrap justify-between w-full">
-          <PhotoGalleryModal
-            activeCardIndex={activeCard && Number(activeCard.dataset.index)}
-            handleClose={() => {
-              setModalHasSmoothTransition(false);
-              resetModal(modalRef.current, setActiveCard, setModalIsOpen);
-            }}
-            handleNextImage={() => {
-              if (!isThrottled) {
-                handleThrottle(setIsThrottled);
-                // The smooth slideshow transition between images should only occur when
-                // changing images via next/previous buttons or left/right arrows. The
-                // transition should otherwise be immediate when clicking a gallery card.
-                setModalHasSmoothTransition(true);
-                changeModalImage(activeCard, cardRefs, 'next', setActiveCard);
-                setLastNavigationDirection('next');
-              }
-            }}
-            handlePreviousImage={() => {
-              if (!isThrottled) {
-                handleThrottle(setIsThrottled);
-                setModalHasSmoothTransition(true);
-                changeModalImage(activeCard, cardRefs, 'previous', setActiveCard);
-                setLastNavigationDirection('previous');
-              }
-            }}
-            hasSmoothTransition={modalHasSmoothTransition}
-            height={modalWidth * (2 / 3)} // Supports images with a 3:2 aspect ratio ONLY.
-            imageMetadata={
-              content.frontmatter.image_metadata
-                ? setImageMetadata(content.frontmatter.image_metadata)
-                : null
-            }
-            images={images}
-            isOpen={modalIsOpen}
-            lastNavigationDirection={lastNavigationDirection}
-            ref={modalRef}
-            width={modalWidth}
+    <>
+      <Metadata title={content.frontmatter.title} />
+      <section
+        className="photo-gallery"
+        onClick={() => {
+          setModalHasSmoothTransition(false);
+          resetModal(modalRef.current, setActiveCard, setModalIsOpen);
+        }}
+        ref={photoGalleryRef}
+      >
+        <div className="container mx-auto px-4">
+          <h1 className="text-center mb-16 pb-1 pt-8">{content.frontmatter.title}</h1>
+          <div
+            className="global-editor mb-16 pb-1"
+            dangerouslySetInnerHTML={{ __html: content.html }}
           />
-          {images.map((image, index) => (
-            <div className="photo-gallery__card-container h-full sm:w-full" key={index}>
-              <div
-                className="photo-gallery__card observable relative hidden h-0 bg-white
+          <div className="photo-gallery__cards flex flex-wrap justify-between w-full">
+            <PhotoGalleryModal
+              activeCardIndex={activeCard && Number(activeCard.dataset.index)}
+              handleClose={() => {
+                setModalHasSmoothTransition(false);
+                resetModal(modalRef.current, setActiveCard, setModalIsOpen);
+              }}
+              handleNextImage={() => {
+                if (!isThrottled) {
+                  handleThrottle(setIsThrottled);
+                  // The smooth slideshow transition between images should only occur when
+                  // changing images via next/previous buttons or left/right arrows. The
+                  // transition should otherwise be immediate when clicking a gallery card.
+                  setModalHasSmoothTransition(true);
+                  changeModalImage(activeCard, cardRefs, 'next', setActiveCard);
+                  setLastNavigationDirection('next');
+                }
+              }}
+              handlePreviousImage={() => {
+                if (!isThrottled) {
+                  handleThrottle(setIsThrottled);
+                  setModalHasSmoothTransition(true);
+                  changeModalImage(activeCard, cardRefs, 'previous', setActiveCard);
+                  setLastNavigationDirection('previous');
+                }
+              }}
+              hasSmoothTransition={modalHasSmoothTransition}
+              height={modalWidth * (2 / 3)} // Supports images with a 3:2 aspect ratio ONLY.
+              imageMetadata={
+                content.frontmatter.image_metadata
+                  ? setImageMetadata(content.frontmatter.image_metadata)
+                  : null
+              }
+              images={images}
+              isOpen={modalIsOpen}
+              lastNavigationDirection={lastNavigationDirection}
+              ref={modalRef}
+              width={modalWidth}
+            />
+            {images.map((image, index) => (
+              <div className="photo-gallery__card-container h-full sm:w-full" key={index}>
+                <div
+                  className="photo-gallery__card observable relative hidden h-0 bg-white
                   border border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
-                data-index={index}
-                data-node-base={image.node.base}
-                data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
-                onClick={e => {
-                  if (!isThrottled) {
-                    e.stopPropagation();
-                    handleThrottle(setIsThrottled);
-                    setModalHasSmoothTransition(false);
-                    setActiveCard(cardRefs[index].current);
-                    setLastNavigationDirection('');
-                  }
-                }}
-                onMouseDown={e => (cardRefs[index].current.style = '')}
-                ref={cardRefs[index]}
-              >
-                <Img
-                  alt={image.node.base.split('.')[0]}
-                  className="h-full w-full"
-                  fluid={image.node.childImageSharp.fluid}
-                />
+                  data-index={index}
+                  data-node-base={image.node.base}
+                  data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
+                  onClick={e => {
+                    if (!isThrottled) {
+                      e.stopPropagation();
+                      handleThrottle(setIsThrottled);
+                      setModalHasSmoothTransition(false);
+                      setActiveCard(cardRefs[index].current);
+                      setLastNavigationDirection('');
+                    }
+                  }}
+                  onMouseDown={e => (cardRefs[index].current.style = '')}
+                  ref={cardRefs[index]}
+                >
+                  <Img
+                    alt={image.node.base.split('.')[0]}
+                    className="h-full w-full"
+                    fluid={image.node.childImageSharp.fluid}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
