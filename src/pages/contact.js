@@ -68,7 +68,7 @@ export default () => {
         <div className="mb-10 pb-1">
           <p>
             Please include your name, email address, and a brief message in the form
-            below, and I will respond as soon as possible.
+            below.
           </p>
           <p>
             I can also be found on{' '}
