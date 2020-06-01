@@ -91,20 +91,8 @@ export default () => {
           </p>
           <p>
             If you have a passion for finding technical solutions to civic-minded
-            problems, or are interested in the intersection between law and technology,
-            I'd love to chat. Feel free to learn more{' '}
-            <Link className="text-gray-900 hover:gray-600" to="/about/">
-              about
-            </Link>{' '}
-            me, browse some{' '}
-            <Link className="text-gray-900 hover:gray-600" to="/photos/">
-              photos
-            </Link>
-            , or get in{' '}
-            <Link className="text-gray-900 hover:gray-600" to="/contact/">
-              contact
-            </Link>
-            . Thanks for visiting.
+            problems, or are interested in the intersection of law and technology, I'd
+            love to chat.
           </p>
         </PosedText>
       </div>
