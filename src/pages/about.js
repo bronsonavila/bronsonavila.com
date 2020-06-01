@@ -8,7 +8,7 @@ import Metadata from '../components/Metadata';
 const duration = 350;
 
 const PosedDiv = posed.div({
-  visible: { staggerChildren: duration / 2 },
+  visible: { staggerChildren: duration / 3 },
 });
 
 const PosedDivChild = posed.div({
@@ -36,59 +36,59 @@ export default () => {
               url="https://www.linkedin.com/in/bronsonavila/"
             />{' '}
             profile. You can also find some of my pet projects and coding notes on{' '}
-            <ExternalLink text="GitHub" url="https://github.com/bronsonavila/" />. If
-            you'd like a little more than just the brass tacks, then please read on.
+            <ExternalLink text="GitHub" url="https://github.com/bronsonavila/" />. If you
+            would like a little more than just the brass tacks, then please read on.
           </p>
           <PosedDiv pose={isLoaded ? 'visible' : 'hidden'}>
             <PosedDivChild>
-              <h3 className="text-center mb-12 mt-16">Software Developer</h3>
+              <h3 className="text-center mb-12 mt-16">Software Development</h3>
               <p>
-                I've been developing websites and applications as a hobbyist since 2017
+                I have been developing websites and applications as a hobbyist since 2017
                 and professionally since 2018. I started off self-teaching via online
                 resources simply out of curiosity and having a desire to learn something
                 new. After falling down the rabbit hole, I quit my job as an attorney and
                 joined a coding bootcamp to shift careers.
               </p>
+              <p>Why make the change?</p>
               <p>
-                Why make the change? Software development offers the potential for
-                creative expression, open access to information, and general human
-                empowerment. There is, sadly, little room for such ideals in a legal
-                system designed to value precedent over innovation, secrecy over
-                disclosure, and conformity over self-determination.
+                To me, software development is one of the greatest tools for human
+                empowerment, as it offers the potential for unfettered creative expression
+                and open access to information. By contrast, American jurisprudence is
+                designed to value precedent over innovation, and the administration of
+                justice is often lacking in transparency. The environment can grow to be
+                quite stifling for those seeking real change.
               </p>
               <p>
                 My long-term goal is to use my knowledge of law and technology to improve
-                access to legal information and increase the efficiency of the
-                administration of justice. Meanwhile, I continue learning as much as I can
-                while seeking to help good people do good work. If you're similarly naive
-                and ambitious, I'm happy to make <Link to="/contact/">contact</Link>.
+                access to legal information and increase the efficiency of judicial
+                systems. Meanwhile, I continue learning as much as I can while seeking to
+                help good people do good work.
               </p>
             </PosedDivChild>
             <PosedDivChild>
-              <h3 className="text-center mb-12 mt-16">Attorney</h3>
+              <h3 className="text-center mb-12 mt-16">Legal Experience</h3>
               <p>
                 I previously worked as an attorney in criminal defense, plaintiff's civil
-                rights litigation, and legislative research and analysis. I wouldn't
-                discourage anyone from taking the same path, but any would-be lawyers
-                should know what they're getting into.
+                rights litigation, and legislative research and analysis. Although I no
+                longer actively practice law, I remain licensed in the State of Hawaii and
+                the Ninth Circuit Court of Appeals.
               </p>
               <p>
-                Litigation is not a truth-seeking process—it is a dispute resolution
-                process. You may hope to only stand for a righteous cause, but sometimes
-                you may have to fight for positions you do not agree with or might not
-                even believe to be true. The court does not care. Resolve the dispute. If
-                you can't, be prepared for trial.
+                My experiences in law have taught me lessons that I will carry for a
+                lifetime. Between managing demanding clients, researching novel legal
+                issues, crafting persuasive arguments, and wrestling with the elusive
+                nature of the truth—I did it all. The job is high-stakes, and it demands
+                empathy, preparedness, and a relentless attention to detail. These are
+                skills that can benefit anyone across all walks of life.
               </p>
+            </PosedDivChild>
+            <PosedDivChild>
+              <h3 className="text-center mb-12 mt-16">Open Invitation</h3>
               <p>
-                As a research attorney at my state legislature, I helped craft legislation
-                throughout the law-making process. Heard the expression about "laws and
-                sausages"? It's true.
-              </p>
-              <p>
-                Notwithstanding the perils, working as an attorney was a worthwhile
-                experience. The job is high-stakes, and it demands thoroughness,
-                preparedness, and relentless attention to detail. These skills continue to
-                serve me as a software developer.
+                Please feel free to <Link to="/contact/">contact</Link> me if you are
+                interested in learning more about law or programming, or if you are
+                considering a career change to software development. It's always nice to
+                correspond with like-minded people who share my naive ambition.
               </p>
             </PosedDivChild>
           </PosedDiv>
