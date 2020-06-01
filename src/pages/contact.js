@@ -88,15 +88,6 @@ export default () => {
               Please include your name, email address, and a brief message in the form
               below.
             </p>
-            <p>
-              I can also be found on{' '}
-              <ExternalLink text="GitHub" url="https://github.com/bronsonavila/" /> and{' '}
-              <ExternalLink
-                text="LinkedIn"
-                url="https://www.linkedin.com/in/bronsonavila/"
-              />
-              .
-            </p>
           </div>
           <PosedForm
             className="flex flex-col"
