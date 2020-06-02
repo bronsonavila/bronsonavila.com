@@ -1,17 +1,29 @@
 module.exports = {
   siteMetadata: {
     title: `Bronson Avila`,
-    description: `Bronson Avila`,
+    description: `Personal website of Bronson Avila`,
     author: `@bronsonavila`,
   },
   plugins: [
     {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: 'UA-109008540-2',
+        head: true,
+        anonymize: true,
+        respectDNT: true,
+        pageTransitionDelay: 850,
+        // Defers execution of google analytics script after page load
+        defer: false,
+      },
+    },
+    {
       resolve: `gatsby-plugin-sass`,
       options: {
         postCssPlugins: [
-          require("tailwindcss"),
-          require("./tailwind.config.js"),
-          require("autoprefixer"),
+          require('tailwindcss'),
+          require('./tailwind.config.js'),
+          require('autoprefixer'),
         ],
       },
     },
@@ -24,7 +36,7 @@ module.exports = {
         whitelistPatterns: [/img/, /gatsby/],
         // ignore: ['/ignored.css', 'prismjs/', 'docsearch.js/'], // Ignore files/folders
         // purgeOnly : ['components/', '/main.css', 'bootstrap/'], // Purge only these files/folders
-      }
+      },
     },
     `gatsby-plugin-react-helmet`,
     {
@@ -45,9 +57,9 @@ module.exports = {
       resolve: 'gatsby-plugin-react-svg',
       options: {
         rule: {
-          include: /static\/svg/
-        }
-      }
+          include: /static\/svg/,
+        },
+      },
     },
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
@@ -74,4 +86,4 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],
-}
+};
