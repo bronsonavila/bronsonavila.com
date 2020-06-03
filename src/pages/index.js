@@ -84,7 +84,7 @@ export default () => {
             />
             , and the{' '}
             <ExternalLink
-              text="United States Chamber of Commerce"
+              text="U.S. Chamber of Commerce"
               url="https://www.uschamber.com/sbindex/"
             />
             .
