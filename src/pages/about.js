@@ -71,7 +71,7 @@ export default () => {
                 I previously worked as an attorney in criminal defense, plaintiff's civil
                 rights litigation, and legislative research and analysis. Although I no
                 longer actively practice law, I remain licensed in the State of Hawaii and
-                the Ninth Circuit Court of Appeals.
+                the U.S. Ninth Circuit Court of Appeals.
               </p>
               <p>
                 My experiences in law have taught me lessons that I will carry for a
