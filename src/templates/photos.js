@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
+import IEWarning from '../components/IEWarning';
 import Metadata from '../components/Metadata';
 import PhotoGalleryModal from '../components/PhotoGalleryModal';
 
@@ -263,6 +264,11 @@ const setResizeEventListener = setLastInnerDimensions => {
 export default ({ data }) => {
   const content = data.markdownRemark;
   const images = data.allFile.edges;
+
+  // Disable page on Internet Explorer.
+  if (typeof document !== 'undefined' && !!document.documentMode) {
+    return <IEWarning title={content.frontmatter.title} />;
+  }
 
   const [activeCard, setActiveCard] = useState(null);
   const [isThrottled, setIsThrottled] = useState(false);

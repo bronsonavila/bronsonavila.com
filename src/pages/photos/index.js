@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 
+import IEWarning from '../../components/IEWarning';
 import Metadata from '../../components/Metadata';
 
 import lazyLoad from '../../utils/lazyLoad';
@@ -44,6 +45,11 @@ const setObserverCallback = delay => entries => {
 };
 
 export default () => {
+  // Disable page on Internet Explorer.
+  if (typeof document !== 'undefined' && !!document.documentMode) {
+    return <IEWarning title="Photos" />;
+  }
+
   // TODO: Configure `featuredImages` to use dynamic (rather than hardcoded) values.
   const data = useStaticQuery(
     graphql`
@@ -131,4 +137,3 @@ export default () => {
     </div>
   );
 };
-
