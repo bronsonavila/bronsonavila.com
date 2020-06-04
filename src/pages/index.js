@@ -41,7 +41,7 @@ export default () => {
 
   return (
     <>
-      <Metadata title="Home" />
+      <Metadata />
       <div className="container mx-auto px-4">
         {/* Image */}
         <div className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-center w-full mt-2 pb-5 pt-8">

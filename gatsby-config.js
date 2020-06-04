@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Bronson Avila`,
-    description: `Personal website of Bronson Avila`,
+    description: `Personal website of Bronson Avila—an attorney-turned-software developer residing in Hawaii.`,
     author: `@bronsonavila`,
   },
   plugins: [
