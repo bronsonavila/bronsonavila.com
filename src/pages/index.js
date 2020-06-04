@@ -41,7 +41,7 @@ export default () => {
 
   return (
     <>
-      <Metadata title="Welcome" />
+      <Metadata title="Home" />
       <div className="container mx-auto px-4">
         {/* Image */}
         <div className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-center w-full mt-2 pb-5 pt-8">
@@ -63,10 +63,10 @@ export default () => {
           className="global-editor mb-8 pb-1 opacity-0"
           pose={isLoaded ? 'visible' : 'hidden'}
         >
-          <p>
+          <h1 className="font-normal text-base tracking-normal leading-relaxed">
             Hi, I'm Bronson Avila—an attorney-turned-software developer residing in
             Hawaii.
-          </p>
+          </h1>
           <p>
             I currently develop websites and web applications for clients of{' '}
             <ExternalLink text="Atlantic 57" url="https://www.atlantic57.com/" />, the
