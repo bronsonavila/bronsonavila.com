@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import posed from 'react-pose';
 
-import ExternalLink from '../components/ExternalLink';
 import FormInput from '../components/FormInput';
 import Metadata from '../components/Metadata';
 
