@@ -263,7 +263,8 @@ const setResizeEventListener = setLastInnerDimensions => {
 
 export default ({ data }) => {
   const content = data.markdownRemark;
-  const images = data.allFile.edges;
+  const cardImages = data.cardImages.edges;
+  const modalImages = data.modalImages.edges;
 
   // Disable page on Internet Explorer.
   if (typeof document !== 'undefined' && !!document.documentMode) {
@@ -283,7 +284,7 @@ export default ({ data }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalWidth, setModalWidth] = useState(null);
 
-  const cardRefs = images.map(image => useRef(null));
+  const cardRefs = cardImages.map(image => useRef(null));
   const modalRef = useRef(null);
   const photoGalleryRef = useRef(null);
 
@@ -376,13 +377,13 @@ export default ({ data }) => {
                   ? setImageMetadata(content.frontmatter.image_metadata)
                   : null
               }
-              images={images}
+              images={modalImages}
               isOpen={modalIsOpen}
               lastNavigationDirection={lastNavigationDirection}
               ref={modalRef}
               width={modalWidth}
             />
-            {images.map((image, index) => (
+            {cardImages.map((image, index) => (
               <div className="photo-gallery__card-container h-full sm:w-full" key={index}>
                 <div
                   className="photo-gallery__card observable relative hidden h-0 bg-white
@@ -432,7 +433,25 @@ export const query = graphql`
         title
       }
     }
-    allFile(
+    cardImages: allFile(
+      filter: {
+        sourceInstanceName: { eq: "images" }
+        relativeDirectory: { eq: $relativeDirectory }
+      }
+      sort: { fields: name }
+    ) {
+      edges {
+        node {
+          base
+          childImageSharp {
+            fluid(maxWidth: 273, quality: 91) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    }
+    modalImages: allFile(
       filter: {
         sourceInstanceName: { eq: "images" }
         relativeDirectory: { eq: $relativeDirectory }
