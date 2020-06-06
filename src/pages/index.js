@@ -23,7 +23,7 @@ export default () => {
               base
               childImageSharp {
                 fluid(maxWidth: 273, quality: 91) {
-                  ...GatsbyImageSharpFluid
+                  ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
