@@ -61,7 +61,7 @@ const LetterA = posed.div({
 });
 
 const Logo = ({ siteTitle }) => (
-  <Link to="/" className="inline-block no-underline">
+  <Link aria-label="Logo" className="inline-block no-underline" to="/">
     <Container className="logo__container">
       <LetterB className="logo__box" />
       <Dot1 className="logo__box" />
