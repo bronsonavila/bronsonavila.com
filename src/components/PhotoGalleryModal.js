@@ -98,6 +98,7 @@ const PhotoGalleryModal = React.forwardRef(
         >
           {/* Buttons */}
           <button
+            aria-label="Close modal"
             className="photo-gallery-modal__button--close absolute top-0 right-0 text-red-800
               transition-all duration-300 ease-in-out opacity-0 z-10
               focus:text-red-700 focus:outline-none hover:text-red-700 hover:outline-none"
@@ -107,6 +108,7 @@ const PhotoGalleryModal = React.forwardRef(
             <Close />
           </button>
           <button
+            aria-label="Previous image"
             className="photo-gallery-modal__button--previous absolute left-0 text-gray-900
               transition-all duration-300 ease-in-out opacity-0 z-10
               focus:text-gray-600 focus:outline-none hover:text-gray-600 hover:outline-none"
@@ -116,6 +118,7 @@ const PhotoGalleryModal = React.forwardRef(
             <Caret />
           </button>
           <button
+            aria-label="Next image"
             className="photo-gallery-modal__button--next absolute right-0 text-gray-900
               transition-all duration-300 ease-in-out opacity-0 z-10
               focus:text-gray-600 focus:outline-none hover:text-gray-600 hover:outline-none"
