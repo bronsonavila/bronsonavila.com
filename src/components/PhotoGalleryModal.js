@@ -24,6 +24,7 @@ import Close from '../../static/svg/circle-close.svg';
  * @param {Integer} imagesLength - The total number of images in the gallery.
  * @param {Integer} index - The index of the current image in the map sequence.
  * @param {String} lastNavigationDirection - Either `next` or `previous`.
+ * @return {String}
  */
 const setImageClasses = (
   activeCardIndex,
@@ -31,22 +32,26 @@ const setImageClasses = (
   index,
   lastNavigationDirection
 ) => {
-  const isNext =
-    index === activeCardIndex + 1 ||
-    (index === 0 && activeCardIndex === imagesLength - 1);
-  const isPrevious =
-    index === activeCardIndex - 1 ||
-    (activeCardIndex === 0 && index === imagesLength - 1);
+  // Prevent scenario where `null + 1 === 1` is `true`.
+  if (activeCardIndex !== null) {
+    const isNext =
+      index === activeCardIndex + 1 ||
+      (index === 0 && activeCardIndex === imagesLength - 1);
+    const isPrevious =
+      index === activeCardIndex - 1 ||
+      (activeCardIndex === 0 && index === imagesLength - 1);
 
-  if (activeCardIndex === index) {
-    return 'is-displayed';
-  } else if (isNext) {
-    return `is-next ${lastNavigationDirection === 'next' ? 'will-fade-in' : ''}`;
-  } else if (isPrevious) {
-    return `is-previous ${lastNavigationDirection === 'previous' ? 'will-fade-in' : ''}`;
-  } else {
-    return '';
+    if (activeCardIndex === index) {
+      return 'is-displayed';
+    } else if (isNext) {
+      return `is-next ${lastNavigationDirection === 'next' ? 'will-fade-in' : ''}`;
+    } else if (isPrevious) {
+      return `is-previous ${
+        lastNavigationDirection === 'previous' ? 'will-fade-in' : ''
+      }`;
+    }
   }
+  return '';
 };
 
 const PhotoGalleryModal = React.forwardRef(
@@ -136,14 +141,12 @@ const PhotoGalleryModal = React.forwardRef(
               <figure
                 className={
                   `photo-gallery-modal__image hidden absolute top-0 w-full ` +
-                  // Prevent `null + 1 === 1` scenario from occurring in `setImageClasses()`.
-                  `${activeCardIndex !== null &&
-                    setImageClasses(
-                      activeCardIndex,
-                      images.length,
-                      index,
-                      lastNavigationDirection
-                    )}`
+                  `${setImageClasses(
+                    activeCardIndex,
+                    images.length,
+                    index,
+                    lastNavigationDirection
+                  )}`
                 }
                 key={index}
               >
