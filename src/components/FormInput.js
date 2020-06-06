@@ -9,8 +9,9 @@ const FormInput = React.forwardRef(
             <FormLabel label={label} labelClasses={labelClasses} name={name} />
             <textarea
               className={`font-sans border border-gray-400 leading-relaxed px-5 py-3 ${inputClasses}`}
-              name={name}
+              id={name}
               maxLength="65535"
+              name={name}
               ref={ref}
               required={required}
               rows="4"
@@ -23,8 +24,9 @@ const FormInput = React.forwardRef(
             <FormLabel label={label} labelClasses={labelClasses} name={name} />
             <input
               className={`font-sans border border-gray-400 mb-6 px-5 py-3 ${inputClasses}`}
-              type={type}
+              id={name}
               name={name}
+              type={type}
               ref={ref}
               required={required}
             />
