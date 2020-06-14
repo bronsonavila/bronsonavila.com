@@ -1,6 +1,3 @@
-/**
- * Wraps all pages with a static header and a transition-enabled router.
- */
 import React from 'react';
 import { PoseGroup } from 'react-pose';
 
@@ -8,6 +5,14 @@ import Header from './Header';
 import Layout from './Layout';
 import Transition from './Transition';
 
+/**
+ * Page Wrapper
+ *
+ * Wraps all pages with a static header and a transition-enabled router.
+ *
+ * @param {Object} children - React's `children` prop
+ * @param {Object} location - The window's `location` object
+ */
 const PageWrapper = ({ children, location }) => (
   <>
     <Header pathname={location.pathname} />

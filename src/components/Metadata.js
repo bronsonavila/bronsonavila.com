@@ -1,16 +1,16 @@
-/**
- * Meta component that queries for data with
- *  Gatsby's useStaticQuery React hook
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
-import React from 'react';
-import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { useStaticQuery, graphql } from 'gatsby';
+import React from 'react';
+import Helmet from 'react-helmet';
 
-function Meta({ description, lang, meta, title }) {
+/**
+ * Metadata
+ *
+ * @param {String} description - The description of the page
+ * @param {String} [lang='en'] - The language of the page (BCP47 syntax)
+ * @param {Object[]} [meta=[]] - Array of `meta` tags
+ * @param {String} title - The title of the page
+ */
+const Metadata = ({ description, lang = 'en', meta = [], title }) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -24,15 +24,12 @@ function Meta({ description, lang, meta, title }) {
       }
     `
   );
-
   const metaDescription = description || site.siteMetadata.description;
   const metaTitle = title || site.siteMetadata.title;
 
   return (
     <Helmet
-      htmlAttributes={{
-        lang,
-      }}
+      htmlAttributes={{ lang }}
       title={metaTitle}
       titleTemplate={title ? `%s | ${site.siteMetadata.title}` : site.siteMetadata.title}
       meta={[
@@ -71,19 +68,6 @@ function Meta({ description, lang, meta, title }) {
       ].concat(meta)}
     />
   );
-}
-
-Meta.defaultProps = {
-  lang: `en`,
-  meta: [],
-  description: ``,
 };
 
-Meta.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object),
-  title: PropTypes.string,
-};
-
-export default Meta;
+export default Metadata;

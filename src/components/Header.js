@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react';
 import { Link } from 'gatsby';
+import React, { useEffect, useState } from 'react';
 
 import Logo from './Logo';
 
+/**
+ * Header
+ *
+ * @param {String} pathname - URL path
+ */
 const Header = ({ pathname }) => (
   <header>
     <div className="border-b border-gray-400 h-full mx-6">

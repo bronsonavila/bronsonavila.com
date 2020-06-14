@@ -69,23 +69,23 @@ export default () => {
           </h1>
           <p>
             I currently develop websites and web applications for clients of{' '}
-            <ExternalLink text="Atlantic 57" url="https://www.atlantic57.com/" />, the
+            <ExternalLink href="https://www.atlantic57.com/" text="Atlantic 57" />, the
             consulting and creative division of{' '}
             <span className="italic">The Atlantic</span>. My work has reached
             organizations such as the{' '}
             <ExternalLink
+              href="https://canceratlas.cancer.org/"
               text="American Cancer Society"
-              url="https://canceratlas.cancer.org/"
             />
             , the{' '}
             <ExternalLink
+              href="https://www.opengovpartnership.org/"
               text="Open Government Partnership"
-              url="https://www.opengovpartnership.org/"
             />
             , and the{' '}
             <ExternalLink
+              href="https://www.uschamber.com/sbindex/"
               text="U.S. Chamber of Commerce"
-              url="https://www.uschamber.com/sbindex/"
             />
             .
           </p>

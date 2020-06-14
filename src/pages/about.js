@@ -32,11 +32,11 @@ export default () => {
           <p>
             For an outline of my experience and education, please refer to my{' '}
             <ExternalLink
+              href="https://www.linkedin.com/in/bronsonavila/"
               text="LinkedIn"
-              url="https://www.linkedin.com/in/bronsonavila/"
             />{' '}
             profile. You can also find some of my pet projects and coding notes on{' '}
-            <ExternalLink text="GitHub" url="https://github.com/bronsonavila/" />. If you
+            <ExternalLink href="https://github.com/bronsonavila/" text="GitHub" />. If you
             would like a little more than just the brass tacks, then please read on.
           </p>
           <PosedDiv pose={isLoaded ? 'visible' : 'hidden'}>

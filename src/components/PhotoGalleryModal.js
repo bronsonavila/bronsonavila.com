@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import Img from 'gatsby-image';
+import React, { useState } from 'react';
 
 import Caret from '../../static/svg/circle-caret.svg';
 import Close from '../../static/svg/circle-close.svg';
@@ -54,6 +54,24 @@ const setImageClasses = (
   return '';
 };
 
+/**
+ * Photo Gallery Modal
+ *
+ * Modal displayed within the the `photos` template.
+ *
+ * @param {Integer} activeCardIndex
+ * @param {Function} handleNextImage
+ * @param {Function} handlePreviousImage
+ * @param {Function} handleClose
+ * @param {Boolean} hasSmoothTransition
+ * @param {Integer} height
+ * @param {Object} imageMetadata
+ * @param {Object[]} images
+ * @param {Boolean} isOpen
+ * @param {String} lastNavigationDirection
+ * @param {Object} ref
+ * @param {Integer} width
+ */
 const PhotoGalleryModal = React.forwardRef(
   (
     {

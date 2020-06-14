@@ -1,6 +1,6 @@
+import { Link } from 'gatsby';
 import React from 'react';
 import posed from 'react-pose';
-import { Link } from 'gatsby';
 
 const duration = 300;
 const ease = 'easeOut';
@@ -11,23 +11,23 @@ const position = 17;
  * @param {Integer} [y=0] - The initial `translateY` position of the logo box.
  * @return {Object} - The initial pose of the logo box.
  */
-const setLogoBoxInitPose = ({ x = 0, y = 0 } = {}) => {
-  return { x, y, transition: { duration, ease } };
-};
+const setLogoBoxInitPose = ({ x = 0, y = 0 } = {}) => ({
+  x,
+  y,
+  transition: { duration, ease },
+});
 
 /**
- * @param {Integer} [x=0] - The new `translateX` position of the logo box.
- * @param {Integer} [y=0] - The new `translateY` position of the logo box.
+ * @param {Integer} [x=0] - The `translateX` position of the logo box on hover.
+ * @param {Integer} [y=0] - The `translateY` position of the logo box on hover.
  * @return {Object} - The pose that the logo box will change to on hover.
  */
-const setLogoBoxHoverPose = ({ x = 0, y = 0 } = {}) => {
-  return {
-    x,
-    y,
-    onValueChange: e => e.element.classList.add('is-hovered'),
-    transition: { duration, ease },
-  };
-};
+const setLogoBoxHoverPose = ({ x = 0, y = 0 } = {}) => ({
+  x,
+  y,
+  onValueChange: e => e.element.classList.add('is-hovered'),
+  transition: { duration, ease },
+});
 
 const Container = posed.div({
   hoverable: true,
@@ -60,7 +60,7 @@ const LetterA = posed.div({
   hover: setLogoBoxHoverPose({ y: position }), // Move left.
 });
 
-const Logo = ({ siteTitle }) => (
+const Logo = () => (
   <Link aria-label="Logo" className="inline-block no-underline" to="/">
     <Container className="logo__container">
       <LetterB className="logo__box" />

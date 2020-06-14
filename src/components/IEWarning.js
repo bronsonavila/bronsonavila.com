@@ -2,6 +2,11 @@ import React from 'react';
 
 import Metadata from './Metadata';
 
+/**
+ * IE Warning
+ *
+ * @param {String} title - Metadata title
+ */
 const IEWarning = ({ title }) => (
   <div className="container mx-auto px-4">
     <Metadata title={title} />

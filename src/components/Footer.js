@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'gatsby';
+import React, { useEffect, useRef, useState } from 'react';
 
 /**
  * Reveals the footer when the page is no longer scrollable. Add an `offset`
