@@ -65,7 +65,6 @@ const setImageClasses = (
  * @param {Function} handleClose
  * @param {Boolean} hasSmoothTransition
  * @param {Integer} height
- * @param {Object} imageMetadata
  * @param {Object[]} images
  * @param {Boolean} isOpen
  * @param {String} lastNavigationDirection
@@ -81,7 +80,6 @@ const PhotoGalleryModal = React.forwardRef(
       handleClose,
       hasSmoothTransition,
       height,
-      imageMetadata,
       images,
       isOpen,
       lastNavigationDirection,
@@ -152,37 +150,31 @@ const PhotoGalleryModal = React.forwardRef(
           </button>
 
           {/* Images */}
-          {images.map((image, index) => {
-            const imageName = image.node.base;
-
-            return (
-              <figure
-                className={
-                  `photo-gallery-modal__image hidden absolute top-0 w-full ` +
-                  `${setImageClasses(
-                    activeCardIndex,
-                    images.length,
-                    index,
-                    lastNavigationDirection
-                  )}`
-                }
-                key={index}
-              >
-                <Img fluid={image.node.childImageSharp.fluid} />
-                {imageMetadata &&
-                  imageMetadata[imageName] &&
-                  imageMetadata[imageName].caption && (
-                    <figcaption
-                      className="absolute bottom-0 text-sm md:text-base text-white
-                      leading-relaxed tracking-tighter transition-all duration-300 ease-in-out
-                      m-3 md:m-4 px-6 md:px-8 py-4 md:py-6 opacity-0 w-full"
-                    >
-                      {imageMetadata[imageName].caption}
-                    </figcaption>
-                  )}
-              </figure>
-            );
-          })}
+          {images.map((image, index) => (
+            <figure
+              className={
+                `photo-gallery-modal__image hidden absolute top-0 w-full ` +
+                `${setImageClasses(
+                  activeCardIndex,
+                  images.length,
+                  index,
+                  lastNavigationDirection
+                )}`
+              }
+              key={index}
+            >
+              <Img fluid={image.image.fluid} />
+              {image.description && (
+                <figcaption
+                  className="absolute bottom-0 text-sm md:text-base text-white
+                    leading-relaxed tracking-tighter transition-all duration-300 ease-in-out
+                    m-3 md:m-4 px-6 md:px-8 py-4 md:py-6 opacity-0 w-full"
+                >
+                  {image.description}
+                </figcaption>
+              )}
+            </figure>
+          ))}
         </div>
       </div>
     );

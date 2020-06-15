@@ -38,6 +38,9 @@ exports.createPages = async ({ graphql, actions }) => {
               slug
               template
             }
+            frontmatter {
+              title
+            }
           }
         }
       }
@@ -46,14 +49,13 @@ exports.createPages = async ({ graphql, actions }) => {
 
   await result.data.allMarkdownRemark.edges.forEach(({ node }) => {
     const slug = node.fields.slug;
-    // Trim prepending and appending slashes from slug to get directory:
-    const relativeDirectory = slug.substring(1, slug.length - 1);
+    const title = node.frontmatter.title;
 
     createPage({
       path: slug,
       component: path.resolve(`./src/templates/${node.fields.template}.js`),
       // Context data is available in page queries as GraphQL variables.
-      context: { slug, relativeDirectory },
+      context: { slug, title },
     });
   });
 };

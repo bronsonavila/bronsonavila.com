@@ -263,8 +263,8 @@ const setResizeEventListener = setLastInnerDimensions => {
 
 export default ({ data }) => {
   const content = data.markdownRemark;
-  const cardImages = data.cardImages.edges;
-  const modalImages = data.modalImages.edges;
+  const cardImages = data.cardImages.nodes;
+  const modalImages = data.modalImages.nodes;
 
   // Disable page on Internet Explorer.
   if (typeof document !== 'undefined' && !!document.documentMode) {
@@ -372,11 +372,6 @@ export default ({ data }) => {
               }}
               hasSmoothTransition={modalHasSmoothTransition}
               height={modalWidth * (2 / 3)} // Supports images with a 3:2 aspect ratio ONLY.
-              imageMetadata={
-                content.frontmatter.image_metadata
-                  ? setImageMetadata(content.frontmatter.image_metadata)
-                  : null
-              }
               images={modalImages}
               isOpen={modalIsOpen}
               lastNavigationDirection={lastNavigationDirection}
@@ -389,7 +384,6 @@ export default ({ data }) => {
                   className="photo-gallery__card observable relative hidden h-0 bg-white
                   border border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
                   data-index={index}
-                  data-node-base={image.node.base}
                   data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
                   onClick={e => {
                     if (!isThrottled) {
@@ -403,11 +397,7 @@ export default ({ data }) => {
                   onMouseDown={e => (cardRefs[index].current.style = '')}
                   ref={cardRefs[index]}
                 >
-                  <Img
-                    alt={image.node.base.split('.')[0]}
-                    className="h-full w-full"
-                    fluid={image.node.childImageSharp.fluid}
-                  />
+                  <Img alt={image.title} className="h-full w-full" fluid={image.image.fluid} />
                 </div>
               </div>
             ))}
@@ -422,49 +412,37 @@ export default ({ data }) => {
 // noticeable loss in image quality. The `maxWidth` of images should be 2px smaller
 // than the `modalWidth` value to account for a 1px border.
 export const query = graphql`
-  query($slug: String!, $relativeDirectory: String!) {
+  query($slug: String!, $title: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {
-        image_metadata {
-          name
-          caption
-        }
         title
       }
     }
-    cardImages: allFile(
-      filter: {
-        sourceInstanceName: { eq: "images" }
-        relativeDirectory: { eq: $relativeDirectory }
-      }
-      sort: { fields: name }
+    cardImages: allContentfulGalleryImage(
+      filter: { gallery: { title: { eq: $title } } }
+      sort: { order: ASC, fields: title }
     ) {
-      edges {
-        node {
-          base
-          childImageSharp {
-            fluid(maxWidth: 273, quality: 91) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
+      nodes {
+        title
+        description
+        image {
+          fluid(maxWidth: 273, quality: 91) {
+            ...GatsbyContentfulFluid_withWebp
           }
         }
       }
     }
-    modalImages: allFile(
-      filter: {
-        sourceInstanceName: { eq: "images" }
-        relativeDirectory: { eq: $relativeDirectory }
-      }
-      sort: { fields: name }
+    modalImages: allContentfulGalleryImage(
+      filter: { gallery: { title: { eq: $title } } }
+      sort: { order: ASC, fields: title }
     ) {
-      edges {
-        node {
-          base
-          childImageSharp {
-            fluid(maxWidth: 929, quality: 91) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
+      nodes {
+        title
+        description
+        image {
+          fluid(maxWidth: 929, quality: 91) {
+            ...GatsbyContentfulFluid_withWebp
           }
         }
       }
