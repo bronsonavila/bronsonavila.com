@@ -17,7 +17,7 @@ const FormInput = React.forwardRef(
       case 'textarea':
         return (
           <>
-            <FormLabel for={name} label={label} labelClasses={labelClasses} />
+            <FormLabel htmlFor={name} label={label} labelClasses={labelClasses} />
             <textarea
               className={`font-sans border border-gray-400 leading-relaxed px-5 py-3 ${inputClasses}`}
               id={name}
@@ -32,7 +32,7 @@ const FormInput = React.forwardRef(
       default:
         return (
           <>
-            <FormLabel for={name} label={label} labelClasses={labelClasses} />
+            <FormLabel htmlFor={name} label={label} labelClasses={labelClasses} />
             <input
               className={`font-sans border border-gray-400 mb-6 px-5 py-3 ${inputClasses}`}
               id={name}
@@ -50,12 +50,12 @@ const FormInput = React.forwardRef(
 /**
  * Form Label
  *
- * @param {String} id - The `id` of the form-related element
+ * @param {String} htmlFor - The `id` of the form-related element
  * @param {String} label - Inner text
  * @param {String} labelClasses - Classes applied to the label
  */
-const FormLabel = ({ id, label, labelClasses }) => (
-  <label htmlFor={id} className={`pb-3 ${labelClasses}`}>
+const FormLabel = ({ htmlFor, label, labelClasses }) => (
+  <label htmlFor={htmlFor} className={`pb-3 ${labelClasses}`}>
     <div className="form__label-bullet inline-block bg-red-600 rounded-full mr-3"></div>
     <span className="font-sans text-sm text-gray-900">{label}</span>
   </label>
