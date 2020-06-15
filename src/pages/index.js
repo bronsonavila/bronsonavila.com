@@ -17,15 +17,13 @@ export default () => {
   const data = useStaticQuery(
     graphql`
       query {
-        allFile(filter: { base: { eq: "bronson-avila.jpg" } }) {
-          edges {
-            node {
-              base
-              childImageSharp {
-                fluid(maxWidth: 273, quality: 91) {
-                  ...GatsbyImageSharpFluid_withWebp
-                }
-              }
+        image: allContentfulAsset(
+          filter: { file: { fileName: { eq: "bronson-avila.jpg" } } }
+        ) {
+          nodes {
+            title
+            fluid(maxWidth: 273, quality: 91) {
+              ...GatsbyContentfulFluid_withWebp
             }
           }
         }
@@ -33,7 +31,7 @@ export default () => {
     `
   );
 
-  const image = data.allFile.edges[0];
+  const image = data.image.nodes[0];
 
   useEffect(() => {
     setIsLoaded(true);
@@ -51,11 +49,7 @@ export default () => {
                 border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
               to="/about/"
             >
-              <Img
-                alt={image.node.base.split('.')[0]}
-                className="h-full w-full"
-                fluid={image.node.childImageSharp.fluid}
-              />
+              <Img alt={image.title} className="h-full w-full" fluid={image.fluid} />
             </Link>
           </div>
         </div>
