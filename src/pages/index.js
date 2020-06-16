@@ -6,8 +6,14 @@ import posed from 'react-pose';
 import ExternalLink from '../components/ExternalLink';
 import Metadata from '../components/Metadata';
 
-const PosedText = posed.div({
-  visible: { y: 0, opacity: 1, delay: 350, transition: { ease: 'easeOut' } },
+const duration = 850;
+
+const PosedDiv = posed.div({
+  visible: { staggerChildren: duration / 2 },
+});
+
+const PosedDivChild = posed.div({
+  visible: { y: 0, opacity: 1, transition: { ease: 'easeOut' } },
   hidden: { y: 50, opacity: 0 },
 });
 
@@ -40,9 +46,13 @@ export default () => {
   return (
     <>
       <Metadata />
-      <div className="container mx-auto px-4">
-        {/* Image */}
-        <div className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-center w-full mt-2 pb-5 pt-8">
+      <PosedDiv className="container mx-auto px-4" pose={isLoaded ? 'visible' : 'hidden'}>
+        <PosedDivChild
+          className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-center 
+            w-full mt-2 pb-5 pt-8 opacity-0"
+          pose={isLoaded ? 'visible' : 'hidden'}
+        >
+          {/* Image */}
           <div className="photo-gallery-index__card-container--single h-full sm:w-full">
             <Link
               className="photo-gallery-index__card observable is-visible has-entered relative hidden h-0 bg-white
@@ -52,8 +62,8 @@ export default () => {
               <Img alt={image.title} className="h-full w-full" fluid={image.fluid} />
             </Link>
           </div>
-        </div>
-        <PosedText
+        </PosedDivChild>
+        <PosedDivChild
           className="global-editor mb-8 pb-1 opacity-0"
           pose={isLoaded ? 'visible' : 'hidden'}
         >
@@ -88,8 +98,8 @@ export default () => {
             problems, or are interested in the intersection of law and technology, I'd
             love to chat.
           </p>
-        </PosedText>
-      </div>
+        </PosedDivChild>
+      </PosedDiv>
     </>
   );
 };
