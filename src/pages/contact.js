@@ -128,7 +128,7 @@ export default () => {
             <PosedFormChild className="relative text-center mt-m pt-1 w-full">
               <p
                 className={`form__feedback absolute font-sans text-center leading-relaxed opacity-0 w-full
-                transition duration-300 ease-in-out ${submitStatus}`}
+                  transition duration-300 ease-in-out ${submitStatus}`}
               >
                 {submitStatus === 'error' ? (
                   <>
@@ -142,7 +142,7 @@ export default () => {
               </p>
               <input
                 className={`form__submit cursor-pointer font-sans text-white bg-gray-900 border border-gray-900 mt-12 px-10 py-3
-                transition duration-300 ease-in-out hover:bg-gray-600 hover:border-gray-600 ${submitStatus}`}
+                  transition duration-300 ease-in-out hover:bg-gray-600 hover:border-gray-600 ${submitStatus}`}
                 disabled={submitStatus}
                 ref={refs.submitButton}
                 type="submit"

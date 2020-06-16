@@ -86,7 +86,7 @@ export default () => {
             <div className="photo-gallery-index__card-container h-full sm:w-full">
               <Link
                 className="photo-gallery-index__card observable relative hidden h-0 bg-white
-                    border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
+                  border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
                 data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
                 onMouseDown={e => (cardRefs[index].current.style = '')}
                 ref={cardRefs[index]}

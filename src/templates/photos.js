@@ -382,7 +382,7 @@ export default ({ data }) => {
               <div className="photo-gallery__card-container h-full sm:w-full" key={index}>
                 <div
                   className="photo-gallery__card observable relative hidden h-0 bg-white
-                  border border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
+                    border border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
                   data-index={index}
                   data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
                   onClick={e => {
