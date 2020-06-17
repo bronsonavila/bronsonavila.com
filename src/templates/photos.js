@@ -436,7 +436,7 @@ export default ({ data }) => {
           {nextGallery && previousGallery && (
             <div
               className="photo-gallery-navigation observable hidden h-0 mb-20 md:mb-16 md:pb-3 lg:pb-0
-                transition-opacity duration-300 ease-in-out opacity-0"
+                transition duration-300 ease-in-out opacity-0"
               data-observer-root-margin="0px 0px 25%"
             >
               <h3 className="text-center mb-12 mt-16 md:mt-14 lg:mt-10">More Photos</h3>
