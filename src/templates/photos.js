@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
+import React, { useEffect, useRef, useState } from 'react';
 
 import IEWarning from '../components/IEWarning';
 import Metadata from '../components/Metadata';
@@ -96,18 +96,17 @@ const changeModalImage = (activeCard, cardRefs, direction, setActiveCard) => {
 };
 
 /**
- * Changes the display of `.photo-gallery__card` elements from `none` to `block` at
- * staggered intervals. This allows the first batch of initially displayed
- * cards to be revealed in sequential order rather than all at once. This is
- * because the `lazyLoad` IntersectionObserver will not detect elements until
- * `display: none` has been changed to a visible value.
+ * Changes the display of `.observable` elements from `none` to `block` at staggered
+ * intervals. This allows the image cards above the fold to be revealed in sequential
+ * order rather than all at once. This is because the `lazyLoad` IntersectionObserver
+ * will not detect elements until `display: none` has been changed to a visible value.
  */
 const displayPhotoGalleryCards = () => {
-  const cards = [...document.querySelectorAll('.photo-gallery__card')];
+  const observables = [...document.querySelectorAll('.observable')];
 
-  cards.forEach((card, index) => {
+  observables.forEach((observable, index) => {
     // Must trigger before `setObserverCallback` runs.
-    setTimeout(() => card.classList.add('is-visible'), (index * delay) / 3.666);
+    setTimeout(() => observable.classList.add('is-visible'), (index * delay) / 3.666);
   });
 };
 
@@ -208,20 +207,6 @@ const resetModal = (modal, setActiveCard, setModalIsOpen) => {
 };
 
 /**
- * Transforms the GraphQL `image_metadata` array into an object where each image's
- * `name` is a key.
- *
- * @param {Array} imageMetadata - `image_metadata` with `name` and `caption` subfields.
- * @return {Object}
- */
-const setImageMetadata = imageMetadata => {
-  return imageMetadata.reduce((map, image) => {
-    map[image.name] = { caption: image.caption };
-    return map;
-  }, {});
-};
-
-/**
  * Adds an event listener to the `document` object to track keyboard events.
  *
  * @param {Function} setLastKeyboardEvent
@@ -234,8 +219,33 @@ const setKeyboardEventListeners = setLastKeyboardEvent => {
 };
 
 /**
+ * Sets the appropriate navigation links for next/previous photo galleries.
+ *
+ * @param {Object[]} allGalleries - All Gallery content from Contentful.
+ * @param {String} currentGalleryTitle - The title of the gallery currently being viewed.
+ * @param {Function} setNextGallery
+ * @param {Function} setPreviousGallery
+ */
+const setNextAndPreviousGalleries = (
+  allGalleries,
+  currentGalleryTitle,
+  setNextGallery,
+  setPreviousGallery
+) => {
+  const currentGallery = allGalleries.filter(
+    gallery => gallery.node.title === currentGalleryTitle
+  )[0];
+  const nextGallery = currentGallery.next ?? allGalleries[0].node;
+  const previousGallery =
+    currentGallery.previous ?? allGalleries[allGalleries.length - 1].node;
+
+  setNextGallery(nextGallery);
+  setPreviousGallery(previousGallery);
+};
+
+/**
  * Callback for the `lazyLoad` IntersectionObserver. Animates the entrance of
- * each `.photo-gallery__card` element.
+ * each `.observable` element.
  *
  * @param {Integer} delay - The `setTimeout` delay value.
  * @return {Function} - An IntersectionObserver callback function.
@@ -262,8 +272,9 @@ const setResizeEventListener = setLastInnerDimensions => {
 };
 
 export default ({ data }) => {
-  const content = data.markdownRemark;
+  const allGalleries = data.allGalleries.edges;
   const cardImages = data.cardImages.nodes;
+  const content = data.markdownRemark;
   const modalImages = data.modalImages.nodes;
 
   // Disable page on Internet Explorer.
@@ -283,6 +294,8 @@ export default ({ data }) => {
   const [modalHasSmoothTransition, setModalHasSmoothTransition] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalWidth, setModalWidth] = useState(null);
+  const [nextGallery, setNextGallery] = useState(null);
+  const [previousGallery, setPreviousGallery] = useState(null);
 
   const cardRefs = cardImages.map(image => useRef(null));
   const modalRef = useRef(null);
@@ -319,6 +332,16 @@ export default ({ data }) => {
     }
   }, [lastKeyboardEvent]);
 
+  // Navigation links.
+  useEffect(() => {
+    setNextAndPreviousGalleries(
+      allGalleries,
+      content.frontmatter.title,
+      setNextGallery,
+      setPreviousGallery
+    );
+  }, [allGalleries, content]);
+
   // Resize effects (reset modal whenever the screen size changes).
   useEffect(() => setResizeEventListener(setLastInnerDimensions), []);
   useEffect(() => {
@@ -339,12 +362,15 @@ export default ({ data }) => {
         ref={photoGalleryRef}
       >
         <div className="container mx-auto px-4">
+          {/* Title */}
           <h1 className="text-center mb-16 pb-1 pt-8">{content.frontmatter.title}</h1>
+          {/* Text Content */}
           <div
             className="global-editor mb-16 pb-1"
             dangerouslySetInnerHTML={{ __html: content.html }}
           />
-          <div className="photo-gallery__cards flex flex-wrap justify-between w-full">
+          {/* Cards */}
+          <div className="photo-gallery__cards flex flex-wrap justify-between w-full mb-6">
             <PhotoGalleryModal
               activeCardIndex={activeCard && Number(activeCard.dataset.index)}
               handleClose={() => {
@@ -384,7 +410,7 @@ export default ({ data }) => {
                   className="photo-gallery__card observable relative hidden h-0 bg-white
                     border border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
                   data-index={index}
-                  data-observer-root-margin="0px 0px 25%" // Best with bottom margin.
+                  data-observer-root-margin="0px 0px 25%" // Best with 25% bottom margin.
                   onClick={e => {
                     if (!isThrottled) {
                       e.stopPropagation();
@@ -397,11 +423,52 @@ export default ({ data }) => {
                   onMouseDown={e => (cardRefs[index].current.style = '')}
                   ref={cardRefs[index]}
                 >
-                  <Img alt={image.title} className="h-full w-full" fluid={image.image.fluid} />
+                  <Img
+                    alt={image.title}
+                    className="h-full w-full"
+                    fluid={image.image.fluid}
+                  />
                 </div>
               </div>
             ))}
           </div>
+          {/* More Photos */}
+          {nextGallery && previousGallery && (
+            <div
+              className="photo-gallery-navigation observable hidden h-0 mb-20 md:mb-16 md:pb-3 lg:pb-0
+                transition-opacity duration-300 ease-in-out opacity-0"
+              data-observer-root-margin="0px 0px 25%"
+            >
+              <h3 className="text-center mb-12 mt-16 md:mt-14 lg:mt-10">More Photos</h3>
+              <div className="photo-gallery-navigation__cards flex items-center justify-between sm:justify-center w-full">
+                {[previousGallery, nextGallery].map((gallery, index) => (
+                  <React.Fragment key={index}>
+                    <div
+                      className={`photo-gallery-navigation__card-container h-full sm:w-full ${
+                        index !== 0 ? 'sm:ml-9 md:ml-11 lg:ml-14' : ''
+                      }`}
+                    >
+                      <Link
+                        className="photo-gallery-navigation__card observable relative hidden h-0 bg-white
+                          border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
+                        data-observer-root-margin="0px 0px 25%"
+                        to={`/photos/${gallery.slug}/`}
+                      >
+                        <Img
+                          alt={gallery.featured_image.title}
+                          className="h-full w-full"
+                          fluid={gallery.featured_image.fluid}
+                        />
+                        <p className="photo-gallery-navigation__card-label absolute whitespace-pre mt-10 hover:text-gray-600">
+                          {gallery.title}
+                        </p>
+                      </Link>
+                    </div>
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </>
@@ -417,6 +484,37 @@ export const query = graphql`
       html
       frontmatter {
         title
+      }
+    }
+    allGalleries: allContentfulGallery(sort: { order: ASC, fields: title }) {
+      edges {
+        next {
+          title
+          slug
+          featured_image {
+            fluid(maxWidth: 273, quality: 91) {
+              ...GatsbyContentfulFluid_withWebp
+            }
+          }
+        }
+        node {
+          title
+          slug
+          featured_image {
+            fluid(maxWidth: 273, quality: 91) {
+              ...GatsbyContentfulFluid_withWebp
+            }
+          }
+        }
+        previous {
+          title
+          slug
+          featured_image {
+            fluid(maxWidth: 273, quality: 91) {
+              ...GatsbyContentfulFluid_withWebp
+            }
+          }
+        }
       }
     }
     cardImages: allContentfulGalleryImage(
