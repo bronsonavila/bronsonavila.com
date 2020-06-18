@@ -141,6 +141,7 @@ export default () => {
                 )}
               </p>
               <input
+                aria-label="submit"
                 className={`form__submit cursor-pointer font-sans text-white bg-gray-900 border border-gray-900 mt-12 px-10 py-3
                   transition duration-300 ease-in-out hover:bg-gray-600 hover:border-gray-600 ${submitStatus}`}
                 disabled={submitStatus}

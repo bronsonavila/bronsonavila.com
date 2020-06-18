@@ -19,6 +19,7 @@ const FormInput = React.forwardRef(
           <>
             <FormLabel htmlFor={name} label={label} labelClasses={labelClasses} />
             <textarea
+              aria-label={label}
               className={`font-sans border border-gray-400 leading-relaxed px-5 py-3 ${inputClasses}`}
               id={name}
               maxLength="65535"
@@ -34,6 +35,7 @@ const FormInput = React.forwardRef(
           <>
             <FormLabel htmlFor={name} label={label} labelClasses={labelClasses} />
             <input
+              aria-label={label}
               className={`font-sans border border-gray-400 mb-6 px-5 py-3 ${inputClasses}`}
               id={name}
               name={name}
