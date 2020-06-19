@@ -44,7 +44,7 @@ const setObserverCallback = delay => entries => {
   });
 };
 
-export default () => {
+export default ({ location }) => {
   // Disable page on Internet Explorer.
   if (typeof document !== 'undefined' && !!document.documentMode) {
     return <IEWarning title="Photos" />;
@@ -78,7 +78,11 @@ export default () => {
 
   return (
     <div className="container mx-auto px-4">
-      <Metadata title="Photos" />
+      <Metadata
+        description="Photos by Bronson Avila"
+        pathname={location.pathname}
+        title="Photos"
+      />
       <h1 className="text-center mb-20 pb-3 pt-8">Photos</h1>
       <div className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-between w-full">
         {galleries.map((gallery, index) => (

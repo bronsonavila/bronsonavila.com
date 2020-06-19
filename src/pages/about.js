@@ -16,7 +16,7 @@ const PosedDivChild = posed.div({
   hidden: { y: 50, opacity: 0 },
 });
 
-export default () => {
+export default ({ location }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,11 @@ export default () => {
 
   return (
     <>
-      <Metadata title="About" />
+      <Metadata
+        description="About Bronson Avila"
+        pathname={location.pathname}
+        title="About"
+      />
       <div className="container mx-auto px-4">
         <h1 className="text-center mb-16 pb-1 pt-8">About</h1>
         <div className="global-editor mb-8 pb-1">

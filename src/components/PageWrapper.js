@@ -11,7 +11,7 @@ import Transition from './Transition';
  * Wraps all pages with a static header and a transition-enabled router.
  *
  * @param {Object} children - React's `children` prop
- * @param {Object} location - The window's `location` object
+ * @param {Object} location - React Router's `location` prop
  */
 const PageWrapper = ({ children, location }) => (
   <>

@@ -207,6 +207,34 @@ const resetModal = (modal, setActiveCard, setModalIsOpen) => {
 };
 
 /**
+ * Sets the appropriate navigation links for next/previous photo galleries.
+ *
+ * @param {Object[]} allGalleries - All Gallery content from Contentful.
+ * @param {String} currentGalleryTitle - The title of the gallery currently being viewed.
+ * @param {Function} setGalleryCurrent
+ * @param {Function} setGalleryNext
+ * @param {Function} setGalleryPrevious
+ */
+const setGalleriesState = (
+  allGalleries,
+  currentGalleryTitle,
+  setGalleryCurrent,
+  setGalleryNext,
+  setGalleryPrevious
+) => {
+  const galleryCurrent = allGalleries.filter(
+    gallery => gallery.node.title === currentGalleryTitle
+  )[0];
+  const galleryNext = galleryCurrent.next ?? allGalleries[0].node;
+  const galleryPrevious =
+    galleryCurrent.previous ?? allGalleries[allGalleries.length - 1].node;
+
+  setGalleryCurrent(galleryCurrent);
+  setGalleryNext(galleryNext);
+  setGalleryPrevious(galleryPrevious);
+};
+
+/**
  * Adds an event listener to the `document` object to track keyboard events.
  *
  * @param {Function} setLastKeyboardEvent
@@ -216,31 +244,6 @@ const setKeyboardEventListeners = setLastKeyboardEvent => {
   const onKeyDown = e => setLastKeyboardEvent(e);
   document.addEventListener('keydown', onKeyDown);
   return () => document.removeEventListener('keydown', onKeyDown);
-};
-
-/**
- * Sets the appropriate navigation links for next/previous photo galleries.
- *
- * @param {Object[]} allGalleries - All Gallery content from Contentful.
- * @param {String} currentGalleryTitle - The title of the gallery currently being viewed.
- * @param {Function} setNextGallery
- * @param {Function} setPreviousGallery
- */
-const setNextAndPreviousGalleries = (
-  allGalleries,
-  currentGalleryTitle,
-  setNextGallery,
-  setPreviousGallery
-) => {
-  const currentGallery = allGalleries.filter(
-    gallery => gallery.node.title === currentGalleryTitle
-  )[0];
-  const nextGallery = currentGallery.next ?? allGalleries[0].node;
-  const previousGallery =
-    currentGallery.previous ?? allGalleries[allGalleries.length - 1].node;
-
-  setNextGallery(nextGallery);
-  setPreviousGallery(previousGallery);
 };
 
 /**
@@ -271,7 +274,7 @@ const setResizeEventListener = setLastInnerDimensions => {
   return () => window.removeEventListener('resize', onResize);
 };
 
-export default ({ data }) => {
+export default ({ data, location }) => {
   const allGalleries = data.allGalleries.edges;
   const cardImages = data.cardImages.nodes;
   const content = data.markdownRemark;
@@ -289,19 +292,24 @@ export default ({ data }) => {
       ? { height: window.innerHeight, width: window.innerWidth }
       : null
   );
+  // Gallery state:
+  const [galleryCurrent, setGalleryCurrent] = useState(null);
+  const [galleryNext, setGalleryNext] = useState(null);
+  const [galleryPrevious, setGalleryPrevious] = useState(null);
+  // Navigation state:
   const [lastKeyboardEvent, setLastKeyboardEvent] = useState(null);
   const [lastNavigationDirection, setLastNavigationDirection] = useState('');
+  // Modal state:
   const [modalHasSmoothTransition, setModalHasSmoothTransition] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalWidth, setModalWidth] = useState(null);
-  const [nextGallery, setNextGallery] = useState(null);
-  const [previousGallery, setPreviousGallery] = useState(null);
 
+  // Refs:
   const cardRefs = cardImages.map(image => useRef(null));
   const modalRef = useRef(null);
   const photoGalleryRef = useRef(null);
 
-  // Animation effects.
+  // Animation effects:
   useEffect(() => {
     setTimeout(() => animateCards(), delay); // Initial load is sluggish without delay.
   });
@@ -313,7 +321,7 @@ export default ({ data }) => {
     }
   }, [activeCard, lastNavigationDirection]);
 
-  // Keyboard effects.
+  // Keyboard effects:
   useEffect(() => setKeyboardEventListeners(setLastKeyboardEvent), []);
   useEffect(() => {
     if (!isThrottled) {
@@ -332,17 +340,18 @@ export default ({ data }) => {
     }
   }, [lastKeyboardEvent]);
 
-  // Navigation links.
+  // Navigation links:
   useEffect(() => {
-    setNextAndPreviousGalleries(
+    setGalleriesState(
       allGalleries,
       content.frontmatter.title,
-      setNextGallery,
-      setPreviousGallery
+      setGalleryCurrent,
+      setGalleryNext,
+      setGalleryPrevious
     );
   }, [allGalleries, content]);
 
-  // Resize effects (reset modal whenever the screen size changes).
+  // Resize effects (reset modal whenever the screen size changes):
   useEffect(() => setResizeEventListener(setLastInnerDimensions), []);
   useEffect(() => {
     handleModalResize(lastInnerDimensions.width, setModalWidth);
@@ -352,7 +361,13 @@ export default ({ data }) => {
 
   return (
     <>
-      <Metadata title={content.frontmatter.title} />
+      <Metadata
+        description={`${content.frontmatter.title} photos`}
+        // Contentful CDN URLs are prepended only with two slashes, not the protocol.
+        image={`https:${galleryCurrent.node.featured_image.fixed.src}`}
+        pathname={location.pathname}
+        title={content.frontmatter.title}
+      />
       <section
         className="photo-gallery"
         onClick={() => {
@@ -433,7 +448,7 @@ export default ({ data }) => {
             ))}
           </div>
           {/* More Photos */}
-          {nextGallery && previousGallery && (
+          {galleryNext && galleryPrevious && (
             <div
               className="photo-gallery-navigation observable hidden h-0 mb-20 md:mb-16 md:pb-3 lg:pb-0
                 transition duration-300 ease-in-out opacity-0"
@@ -441,7 +456,7 @@ export default ({ data }) => {
             >
               <h3 className="text-center mb-12 mt-16 md:mt-14 lg:mt-10">More Photos</h3>
               <div className="photo-gallery-navigation__cards flex items-center justify-between sm:justify-center w-full">
-                {[previousGallery, nextGallery].map((gallery, index) => (
+                {[galleryPrevious, galleryNext].map((gallery, index) => (
                   <React.Fragment key={index}>
                     <div
                       className={`photo-gallery-navigation__card-container h-full sm:w-full ${
@@ -501,6 +516,9 @@ export const query = graphql`
           title
           slug
           featured_image {
+            fixed(width: 1200, quality: 91) {
+              src
+            }
             fluid(maxWidth: 273, quality: 91) {
               ...GatsbyContentfulFluid_withWebp
             }

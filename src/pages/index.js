@@ -17,7 +17,7 @@ const PosedDivChild = posed.div({
   hidden: { y: 50, opacity: 0 },
 });
 
-export default () => {
+export default ({ location }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const data = useStaticQuery(
@@ -45,10 +45,10 @@ export default () => {
 
   return (
     <>
-      <Metadata />
+      <Metadata pathname={location.pathname} />
       <PosedDiv className="container mx-auto px-4" pose={isLoaded ? 'visible' : 'hidden'}>
         <PosedDivChild
-          className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-center 
+          className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-center
             w-full mt-2 pb-5 pt-8 opacity-0"
           pose={isLoaded ? 'visible' : 'hidden'}
         >

@@ -4,9 +4,11 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: `Bronson Avila`,
+    author: `Bronson Avila`,
+    authorUsername: `@bronsonavila`,
+    baseUrl: `https://www.bronsonavila.com`,
     description: `Personal website of Bronson Avila—an attorney-turned-software developer residing in Hawaii.`,
-    author: `@bronsonavila`,
+    title: `Bronson Avila`,
   },
   plugins: [
     {
