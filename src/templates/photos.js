@@ -364,7 +364,7 @@ export default ({ data, location }) => {
       <Metadata
         description={`${content.frontmatter.title} photos`}
         // Contentful CDN URLs are prepended only with two slashes, not the protocol.
-        image={`https:${galleryCurrent.node.featured_image.fixed.src}`}
+        image={galleryCurrent && `https:${galleryCurrent.node.featured_image.fixed.src}`}
         pathname={location.pathname}
         title={content.frontmatter.title}
       />
