@@ -362,7 +362,7 @@ export default ({ data, location }) => {
   return (
     <>
       <Metadata
-        description={`${content.frontmatter.title} photos`}
+        description={content.frontmatter.description}
         // Contentful CDN URLs are prepended only with two slashes, not the protocol.
         image={galleryCurrent && `https:${galleryCurrent.node.featured_image.fixed.src}`}
         pathname={location.pathname}
@@ -498,6 +498,7 @@ export const query = graphql`
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {
+        description
         title
       }
     }

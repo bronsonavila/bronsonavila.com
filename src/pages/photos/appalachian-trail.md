@@ -1,7 +1,7 @@
 ---
 title: "Appalachian Trail"
 date: "2020-05-25"
-description: "Appalachian Trail 2016"
+description: "Photos of the northern half of the Appalachian Trail (2016)"
 
 ---
 
