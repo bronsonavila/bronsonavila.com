@@ -6,8 +6,8 @@ module.exports = {
   siteMetadata: {
     author: `Bronson Avila`,
     authorUsername: `@bronsonavila`,
-    baseUrl: `https://www.bronsonavila.com`,
     description: `Personal website of Bronson Avila—an attorney-turned-software developer residing in Hawaii.`,
+    siteUrl: `https://www.bronsonavila.com`,
     title: `Bronson Avila`,
   },
   plugins: [
@@ -70,6 +70,7 @@ module.exports = {
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

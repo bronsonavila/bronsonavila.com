@@ -54,7 +54,7 @@ const Metadata = ({ description, image, lang = 'en', pathname, title }) => {
           siteMetadata {
             author
             authorUsername
-            baseUrl
+            siteUrl
             description
             title
           }
@@ -64,9 +64,9 @@ const Metadata = ({ description, image, lang = 'en', pathname, title }) => {
   ).site;
 
   const metaDescription = description || siteMetadata.description;
-  const metaImage = image || `${siteMetadata.baseUrl}/icons/icon-512x512.png`;
+  const metaImage = image || `${siteMetadata.siteUrl}/icons/icon-512x512.png`;
   const metaTitle = title || siteMetadata.title;
-  const metaUrl = `${siteMetadata.baseUrl}${pathname}`;
+  const metaUrl = `${siteMetadata.siteUrl}${pathname}`;
 
   return (
     <Helmet
