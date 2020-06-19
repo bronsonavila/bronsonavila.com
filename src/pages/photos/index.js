@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
+import React, { useEffect, useRef } from 'react';
 
 import IEWarning from '../../components/IEWarning';
 import Metadata from '../../components/Metadata';

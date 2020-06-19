@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
+import React, { useEffect, useState } from 'react';
 import posed from 'react-pose';
 
 import ExternalLink from '../components/ExternalLink';
