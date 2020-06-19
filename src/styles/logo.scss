@@ -2,23 +2,22 @@ $box-size: 18px;
 $container-size: 35px;
 
 .logo__container {
-  @apply relative;
   height: $container-size;
   width: $container-size;
 }
 
 .logo__box {
-  @apply absolute;
-  @apply bg-cover;
-  @apply shadow-xs;
-  @apply transition-colors;
-  @apply duration-300;
-  @apply ease-in-out;
+  @apply .absolute;
+  @apply .bg-cover;
+  @apply .shadow-xs;
+  @apply .transition-colors;
+  @apply .duration-300;
+  @apply .ease-in-out;
   height: $box-size;
   width: $box-size;
 
   &.is-hovered {
-    @apply shadow-sm;
+    @apply .shadow-sm;
   }
 
   &:nth-of-type(1) {
