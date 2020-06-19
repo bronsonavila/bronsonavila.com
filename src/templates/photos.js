@@ -211,14 +211,12 @@ const resetModal = (modal, setActiveCard, setModalIsOpen) => {
  *
  * @param {Object[]} allGalleries - All Gallery content from Contentful.
  * @param {String} currentGalleryTitle - The title of the gallery currently being viewed.
- * @param {Function} setGalleryCurrent
  * @param {Function} setGalleryNext
  * @param {Function} setGalleryPrevious
  */
 const setGalleriesState = (
   allGalleries,
   currentGalleryTitle,
-  setGalleryCurrent,
   setGalleryNext,
   setGalleryPrevious
 ) => {
@@ -229,7 +227,6 @@ const setGalleriesState = (
   const galleryPrevious =
     galleryCurrent.previous ?? allGalleries[allGalleries.length - 1].node;
 
-  setGalleryCurrent(galleryCurrent);
   setGalleryNext(galleryNext);
   setGalleryPrevious(galleryPrevious);
 };
@@ -278,6 +275,7 @@ export default ({ data, location }) => {
   const allGalleries = data.allGalleries.edges;
   const cardImages = data.cardImages.nodes;
   const content = data.markdownRemark;
+  const metaImage = data.metaImage.nodes[0].featured_image;
   const modalImages = data.modalImages.nodes;
 
   // Disable page on Internet Explorer.
@@ -293,7 +291,6 @@ export default ({ data, location }) => {
       : null
   );
   // Gallery state:
-  const [galleryCurrent, setGalleryCurrent] = useState(null);
   const [galleryNext, setGalleryNext] = useState(null);
   const [galleryPrevious, setGalleryPrevious] = useState(null);
   // Navigation state:
@@ -345,7 +342,6 @@ export default ({ data, location }) => {
     setGalleriesState(
       allGalleries,
       content.frontmatter.title,
-      setGalleryCurrent,
       setGalleryNext,
       setGalleryPrevious
     );
@@ -364,7 +360,7 @@ export default ({ data, location }) => {
       <Metadata
         description={content.frontmatter.description}
         // Contentful CDN URLs are prepended only with two slashes, not the protocol.
-        image={galleryCurrent && `https:${galleryCurrent.node.featured_image.fixed.src}`}
+        image={`https:${metaImage.fixed.src}`}
         pathname={location.pathname}
         title={content.frontmatter.title}
       />
@@ -517,9 +513,6 @@ export const query = graphql`
           title
           slug
           featured_image {
-            fixed(width: 1200, quality: 91) {
-              src
-            }
             fluid(maxWidth: 273, quality: 91) {
               ...GatsbyContentfulFluid_withWebp
             }
@@ -532,6 +525,15 @@ export const query = graphql`
             fluid(maxWidth: 273, quality: 91) {
               ...GatsbyContentfulFluid_withWebp
             }
+          }
+        }
+      }
+    }
+    metaImage: allContentfulGallery(filter: { title: { eq: $title } }) {
+      nodes {
+        featured_image {
+          fixed(width: 1200, quality: 91) {
+            src
           }
         }
       }
