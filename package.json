@@ -1,7 +1,7 @@
 {
-  "name": "portfolio-gatsby",
+  "name": "bronsonavila",
   "private": true,
-  "description": "Bronson Avila's portfolio website.",
+  "description": "Bronson Avila's personal website.",
   "version": "1.0.0",
   "author": "Bronson Avila <bronson.avila@gmail.com>",
   "dependencies": {
@@ -50,10 +50,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bronsonavila/portfolio-gatsby"
+    "url": "https://github.com/bronsonavila/bronsonavila.com"
   },
   "bugs": {
-    "url": "https://github.com/bronsonavila/portfolio-gatsby/issues"
+    "url": "https://github.com/bronsonavila/bronsonavila.com/issues"
   },
   "browserslist": [
     "last 2 versions",
