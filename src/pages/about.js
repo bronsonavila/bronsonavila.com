@@ -40,33 +40,26 @@ export default ({ location }) => {
               text="LinkedIn"
             />{' '}
             profile. You can also find some of my pet projects and coding notes on{' '}
-            <ExternalLink href="https://github.com/bronsonavila/" text="GitHub" />. If you
-            would like a little more than just the brass tacks, then please read on.
+            <ExternalLink href="https://github.com/bronsonavila/" text="GitHub" />.
           </p>
           <PosedDiv pose={isLoaded ? 'visible' : 'hidden'}>
             <PosedDivChild>
-              <h3 className="text-center mb-12 mt-16">Software Development</h3>
+              <h3 className="text-center mb-12 mt-16">Full-Stack Web Development</h3>
               <p>
-                I have been developing websites and applications as a hobbyist since 2017
-                and professionally since 2018. I started off self-teaching via online
-                resources simply out of curiosity and having a desire to learn something
-                new. After falling down the rabbit hole, I quit my job as an attorney and
-                joined a coding bootcamp to shift careers.
+                I have been developing websites and web applications as a hobbyist since 2017
+                and professionally since 2018. I started self-teaching via online
+                resources out of personal curiosity, and I soon joined a coding bootcamp to shift out of the legal profession.
               </p>
               <p>Why make the change?</p>
               <p>
-                To me, software development is one of the greatest tools for human
-                empowerment, as it offers the potential for unfettered creative expression
-                and open access to information. By contrast, American jurisprudence is
-                designed to value precedent over innovation, and the administration of
-                justice is often lacking in transparency. The environment can grow to be
-                quite stifling for those seeking real change.
+                Software development is one of the greatest tools we have to empower ourselves, as it allows for unfettered creative expression
+                and open access to information. By contrast, the American legal system is
+                built upon rigid adherence to precedent rather than innovation, and the judicial process is often lacking in transparency. The environment can grow to be stifling for those seeking meaningful progress.
               </p>
               <p>
                 My long-term goal is to use my knowledge of law and technology to improve
-                access to legal information and increase the efficiency of judicial
-                systems. Meanwhile, I continue learning as much as I can while seeking to
-                help good people do good work.
+                access to legal information and increase the efficiency of government
+                systems. Meanwhile, I continue learning as much as I can while helping good people do good work.
               </p>
             </PosedDivChild>
             <PosedDivChild>
@@ -77,22 +70,13 @@ export default ({ location }) => {
                 longer actively practice law, I remain licensed in the State of Hawaii and
                 the U.S. Ninth Circuit Court of Appeals.
               </p>
-              <p>
-                My experiences in law have taught me lessons that I will carry for a
-                lifetime. Between managing demanding clients, researching novel legal
-                issues, crafting persuasive arguments, and wrestling with the elusive
-                nature of the truth—I did it all. The job is high-stakes, and it demands
-                empathy, preparedness, and a relentless attention to detail. These are
-                skills that can benefit anyone across all walks of life.
-              </p>
             </PosedDivChild>
             <PosedDivChild>
               <h3 className="text-center mb-12 mt-16">Open Invitation</h3>
               <p>
                 Please feel free to <Link to="/contact/">contact</Link> me if you are
                 interested in learning more about law or programming, or if you are
-                considering a career change to software development. It's always nice to
-                correspond with like-minded people who share my naive ambition.
+                considering a career change similar to my own.
               </p>
             </PosedDivChild>
           </PosedDiv>
