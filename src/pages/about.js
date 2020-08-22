@@ -46,20 +46,25 @@ export default ({ location }) => {
             <PosedDivChild>
               <h3 className="text-center mb-12 mt-16">Full-Stack Web Development</h3>
               <p>
-                I have been developing websites and web applications as a hobbyist since 2017
-                and professionally since 2018. I started self-teaching via online
-                resources out of personal curiosity, and I soon joined a coding bootcamp to shift out of the legal profession.
+                I have been developing websites and web applications as a hobbyist since
+                2017 and professionally since 2018. I started self-teaching via online
+                resources out of personal curiosity, and I soon joined a coding bootcamp
+                to shift out of the legal profession.
               </p>
               <p>Why make the change?</p>
               <p>
-                Software development is one of the greatest tools we have to empower ourselves, as it allows for unfettered creative expression
-                and open access to information. By contrast, the American legal system is
-                built upon rigid adherence to precedent rather than innovation, and the judicial process is often lacking in transparency. The environment can grow to be stifling for those seeking meaningful progress.
+                Software development is one of the greatest tools we have to empower
+                ourselves, as it allows for unfettered creative expression and open access
+                to information. By contrast, the American legal system is built upon rigid
+                adherence to precedent rather than innovation, and the judicial process is
+                often lacking in transparency. The environment can grow to be stifling for
+                those seeking meaningful progress.
               </p>
               <p>
                 My long-term goal is to use my knowledge of law and technology to improve
                 access to legal information and increase the efficiency of government
-                systems. Meanwhile, I continue learning as much as I can while helping good people do good work.
+                systems. Meanwhile, I continue learning as much as I can while helping
+                good people do good work.
               </p>
             </PosedDivChild>
             <PosedDivChild>

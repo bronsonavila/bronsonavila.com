@@ -68,8 +68,7 @@ export default ({ location }) => {
           pose={isLoaded ? 'visible' : 'hidden'}
         >
           <h1 className="font-normal text-base tracking-normal leading-relaxed">
-            Hello, I'm Bronson Avila—an attorney-turned-developer residing in
-            Hawaii.
+            Hello, I'm Bronson Avila—an attorney-turned-developer residing in Hawaii.
           </h1>
           <p>
             I currently develop websites and web applications for clients of{' '}
