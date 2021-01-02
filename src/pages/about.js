@@ -44,7 +44,7 @@ export default ({ location }) => {
           </p>
           <PosedDiv pose={isLoaded ? 'visible' : 'hidden'}>
             <PosedDivChild>
-              <h3 className="text-center mb-12 mt-16">Full-Stack Web Development</h3>
+              <h3 className="text-center mb-12 mt-16">Software Engineering</h3>
               <p>
                 I have been developing websites and web applications as a hobbyist since
                 2017 and professionally since 2018. I started self-teaching via online

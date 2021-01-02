@@ -68,11 +68,17 @@ export default ({ location }) => {
           pose={isLoaded ? 'visible' : 'hidden'}
         >
           <h1 className="font-normal text-base tracking-normal leading-relaxed">
-            Hello, I'm Bronson Avila—an attorney-turned-developer residing in Hawaii.
+            Hello, I'm Bronson Avila — an attorney-turned-software engineer residing in
+            Hawaii.
           </h1>
           <p>
-            I currently develop websites and web applications for clients of{' '}
-            <ExternalLink href="https://www.atlantic57.com/" text="Atlantic 57" />, the
+            I currently work as a software engineer for{' '}
+            <ExternalLink href="https://try.bbot.menu/" text="Bbot" /> — a contactless
+            mobile order and pay solution for the hospitality industry.
+          </p>
+          <p>
+            I previously developed websites and web applications for clients of{' '}
+            <ExternalLink href="https://www.atlantic57.com/" text="Atlantic 57" /> — the
             consulting and creative division of{' '}
             <span className="italic">The Atlantic</span>. My work has reached
             organizations such as the{' '}
@@ -91,11 +97,6 @@ export default ({ location }) => {
               text="U.S. Chamber of Commerce"
             />
             .
-          </p>
-          <p>
-            If you have a passion for finding technical solutions to civic-minded
-            problems, or are interested in the intersection of law and technology, I'd
-            love to chat.
           </p>
         </PosedDivChild>
       </PosedDiv>

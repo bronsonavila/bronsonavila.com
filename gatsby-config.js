@@ -6,7 +6,7 @@ module.exports = {
   siteMetadata: {
     author: `Bronson Avila`,
     authorUsername: `@bronsonavila`,
-    description: `Personal website of Bronson Avila—an attorney-turned-developer residing in Hawaii.`,
+    description: `Personal website of Bronson Avila — an attorney-turned-software engineer residing in Hawaii.`,
     siteUrl: `https://www.bronsonavila.com`,
     title: `Bronson Avila`,
   },
