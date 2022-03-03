@@ -69,19 +69,17 @@ export default ({ location }) => {
         >
           <h1 className="font-normal text-base tracking-normal leading-relaxed">
             Hello, I'm Bronson Avila — an attorney-turned-software engineer residing in
-            Hawaii.
+            Hawaii. I'm currently open to new opportunities as a front-end or full-stack
+            engineer.
           </h1>
+
           <p>
-            I currently work as a software engineer for{' '}
-            <ExternalLink href="https://try.bbot.menu/" text="Bbot" /> — a contactless
-            mobile order and pay solution for the hospitality industry.
-          </p>
-          <p>
-            I previously developed websites and web applications for clients of{' '}
-            <ExternalLink href="https://www.atlantic57.com/" text="Atlantic 57" /> — the
-            consulting and creative division of{' '}
-            <span className="italic">The Atlantic</span>. My work has reached
-            organizations such as the{' '}
+            I have most recently worked as a software engineer at{' '}
+            <ExternalLink href="https://www.meetbbot.com/" text="Bbot" /> — a mobile
+            ordering platform for the hospitality industry. I also previously developed
+            websites and web applications for clients of{' '}
+            <ExternalLink href="https://www.atlantic57.com/" text="Atlantic 57" />, where
+            my work has impacted organizations such as the{' '}
             <ExternalLink
               href="https://canceratlas.cancer.org/"
               text="American Cancer Society"
@@ -93,8 +91,8 @@ export default ({ location }) => {
             />
             , and the{' '}
             <ExternalLink
-              href="https://www.uschamber.com/sbindex/"
-              text="U.S. Chamber of Commerce"
+              href="https://www.splcenter.org/"
+              text="Southern Poverty Law Center"
             />
             .
           </p>
