@@ -6,7 +6,7 @@
 import React from 'react';
 import PageWrapper from 'components/PageWrapper';
 
-import 'styles/_styles.scss';
+import 'styles/index.scss';
 
 // Required for page transition animation.
 export const wrapPageElement = ({ element, props }) => {
