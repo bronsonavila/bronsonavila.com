@@ -1,54 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import posed from 'react-pose';
 
 import FormInput from 'components/FormInput';
 import Metadata from 'components/Metadata';
 
 const duration = 350;
-
-const handleSubmit = (e, refs, setSubmitStatus) => {
-  e.preventDefault();
-  setSubmitStatus('submitting');
-
-  const { name, email, message, required } = {
-    name: encodeURI(refs.inputs.name.current.value),
-    email: encodeURI(refs.inputs.email.current.value),
-    message: encodeURI(refs.inputs.message.current.value),
-    required: encodeURI(refs.inputs.required.current.value),
-  };
-
-  const webAppURL =
-    'https://script.google.com/macros/s/AKfycbzXeqkR9-JWbTmdhTVPI5ZPfJQokhY9Ev4MnKyqxyiHLyPokvw/exec';
-
-  // Using `GET` with `onreadystatechange` rather than `POST` with `onload` because
-  // the latter fails to process a response in the browser (yet `POST` works via Postman).
-  const xhr = new XMLHttpRequest();
-  xhr.onerror = () => {
-    setSubmitStatus('error');
-    console.log(xhr.responseText);
-  };
-  xhr.ontimeout = () => {
-    setSubmitStatus('error');
-    console.log(xhr.responseText);
-  };
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200 && JSON.parse(xhr.responseText).success) {
-        setSubmitStatus('success');
-        // Clear inputs.
-        Object.keys(refs.inputs).forEach(item => (refs.inputs[item].current.value = ''));
-      } else {
-        setSubmitStatus('error');
-        console.log(xhr.responseText);
-      }
-    }
-  };
-  xhr.open(
-    'GET',
-    `${webAppURL}?name=${name}&email=${email}&message=${message}&required=${required}`
-  );
-  xhr.send();
-};
 
 const PosedForm = posed.form({
   visible: { staggerChildren: duration / 4 },
@@ -60,16 +16,37 @@ const PosedFormChild = posed.div({
 });
 
 export default ({ location }) => {
+  const [email, setEmail] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
+  const [message, setMessage] = useState('');
+  const [name, setName] = useState('');
+  const [required, setRequired] = useState(''); // Not actually required; acts as a honey pot.
   const [submitStatus, setSubmitStatus] = useState('');
-  const refs = {
-    inputs: {
-      name: useRef(null),
-      email: useRef(null),
-      message: useRef(null),
-      required: useRef(null),
-    },
-    submitButton: useRef(null),
+
+  const webAppUrl =
+    'https://script.google.com/macros/s/AKfycbzXeqkR9-JWbTmdhTVPI5ZPfJQokhY9Ev4MnKyqxyiHLyPokvw/exec';
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setSubmitStatus('submitting');
+
+    try {
+      const response = await fetch(
+        encodeURI(
+          `${webAppUrl}?name=${name}&email=${email}&message=${message}&required=${required}`
+        )
+      );
+      const { success } = await response.json();
+      setSubmitStatus(response.status === 200 && success ? 'success' : 'error');
+    } catch (err) {
+      setSubmitStatus('error');
+      console.error(err);
+    } finally {
+      setEmail('');
+      setMessage('');
+      setName('');
+      setRequired('');
+    }
   };
 
   useEffect(() => {
@@ -94,9 +71,7 @@ export default ({ location }) => {
           </div>
           <PosedForm
             className="flex flex-col"
-            onSubmit={e => {
-              handleSubmit(e, refs, setSubmitStatus);
-            }}
+            onSubmit={handleSubmit}
             pose={isLoaded ? 'visible' : 'hidden'}
           >
             {/* Honey pot */}
@@ -105,30 +80,38 @@ export default ({ location }) => {
               label="Required"
               labelClasses="absolute bottom-0 h-0 w-0 opacity-0 overflow-hidden"
               name="required"
-              ref={refs.inputs.required}
+              onChange={e => setRequired(e.target.value)}
               required={false}
               type="text"
+              value={required}
             />
             <PosedFormChild className="flex flex-col w-full">
-              <FormInput label="Name" name="name" ref={refs.inputs.name} type="text" />
+              <FormInput
+                label="Name"
+                name="name"
+                onChange={e => setName(e.target.value)}
+                type="text"
+                value={name}
+              />
             </PosedFormChild>
             <PosedFormChild className="flex flex-col w-full">
               <FormInput
                 label="Email"
                 name="email"
-                ref={refs.inputs.email}
+                onChange={e => setEmail(e.target.value)}
                 type="email"
+                value={email}
               />
             </PosedFormChild>
             <PosedFormChild className="flex flex-col w-full">
               <FormInput
                 label="Message"
                 name="message"
-                ref={refs.inputs.message}
+                onChange={e => setMessage(e.target.value)}
                 type="textarea"
+                value={message}
               />
             </PosedFormChild>
-
             <PosedFormChild className="relative text-center mt-m pt-1 w-full">
               <p
                 className={`form__feedback absolute font-sans text-center leading-relaxed opacity-0 w-full
@@ -149,7 +132,6 @@ export default ({ location }) => {
                 className={`form__submit cursor-pointer font-sans text-white bg-gray-900 border border-gray-900 mt-12 px-10 py-3
                   transition duration-300 ease-in-out hover:bg-gray-600 hover:border-gray-600 ${submitStatus}`}
                 disabled={submitStatus}
-                ref={refs.submitButton}
                 type="submit"
                 value={submitStatus ? 'Sending...' : 'Send'}
               />
