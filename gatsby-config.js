@@ -4,22 +4,23 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    author: `Bronson Avila`,
-    authorUsername: `@bronsonavila`,
-    description: `Personal website of Bronson Avila — an attorney-turned-software engineer residing in Hawaii.`,
-    siteUrl: `https://www.bronsonavila.com`,
-    title: `Bronson Avila`,
+    author: 'Bronson Avila',
+    authorUsername: '@bronsonavila',
+    description:
+      'Personal website of Bronson Avila — an attorney-turned-software engineer residing in Hawaii.',
+    siteUrl: 'https://www.bronsonavila.com',
+    title: 'Bronson Avila',
   },
   plugins: [
     {
-      resolve: `gatsby-source-contentful`,
+      resolve: 'gatsby-source-contentful',
       options: {
         spaceId: process.env.CONTENTFUL_SPACE_ID,
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: 'gatsby-plugin-google-analytics',
       options: {
         trackingId: 'UA-109008540-2',
         head: true,
@@ -30,7 +31,7 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-sass`,
+      resolve: 'gatsby-plugin-sass',
       options: {
         postCssPlugins: [
           require('tailwindcss'),
@@ -40,17 +41,16 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-purgecss`,
+      resolve: 'gatsby-plugin-purgecss',
       options: {
         tailwind: true,
         whitelistPatterns: [/img/, /gatsby/],
       },
     },
-    `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `pages`,
+        name: 'pages',
         path: `${__dirname}/src/pages`,
       },
     },
@@ -62,22 +62,24 @@ module.exports = {
         },
       },
     },
-    `gatsby-transformer-remark`,
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    `gatsby-plugin-sitemap`,
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: 'gatsby-plugin-manifest',
       options: {
-        name: `gatsby-bronson-avila`,
-        short_name: `bronson-avila`,
-        start_url: `/`,
-        background_color: `#fafafa`,
-        theme_color: `#a90000`,
-        display: `minimal-ui`,
-        icon: `static/logo.png`,
+        name: 'gatsby-bronson-avila',
+        short_name: 'bronson-avila',
+        start_url: '/',
+        background_color: '#fafafa',
+        theme_color: '#a90000',
+        display: 'minimal-ui',
+        icon: 'static/logo.png',
       },
     },
+    'gatsby-transformer-remark',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
+    'gatsby-plugin-sitemap',
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-root-import',
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

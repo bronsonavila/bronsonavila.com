@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Metadata from './Metadata';
+import Metadata from 'components/Metadata';
 
 /**
  * IE Warning

@@ -29,6 +29,7 @@
     "tailwindcss": "^1.2.0"
   },
   "devDependencies": {
+    "gatsby-plugin-root-import": "^2.0.8",
     "node-sass": "npm:sass",
     "prettier": "^1.19.1"
   },

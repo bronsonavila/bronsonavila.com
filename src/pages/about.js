@@ -2,8 +2,8 @@ import { Link } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import posed from 'react-pose';
 
-import ExternalLink from '../components/ExternalLink';
-import Metadata from '../components/Metadata';
+import ExternalLink from 'components/ExternalLink';
+import Metadata from 'components/Metadata';
 
 const duration = 350;
 

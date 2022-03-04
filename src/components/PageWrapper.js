@@ -1,9 +1,9 @@
 import React from 'react';
 import { PoseGroup } from 'react-pose';
 
-import Header from './Header';
-import Layout from './Layout';
-import Transition from './Transition';
+import Header from 'components/Header';
+import Layout from 'components/Layout';
+import Transition from 'components/Transition';
 
 /**
  * Page Wrapper

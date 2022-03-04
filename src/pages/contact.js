@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import posed from 'react-pose';
 
-import FormInput from '../components/FormInput';
-import Metadata from '../components/Metadata';
+import FormInput from 'components/FormInput';
+import Metadata from 'components/Metadata';
 
 const duration = 350;
 

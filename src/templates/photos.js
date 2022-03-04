@@ -2,13 +2,13 @@ import { graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 import React, { useEffect, useRef, useState } from 'react';
 
-import IEWarning from '../components/IEWarning';
-import Metadata from '../components/Metadata';
-import PhotoGalleryModal from '../components/PhotoGalleryModal';
+import IEWarning from 'components/IEWarning';
+import Metadata from 'components/Metadata';
+import PhotoGalleryModal from 'components/PhotoGalleryModal';
 
-import getTransformMatrixArray from '../utils/getTransformMatrixArray';
-import lazyLoad from '../utils/lazyLoad';
-import moveElementsRelativeToMouse from '../utils/moveElementsRelativeToMouse';
+import getTransformMatrixArray from 'utils/getTransformMatrixArray';
+import lazyLoad from 'utils/lazyLoad';
+import moveElementsRelativeToMouse from 'utils/moveElementsRelativeToMouse';
 
 const delay = 300; // For animations and transitions.
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Metadata from '../components/Metadata';
+import Metadata from 'components/Metadata';
 
 const NotFoundPage = () => (
   <div className="container mx-auto px-4">

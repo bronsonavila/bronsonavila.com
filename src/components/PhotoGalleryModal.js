@@ -1,8 +1,8 @@
 import Img from 'gatsby-image';
 import React, { useState } from 'react';
 
-import Caret from '../../static/svg/circle-caret.svg';
-import Close from '../../static/svg/circle-close.svg';
+import Caret from 'src/../static/svg/circle-caret.svg';
+import Close from 'src/../static/svg/circle-close.svg';
 
 /**
  * Sets classes on each image to ensure appropriate display and animation.

@@ -3,10 +3,10 @@
  *
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
-import React from "react";
-import PageWrapper from "./src/components/PageWrapper";
+import React from 'react';
+import PageWrapper from 'components/PageWrapper';
 
-import "./src/styles/_styles.scss"
+import 'styles/_styles.scss';
 
 // Required for page transition animation.
 export const wrapPageElement = ({ element, props }) => {

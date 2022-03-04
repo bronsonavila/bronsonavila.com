@@ -2,7 +2,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import Helmet from 'react-helmet';
 
-import formatDate from '../utils/formatDate';
+import formatDate from 'utils/formatDate';
 
 /**
  * Creates `WebPage` schema data in JSON-LD format.
