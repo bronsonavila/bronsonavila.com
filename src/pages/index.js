@@ -68,21 +68,19 @@ export default ({ location }) => {
           pose={isLoaded ? 'visible' : 'hidden'}
         >
           <h1 className="font-normal text-base tracking-normal leading-relaxed">
-            Hey, I'm Bronson Avila — an attorney-turned-software engineer specializing in
-            front-end development of web applications.
+            Hey, I'm Bronson Avila — an attorney-turned-software engineer.
           </h1>
           <p>
             I currently reside in Hawaii and work remotely as a front-end engineer at{' '}
             <ExternalLink href="https://www.tryklarity.com/" text="Klarity" /> — an
-            automated contract review solution for accounting and finance teams.
+            automated contract review platform for accounting and finance teams.
           </p>
           <p>
-            My prior experience includes working as a software engineer at{' '}
-            <ExternalLink href="https://www.meetbbot.com/" text="Bbot" /> — a mobile
-            ordering platform for the hospitality industry. I also previously developed
-            websites and web applications for clients of{' '}
-            <ExternalLink href="https://www.longdash.co/" text="Long Dash" />, which
-            include the{' '}
+            I previously worked as a software engineer at{' '}
+            <ExternalLink href="https://www.meetbbot.com/" text="Bbot" />, and have
+            developed websites and web applications for clients of{' '}
+            <ExternalLink href="https://www.longdash.co/" text="Long Dash" /> — including
+            the{' '}
             <ExternalLink
               href="https://canceratlas.cancer.org/"
               text="American Cancer Society"
