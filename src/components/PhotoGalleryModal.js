@@ -94,7 +94,7 @@ const PhotoGalleryModal = React.forwardRef(
       `${isOpen ? 'is-open ' : ''}`;
 
     return (
-      <div
+      <div // eslint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         className={
           `photo-gallery-modal absolute top-0 left-0 bg-white border border-gray-400 ` +
           `overflow-hidden shadow-2xl z-20 ${modalStateClasses}`

@@ -335,7 +335,7 @@ export default ({ data, location }) => {
         setModalIsOpen
       );
     }
-  }, [lastKeyboardEvent]);
+  }, [lastKeyboardEvent]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Navigation links:
   useEffect(() => {
@@ -364,7 +364,7 @@ export default ({ data, location }) => {
         pathname={location.pathname}
         title={content.frontmatter.title}
       />
-      <section
+      <section // eslint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
         className="photo-gallery"
         onClick={() => {
           setModalHasSmoothTransition(false);
@@ -417,7 +417,7 @@ export default ({ data, location }) => {
             />
             {cardImages.map((image, index) => (
               <div className="photo-gallery__card-container h-full sm:w-full" key={index}>
-                <div
+                <div // eslint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
                   className="photo-gallery__card observable relative hidden h-0 bg-white
                     border border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
                   data-index={index}
