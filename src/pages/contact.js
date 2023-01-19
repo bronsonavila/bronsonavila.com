@@ -64,10 +64,7 @@ export default ({ location }) => {
         <h1 className="text-center mb-16 pb-1 pt-8">Contact</h1>
         <div className="global-editor mb-8 pb-1">
           <div className="mb-10 pb-1">
-            <p>
-              Please include your name, email address, and a brief message in the form
-              below.
-            </p>
+            <p>Got any questions or want to work together? Drop me a line any time.</p>
           </div>
           <PosedForm
             className="flex flex-col"

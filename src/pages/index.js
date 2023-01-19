@@ -3,7 +3,6 @@ import Img from 'gatsby-image';
 import React, { useEffect, useState } from 'react';
 import posed from 'react-pose';
 
-import ExternalLink from 'components/ExternalLink';
 import Metadata from 'components/Metadata';
 
 const duration = 850;
@@ -68,34 +67,12 @@ export default ({ location }) => {
           pose={isLoaded ? 'visible' : 'hidden'}
         >
           <h1 className="font-normal text-base tracking-normal leading-relaxed">
-            Hey, I'm Bronson Avila — an attorney-turned-software engineer.
+            Hi, I'm Bronson – an attorney-turned-software engineer specializing in the
+            front-end development of websites and web applications in fully remote roles.
           </h1>
           <p>
-            I currently reside in Hawaii and work remotely as a front-end engineer at{' '}
-            <ExternalLink href="https://www.tryklarity.com/" text="Klarity" /> — an
-            automated contract review platform for accounting and finance teams.
-          </p>
-          <p>
-            I previously worked as a software engineer at{' '}
-            <ExternalLink href="https://www.meetbbot.com/" text="Bbot" />, and have
-            developed websites and web applications for clients of{' '}
-            <ExternalLink href="https://www.longdash.co/" text="Long Dash" /> — including
-            the{' '}
-            <ExternalLink
-              href="https://canceratlas.cancer.org/"
-              text="American Cancer Society"
-            />
-            , the{' '}
-            <ExternalLink
-              href="https://www.opengovpartnership.org/"
-              text="Open Government Partnership"
-            />
-            , and the{' '}
-            <ExternalLink
-              href="https://www.splcenter.org/"
-              text="Southern Poverty Law Center"
-            />
-            .
+            Not much to see here, but feel free to browse around to learn more, check out
+            some old photos, or shoot me a message. ✌️
           </p>
         </PosedDivChild>
       </PosedDiv>
