@@ -70,7 +70,10 @@ export default ({ location }) => {
         <PosedDivChild className="global-editor mb-8 pb-1 opacity-0">
           <p>
             Not much to see here, but feel free to browse around to learn more, check out
-            some old photos, or shoot me a message. ✌️
+            some old photos, or shoot me a message.{' '}
+            <span aria-label="Victory Hand emoji" role="img">
+              ✌️
+            </span>
           </p>
         </PosedDivChild>
       </PosedDiv>
