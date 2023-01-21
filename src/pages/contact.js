@@ -7,7 +7,7 @@ import Metadata from 'components/Metadata';
 const duration = 350;
 
 const PosedForm = posed.form({
-  visible: { staggerChildren: duration / 4 },
+  visible: { staggerChildren: duration / 5 },
 });
 
 const PosedFormChild = posed.div({
@@ -63,9 +63,6 @@ export default ({ location }) => {
       <div className="container mx-auto px-4">
         <h1 className="text-center mb-16 pb-1 pt-8">Contact</h1>
         <div className="global-editor mb-8 pb-1">
-          <div className="mb-10 pb-1">
-            <p>Got any questions or want to work together? Drop me a line any time.</p>
-          </div>
           <PosedForm
             className="flex flex-col"
             onSubmit={handleSubmit}
@@ -82,6 +79,9 @@ export default ({ location }) => {
               type="text"
               value={required}
             />
+            <PosedFormChild className="mb-10 pb-1">
+              <p>Got any questions or want to work together? Drop me a line any time.</p>
+            </PosedFormChild>
             <PosedFormChild className="flex flex-col w-full">
               <FormInput
                 label="Name"

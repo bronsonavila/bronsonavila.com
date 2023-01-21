@@ -8,7 +8,7 @@ import Metadata from 'components/Metadata';
 const duration = 850;
 
 const PosedDiv = posed.div({
-  visible: { staggerChildren: duration / 2 },
+  visible: { staggerChildren: duration / 3 },
 });
 
 const PosedDivChild = posed.div({
@@ -49,7 +49,6 @@ export default ({ location }) => {
         <PosedDivChild
           className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-center
             w-full mt-2 pb-5 pt-8 opacity-0"
-          pose={isLoaded ? 'visible' : 'hidden'}
         >
           {/* Image */}
           <div className="photo-gallery-index__card-container--single h-full sm:w-full">
@@ -62,14 +61,13 @@ export default ({ location }) => {
             </Link>
           </div>
         </PosedDivChild>
-        <PosedDivChild
-          className="global-editor mb-8 pb-1 opacity-0"
-          pose={isLoaded ? 'visible' : 'hidden'}
-        >
+        <PosedDivChild className="global-editor opacity-0">
           <h1 className="font-normal text-base tracking-normal leading-relaxed">
             Hi, I'm Bronson – an attorney-turned-software engineer specializing in the
             front-end development of websites and web applications in fully remote roles.
           </h1>
+        </PosedDivChild>
+        <PosedDivChild className="global-editor mb-8 pb-1 opacity-0">
           <p>
             Not much to see here, but feel free to browse around to learn more, check out
             some old photos, or shoot me a message. ✌️
