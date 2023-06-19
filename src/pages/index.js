@@ -7,11 +7,11 @@ import Metadata from 'components/Metadata';
 
 const duration = 850;
 
-const PosedDiv = posed.div({
+const AnimatedContainer = posed.div({
   visible: { staggerChildren: duration / 3 },
 });
 
-const PosedDivChild = posed.div({
+const AnimatedElement = posed.div({
   visible: { y: 0, opacity: 1, transition: { ease: 'easeOut' } },
   hidden: { y: 50, opacity: 0 },
 });
@@ -45,8 +45,11 @@ export default ({ location }) => {
   return (
     <>
       <Metadata pathname={location.pathname} />
-      <PosedDiv className="container mx-auto px-4" pose={isLoaded ? 'visible' : 'hidden'}>
-        <PosedDivChild
+      <AnimatedContainer
+        className="container mx-auto px-4"
+        pose={isLoaded ? 'visible' : 'hidden'}
+      >
+        <AnimatedElement
           className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-center
             w-full mt-2 pb-5 pt-8 opacity-0"
         >
@@ -60,14 +63,14 @@ export default ({ location }) => {
               <Img alt={image.title} className="h-full w-full" fluid={image.fluid} />
             </Link>
           </div>
-        </PosedDivChild>
-        <PosedDivChild className="global-editor opacity-0">
+        </AnimatedElement>
+        <AnimatedElement className="global-editor opacity-0">
           <h1 className="font-normal text-base tracking-normal leading-relaxed">
             Hi, I'm Bronson – an attorney-turned-software engineer specializing in the
             front-end development of websites and web applications in fully remote roles.
           </h1>
-        </PosedDivChild>
-        <PosedDivChild className="global-editor mb-8 pb-1 opacity-0">
+        </AnimatedElement>
+        <AnimatedElement className="global-editor mb-8 pb-1 opacity-0">
           <p>
             Not much to see here, but feel free to browse around to learn more, check out
             some old photos, or shoot me a message.{' '}
@@ -75,8 +78,8 @@ export default ({ location }) => {
               ✌️
             </span>
           </p>
-        </PosedDivChild>
-      </PosedDiv>
+        </AnimatedElement>
+      </AnimatedContainer>
     </>
   );
 };

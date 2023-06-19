@@ -6,11 +6,11 @@ import Metadata from 'components/Metadata';
 
 const duration = 350;
 
-const PosedForm = posed.form({
+const AnimatedForm = posed.form({
   visible: { staggerChildren: duration / 5 },
 });
 
-const PosedFormChild = posed.div({
+const AnimatedFormElement = posed.div({
   visible: { y: 0, opacity: 1, transition: { ease: 'easeOut' } },
   hidden: { y: 50, opacity: 0 },
 });
@@ -63,7 +63,7 @@ export default ({ location }) => {
       <div className="container mx-auto px-4">
         <h1 className="text-center mb-16 pb-1 pt-8">Contact</h1>
         <div className="global-editor mb-8 pb-1">
-          <PosedForm
+          <AnimatedForm
             className="flex flex-col"
             onSubmit={handleSubmit}
             pose={isLoaded ? 'visible' : 'hidden'}
@@ -79,10 +79,10 @@ export default ({ location }) => {
               type="text"
               value={required}
             />
-            <PosedFormChild className="mb-10 pb-1">
+            <AnimatedFormElement className="mb-10 pb-1">
               <p>Got any questions or want to work together? Drop me a line any time.</p>
-            </PosedFormChild>
-            <PosedFormChild className="flex flex-col w-full">
+            </AnimatedFormElement>
+            <AnimatedFormElement className="flex flex-col w-full">
               <FormInput
                 label="Name"
                 name="name"
@@ -90,8 +90,8 @@ export default ({ location }) => {
                 type="text"
                 value={name}
               />
-            </PosedFormChild>
-            <PosedFormChild className="flex flex-col w-full">
+            </AnimatedFormElement>
+            <AnimatedFormElement className="flex flex-col w-full">
               <FormInput
                 label="Email"
                 name="email"
@@ -99,8 +99,8 @@ export default ({ location }) => {
                 type="email"
                 value={email}
               />
-            </PosedFormChild>
-            <PosedFormChild className="flex flex-col w-full">
+            </AnimatedFormElement>
+            <AnimatedFormElement className="flex flex-col w-full">
               <FormInput
                 label="Message"
                 name="message"
@@ -108,8 +108,8 @@ export default ({ location }) => {
                 type="textarea"
                 value={message}
               />
-            </PosedFormChild>
-            <PosedFormChild className="relative text-center mt-m pt-1 w-full">
+            </AnimatedFormElement>
+            <AnimatedFormElement className="relative text-center mt-m pt-1 w-full">
               <p
                 className={`form__feedback absolute font-sans text-center leading-relaxed opacity-0 w-full
                   transition duration-300 ease-in-out ${submitStatus}`}
@@ -132,8 +132,8 @@ export default ({ location }) => {
                 type="submit"
                 value={submitStatus ? 'Sending...' : 'Send'}
               />
-            </PosedFormChild>
-          </PosedForm>
+            </AnimatedFormElement>
+          </AnimatedForm>
         </div>
       </div>
     </>

@@ -6,11 +6,11 @@ import Metadata from 'components/Metadata';
 
 const duration = 350;
 
-const PosedDiv = posed.div({
+const AnimatedContainer = posed.div({
   visible: { staggerChildren: duration / 3 },
 });
 
-const PosedDivChild = posed.div({
+const AnimatedElement = posed.div({
   visible: { y: 0, opacity: 1, transition: { ease: 'easeOut' } },
   hidden: { y: 50, opacity: 0 },
 });
@@ -32,15 +32,15 @@ export default ({ location }) => {
       <div className="container mx-auto px-4">
         <h1 className="text-center mb-16 pb-1 pt-8">About</h1>
         <div className="global-editor mb-8 pb-1">
-          <PosedDiv pose={isLoaded ? 'visible' : 'hidden'}>
-            <PosedDivChild>
+          <AnimatedContainer pose={isLoaded ? 'visible' : 'hidden'}>
+            <AnimatedElement>
               <p>
                 I currently live in Hawaii working remotely as a front-end engineer at{' '}
                 <ExternalLink href="https://www.tryklarity.com/" text="Klarity" /> – an
                 automated contract review platform for accounting and finance teams.
               </p>
-            </PosedDivChild>
-            <PosedDivChild>
+            </AnimatedElement>
+            <AnimatedElement>
               <p>
                 Previously employed as a software engineer at{' '}
                 <ExternalLink href="https://www.meetbbot.com/" text="Bbot" /> prior to its
@@ -64,8 +64,8 @@ export default ({ location }) => {
                 />
                 .
               </p>
-            </PosedDivChild>
-            <PosedDivChild>
+            </AnimatedElement>
+            <AnimatedElement>
               <p>
                 For a deeper dive into my professional experience, check out my{' '}
                 <ExternalLink
@@ -75,8 +75,8 @@ export default ({ location }) => {
                 profile. Want to see some old toy projects and coding notes? Check out my{' '}
                 <ExternalLink href="https://github.com/bronsonavila/" text="GitHub" />.
               </p>
-            </PosedDivChild>
-          </PosedDiv>
+            </AnimatedElement>
+          </AnimatedContainer>
         </div>
       </div>
     </>

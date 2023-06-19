@@ -29,7 +29,7 @@ const setLogoBoxHoverPose = ({ x = 0, y = 0 } = {}) => ({
   transition: { duration, ease },
 });
 
-const Container = posed.div({
+const AnimatedContainer = posed.div({
   hoverable: true,
   hover: {
     staggerChildren: duration / 4,
@@ -62,12 +62,12 @@ const LetterA = posed.div({
 
 const Logo = () => (
   <Link aria-label="Logo" className="inline-block no-underline" to="/">
-    <Container className="logo__container relative">
+    <AnimatedContainer className="logo__container relative">
       <LetterB className="logo__box" />
       <Dot1 className="logo__box" />
       <Dot2 className="logo__box" />
       <LetterA className="logo__box" />
-    </Container>
+    </AnimatedContainer>
   </Link>
 );
 
