@@ -1,14 +1,13 @@
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
+import Metadata from 'components/Metadata';
 import React, { useEffect, useState } from 'react';
 import posed from 'react-pose';
 
-import Metadata from 'components/Metadata';
-
-const duration = 850;
+const DURATION = 850;
 
 const AnimatedContainer = posed.div({
-  visible: { staggerChildren: duration / 3 },
+  visible: { staggerChildren: DURATION / 3 },
 });
 
 const AnimatedElement = posed.div({
@@ -16,7 +15,27 @@ const AnimatedElement = posed.div({
   hidden: { y: 50, opacity: 0 },
 });
 
-export default ({ location }) => {
+/**
+ * @param {string} alt - Image alt text
+ * @param {object} fluid - Gatsby fluid image object
+ * @param {string} to - Link destination
+ */
+const PhotoCardLink = ({ alt, fluid, to }) => (
+  <div className="photo-gallery-index__card-container--single h-full sm:w-full">
+    <Link
+      className="photo-gallery-index__card observable is-visible has-entered relative hidden h-0 bg-white
+      border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
+      to={to}
+    >
+      <Img alt={alt} className="h-full w-full" fluid={fluid} />
+    </Link>
+  </div>
+);
+
+/**
+ * @param {object} location - Gatsby location object
+ */
+const HomePage = ({ location }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const data = useStaticQuery(
@@ -45,6 +64,7 @@ export default ({ location }) => {
   return (
     <>
       <Metadata pathname={location.pathname} />
+
       <AnimatedContainer
         className="container mx-auto px-4"
         pose={isLoaded ? 'visible' : 'hidden'}
@@ -53,23 +73,16 @@ export default ({ location }) => {
           className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-center
             w-full mt-2 pb-5 pt-8 opacity-0"
         >
-          {/* Image */}
-          <div className="photo-gallery-index__card-container--single h-full sm:w-full">
-            <Link
-              className="photo-gallery-index__card observable is-visible has-entered relative hidden h-0 bg-white
-                border-gray-400 shadow opacity-0 cursor-pointer w-full z-10"
-              to="/about/"
-            >
-              <Img alt={image.title} className="h-full w-full" fluid={image.fluid} />
-            </Link>
-          </div>
+          <PhotoCardLink alt={image.title} fluid={image.fluid} to="/about/" />
         </AnimatedElement>
+
         <AnimatedElement className="global-editor opacity-0">
           <h1 className="font-normal text-base tracking-normal leading-relaxed">
             Hi, I'm Bronson – an attorney-turned-software engineer specializing in the
             front-end development of websites and web applications in fully remote roles.
           </h1>
         </AnimatedElement>
+
         <AnimatedElement className="global-editor mb-8 pb-1 opacity-0">
           <p>
             Not much to see here, but feel free to browse around to learn more, check out
@@ -83,3 +96,5 @@ export default ({ location }) => {
     </>
   );
 };
+
+export default HomePage;
