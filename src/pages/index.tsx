@@ -1,10 +1,50 @@
-import { graphql, Link, useStaticQuery } from 'gatsby'
-import Img from 'gatsby-image'
+import { graphql, Link, PageProps, useStaticQuery } from 'gatsby'
+import Img, { FluidObject } from 'gatsby-image'
 import Metadata from 'components/Metadata'
 import posed from 'react-pose'
 import React, { useEffect, useState } from 'react'
 
+// Types
+
+type HomePageProps = PageProps & {
+  location: {
+    pathname: string
+  }
+}
+
+type HomePageQueryData = {
+  image: {
+    nodes: {
+      title: string
+      fluid: FluidObject
+    }[]
+  }
+}
+
+type PhotoCardLinkProps = {
+  alt: string
+  fluid: FluidObject
+  to: string
+}
+
+// Constants
+
 const DURATION = 850
+
+const HOME_PAGE_QUERY = graphql`
+  query {
+    image: allContentfulAsset(filter: { file: { fileName: { eq: "bronson-avila.jpg" } } }) {
+      nodes {
+        title
+        fluid(maxWidth: 273, quality: 91) {
+          ...GatsbyContentfulFluid_withWebp
+        }
+      }
+    }
+  }
+`
+
+// Components
 
 const AnimatedContainer = posed.div({
   visible: { staggerChildren: DURATION / 3 }
@@ -15,12 +55,7 @@ const AnimatedElement = posed.div({
   hidden: { y: 50, opacity: 0 }
 })
 
-/**
- * @param {string} alt - Image alt text
- * @param {object} fluid - Gatsby fluid image object
- * @param {string} to - Link destination
- */
-const PhotoCardLink = ({ alt, fluid, to }) => (
+const PhotoCardLink: React.FC<PhotoCardLinkProps> = ({ alt, fluid, to }) => (
   <div className="photo-gallery-index__card-container--single h-full sm:w-full">
     <Link
       className="photo-gallery-index__card observable is-visible has-entered relative hidden h-0 bg-white
@@ -32,26 +67,10 @@ const PhotoCardLink = ({ alt, fluid, to }) => (
   </div>
 )
 
-/**
- * @param {object} location - Gatsby location object
- */
-const HomePage = ({ location }) => {
+const HomePage: React.FC<HomePageProps> = ({ location }) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
-  const data = useStaticQuery(
-    graphql`
-      query {
-        image: allContentfulAsset(filter: { file: { fileName: { eq: "bronson-avila.jpg" } } }) {
-          nodes {
-            title
-            fluid(maxWidth: 273, quality: 91) {
-              ...GatsbyContentfulFluid_withWebp
-            }
-          }
-        }
-      }
-    `
-  )
+  const data = useStaticQuery(HOME_PAGE_QUERY) as HomePageQueryData
 
   const image = data.image.nodes[0]
 
