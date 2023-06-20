@@ -1,73 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import posed from 'react-pose';
+import FormInput from 'components/FormInput'
+import Metadata from 'components/Metadata'
+import posed from 'react-pose'
+import React, { useEffect, useState } from 'react'
 
-import FormInput from 'components/FormInput';
-import Metadata from 'components/Metadata';
-
-const duration = 350;
+const duration = 350
 
 const AnimatedForm = posed.form({
-  visible: { staggerChildren: duration / 5 },
-});
+  visible: { staggerChildren: duration / 5 }
+})
 
 const AnimatedFormElement = posed.div({
   visible: { y: 0, opacity: 1, transition: { ease: 'easeOut' } },
-  hidden: { y: 50, opacity: 0 },
-});
+  hidden: { y: 50, opacity: 0 }
+})
 
 export default ({ location }) => {
-  const [email, setEmail] = useState('');
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [message, setMessage] = useState('');
-  const [name, setName] = useState('');
-  const [required, setRequired] = useState(''); // Not actually required; acts as a honey pot.
-  const [submitStatus, setSubmitStatus] = useState('');
+  const [email, setEmail] = useState('')
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [message, setMessage] = useState('')
+  const [name, setName] = useState('')
+  const [required, setRequired] = useState('') // Not actually required; acts as a honey pot.
+  const [submitStatus, setSubmitStatus] = useState('')
 
-  const webAppUrl =
-    'https://script.google.com/macros/s/AKfycbzXeqkR9-JWbTmdhTVPI5ZPfJQokhY9Ev4MnKyqxyiHLyPokvw/exec';
+  const webAppUrl = 'https://script.google.com/macros/s/AKfycbzXeqkR9-JWbTmdhTVPI5ZPfJQokhY9Ev4MnKyqxyiHLyPokvw/exec'
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    setSubmitStatus('submitting');
+    e.preventDefault()
+    setSubmitStatus('submitting')
 
     try {
       const response = await fetch(
-        encodeURI(
-          `${webAppUrl}?name=${name}&email=${email}&message=${message}&required=${required}`
-        )
-      );
-      const { success } = await response.json();
-      setSubmitStatus(response.status === 200 && success ? 'success' : 'error');
+        encodeURI(`${webAppUrl}?name=${name}&email=${email}&message=${message}&required=${required}`)
+      )
+      const { success } = await response.json()
+      setSubmitStatus(response.status === 200 && success ? 'success' : 'error')
     } catch (err) {
-      setSubmitStatus('error');
-      console.error(err);
+      setSubmitStatus('error')
+      console.error(err)
     } finally {
-      setEmail('');
-      setMessage('');
-      setName('');
-      setRequired('');
+      setEmail('')
+      setMessage('')
+      setName('')
+      setRequired('')
     }
-  };
+  }
 
   useEffect(() => {
-    setTimeout(() => setIsLoaded(true), duration);
-  }, []);
+    setTimeout(() => setIsLoaded(true), duration)
+  }, [])
 
   return (
     <>
-      <Metadata
-        description="Contact Bronson Avila"
-        pathname={location.pathname}
-        title="Contact"
-      />
+      <Metadata description="Contact Bronson Avila" pathname={location.pathname} title="Contact" />
       <div className="container mx-auto px-4">
         <h1 className="text-center mb-16 pb-1 pt-8">Contact</h1>
         <div className="global-editor mb-8 pb-1">
-          <AnimatedForm
-            className="flex flex-col"
-            onSubmit={handleSubmit}
-            pose={isLoaded ? 'visible' : 'hidden'}
-          >
+          <AnimatedForm className="flex flex-col" onSubmit={handleSubmit} pose={isLoaded ? 'visible' : 'hidden'}>
             {/* Honey pot */}
             <FormInput
               inputClasses="absolute bottom-0 h-0 w-0 opacity-0 overflow-hidden"
@@ -83,13 +71,7 @@ export default ({ location }) => {
               <p>Got any questions or want to work together? Drop me a line any time.</p>
             </AnimatedFormElement>
             <AnimatedFormElement className="flex flex-col w-full">
-              <FormInput
-                label="Name"
-                name="name"
-                onChange={e => setName(e.target.value)}
-                type="text"
-                value={name}
-              />
+              <FormInput label="Name" name="name" onChange={e => setName(e.target.value)} type="text" value={name} />
             </AnimatedFormElement>
             <AnimatedFormElement className="flex flex-col w-full">
               <FormInput
@@ -117,8 +99,7 @@ export default ({ location }) => {
                 {submitStatus === 'error' ? (
                   <>
                     Sorry, an error occurred. Please contact me directly at{' '}
-                    <a href={`mailto:bronson.avila@gmail.com`}>bronson.avila@gmail.com</a>
-                    .
+                    <a href={`mailto:bronson.avila@gmail.com`}>bronson.avila@gmail.com</a>.
                   </>
                 ) : (
                   <>Thanks. I'll be in touch.</>
@@ -137,5 +118,5 @@ export default ({ location }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}

@@ -1,6 +1,6 @@
-import posed from 'react-pose';
+import posed from 'react-pose'
 
-const delay = 350;
+const delay = 350
 
 const Transition = posed.div({
   enter: {
@@ -9,8 +9,8 @@ const Transition = posed.div({
     y: 0,
     transition: {
       ease: 'easeOut',
-      duration: delay,
-    },
+      duration: delay
+    }
   },
   exit: {
     delay: delay / 2,
@@ -18,9 +18,9 @@ const Transition = posed.div({
     y: 50,
     transition: {
       ease: 'easeIn',
-      duration: delay / 2,
-    },
-  },
-});
+      duration: delay / 2
+    }
+  }
+})
 
-export default Transition;
+export default Transition

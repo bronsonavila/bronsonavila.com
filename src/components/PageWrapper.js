@@ -1,9 +1,8 @@
-import React from 'react';
-import { PoseGroup } from 'react-pose';
-
-import Header from 'components/Header';
-import Layout from 'components/Layout';
-import Transition from 'components/Transition';
+import { PoseGroup } from 'react-pose'
+import Header from 'components/Header'
+import Layout from 'components/Layout'
+import React from 'react'
+import Transition from 'components/Transition'
 
 /**
  * Page Wrapper
@@ -30,6 +29,6 @@ const PageWrapper = ({ children, location }) => (
       </Transition>
     </PoseGroup>
   </>
-);
+)
 
-export default PageWrapper;
+export default PageWrapper

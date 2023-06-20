@@ -1,6 +1,5 @@
-import React from 'react';
-
-import Metadata from 'components/Metadata';
+import Metadata from 'components/Metadata'
+import React from 'react'
 
 /**
  * IE Warning
@@ -15,6 +14,6 @@ const IEWarning = ({ title }) => (
       <p>Please use an alternative browser.</p>
     </div>
   </div>
-);
+)
 
-export default IEWarning;
+export default IEWarning

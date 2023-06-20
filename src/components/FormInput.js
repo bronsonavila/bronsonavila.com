@@ -1,6 +1,5 @@
-import React from 'react';
-
-import FormLabel from 'components/FormLabel';
+import FormLabel from 'components/FormLabel'
+import React from 'react'
 
 const FormInput = ({
   inputClasses = '',
@@ -10,7 +9,7 @@ const FormInput = ({
   onChange = () => {},
   required = true,
   type = '',
-  value = '',
+  value = ''
 }) => {
   switch (type) {
     case 'textarea':
@@ -29,7 +28,7 @@ const FormInput = ({
             value={value}
           />
         </>
-      );
+      )
     default:
       return (
         <>
@@ -45,8 +44,8 @@ const FormInput = ({
             value={value}
           />
         </>
-      );
+      )
   }
-};
+}
 
-export default FormInput;
+export default FormInput

@@ -11,6 +11,6 @@ const getTransformMatrixArray = element =>
   window
     .getComputedStyle(element)
     .getPropertyValue('transform')
-    .match(/(-?[0-9.]+)/g);
+    .match(/(-?[0-9.]+)/g)
 
-export default getTransformMatrixArray;
+export default getTransformMatrixArray

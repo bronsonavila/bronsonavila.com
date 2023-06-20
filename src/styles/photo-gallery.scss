@@ -279,7 +279,7 @@ $image-width--xs: $image-width--lg * 0.94752912;
       @apply .transition-opacity;
       @apply .duration-300;
       @apply .ease-in-out;
-      content: "";
+      content: '';
       left: 1px;
       top: 1px;
       max-height: $card-size--lg - 4;
