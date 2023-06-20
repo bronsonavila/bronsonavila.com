@@ -1,5 +1,5 @@
-import { Link } from 'gatsby';
-import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'gatsby'
+import React, { useEffect, useRef, useState } from 'react'
 
 /**
  * Reveals the footer when the page is no longer scrollable. Add an `offset`
@@ -14,55 +14,47 @@ import React, { useEffect, useRef, useState } from 'react';
 const toggleActiveFooterState = (footerRef, offset = 2) => {
   if (window.innerHeight + window.scrollY >= document.body.scrollHeight - offset) {
     if (footerRef && footerRef.current) {
-      footerRef.current.classList.add('is-active');
+      footerRef.current.classList.add('is-active')
     }
   }
-};
+}
 
 const Footer = () => {
-  const [isTicking, setIsTicking] = useState(false);
-  const footerRef = useRef(null);
-  const footerRevealDelay = 850;
+  const [isTicking, setIsTicking] = useState(false)
+  const footerRef = useRef(null)
+  const footerRevealDelay = 850
 
   useEffect(() => {
-    setTimeout(() => toggleActiveFooterState(footerRef), footerRevealDelay);
+    setTimeout(() => toggleActiveFooterState(footerRef), footerRevealDelay)
 
     // Throttle scroll event. See:
     // https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event
     const handleScroll = () => {
       if (!isTicking) {
         window.requestAnimationFrame(() => {
-          toggleActiveFooterState(footerRef);
-          setIsTicking(false);
-        });
-        setIsTicking(true);
+          toggleActiveFooterState(footerRef)
+          setIsTicking(false)
+        })
+        setIsTicking(true)
       }
-    };
+    }
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  });
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  })
 
   return (
     <div className="footer-container absolute bottom-0 w-full overflow-hidden">
-      <footer
-        className="border-t border-gray-400 mx-6 transition-all duration-300 ease-in-out"
-        ref={footerRef}
-      >
+      <footer className="border-t border-gray-400 mx-6 transition-all duration-300 ease-in-out" ref={footerRef}>
         <div className="container h-12 mx-auto px-4 pt-3 pb-5">
-          <Link
-            to="/"
-            className="inline-block font-sans text-sm xs:text-base no-underline pt-px"
-          >
+          <Link to="/" className="inline-block font-sans text-sm xs:text-base no-underline pt-px">
             <span className="text-red-700">©</span>{' '}
-            <span className="text-gray-600 hover:text-gray-900">
-              {new Date().getFullYear()} Bronson Avila
-            </span>
+            <span className="text-gray-600 hover:text-gray-900">{new Date().getFullYear()} Bronson Avila</span>
           </Link>
         </div>
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

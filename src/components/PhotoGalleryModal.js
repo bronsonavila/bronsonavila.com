@@ -1,8 +1,7 @@
-import Img from 'gatsby-image';
-import React, { useState } from 'react';
-
-import Caret from 'src/../static/svg/circle-caret.svg';
-import Close from 'src/../static/svg/circle-close.svg';
+import Caret from 'src/../static/svg/circle-caret.svg'
+import Close from 'src/../static/svg/circle-close.svg'
+import Img from 'gatsby-image'
+import React, { useState } from 'react'
 
 /**
  * Sets classes on each image to ensure appropriate display and animation.
@@ -26,33 +25,22 @@ import Close from 'src/../static/svg/circle-close.svg';
  * @param {String} lastNavigationDirection - Either `next` or `previous`.
  * @return {String}
  */
-const setImageClasses = (
-  activeCardIndex,
-  imagesLength,
-  index,
-  lastNavigationDirection
-) => {
+const setImageClasses = (activeCardIndex, imagesLength, index, lastNavigationDirection) => {
   // Prevent scenario where `null + 1 === 1` is `true`.
   if (activeCardIndex !== null) {
-    const isNext =
-      index === activeCardIndex + 1 ||
-      (index === 0 && activeCardIndex === imagesLength - 1);
-    const isPrevious =
-      index === activeCardIndex - 1 ||
-      (activeCardIndex === 0 && index === imagesLength - 1);
+    const isNext = index === activeCardIndex + 1 || (index === 0 && activeCardIndex === imagesLength - 1)
+    const isPrevious = index === activeCardIndex - 1 || (activeCardIndex === 0 && index === imagesLength - 1)
 
     if (activeCardIndex === index) {
-      return 'is-displayed';
+      return 'is-displayed'
     } else if (isNext) {
-      return `is-next ${lastNavigationDirection === 'next' ? 'will-fade-in' : ''}`;
+      return `is-next ${lastNavigationDirection === 'next' ? 'will-fade-in' : ''}`
     } else if (isPrevious) {
-      return `is-previous ${
-        lastNavigationDirection === 'previous' ? 'will-fade-in' : ''
-      }`;
+      return `is-previous ${lastNavigationDirection === 'previous' ? 'will-fade-in' : ''}`
     }
   }
-  return '';
-};
+  return ''
+}
 
 /**
  * Photo Gallery Modal
@@ -83,15 +71,15 @@ const PhotoGalleryModal = React.forwardRef(
       images,
       isOpen,
       lastNavigationDirection,
-      width,
+      width
     },
     ref
   ) => {
-    const [isHovered, setIsHovered] = useState(null);
+    const [isHovered, setIsHovered] = useState(null)
     const modalStateClasses =
       `${hasSmoothTransition ? 'has-smooth-transition ' : ''}` +
       `${isHovered ? 'is-hovered ' : ''}` +
-      `${isOpen ? 'is-open ' : ''}`;
+      `${isOpen ? 'is-open ' : ''}`
 
     return (
       <div // eslint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -103,14 +91,14 @@ const PhotoGalleryModal = React.forwardRef(
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={e => {
-          const nodeName = e.target.nodeName;
+          const nodeName = e.target.nodeName
           // Only toggle overlay when elements other than SVG icons/buttons are tapped.
-          if (nodeName === 'IMG' || nodeName === 'FIGCAPTION') setIsHovered(!isHovered);
+          if (nodeName === 'IMG' || nodeName === 'FIGCAPTION') setIsHovered(!isHovered)
         }}
         ref={ref}
         style={{
           height: `${height}px`,
-          width: `${width}px`,
+          width: `${width}px`
         }}
       >
         <div
@@ -154,12 +142,7 @@ const PhotoGalleryModal = React.forwardRef(
             <figure
               className={
                 `photo-gallery-modal__image hidden absolute top-0 w-full ` +
-                `${setImageClasses(
-                  activeCardIndex,
-                  images.length,
-                  index,
-                  lastNavigationDirection
-                )}`
+                `${setImageClasses(activeCardIndex, images.length, index, lastNavigationDirection)}`
               }
               key={index}
             >
@@ -177,8 +160,8 @@ const PhotoGalleryModal = React.forwardRef(
           ))}
         </div>
       </div>
-    );
+    )
   }
-);
+)
 
-export default PhotoGalleryModal;
+export default PhotoGalleryModal

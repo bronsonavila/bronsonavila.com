@@ -3,11 +3,11 @@
  *
  * See: https://www.gatsbyjs.org/docs/ssr-apis/
  */
-import React from 'react';
-import PageWrapper from 'components/PageWrapper';
+import React from 'react'
+import PageWrapper from 'components/PageWrapper'
 
-import 'styles/index.scss';
+import 'styles/index.scss'
 
 export const wrapPageElement = ({ element, props }) => {
-  return <PageWrapper {...props}>{element}</PageWrapper>;
-};
+  return <PageWrapper {...props}>{element}</PageWrapper>
+}

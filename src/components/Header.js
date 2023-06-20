@@ -1,7 +1,6 @@
-import { Link } from 'gatsby';
-import React from 'react';
-
-import Logo from 'components/Logo';
+import { Link } from 'gatsby'
+import Logo from 'components/Logo'
+import React from 'react'
 
 /**
  * Header
@@ -42,6 +41,6 @@ const Header = ({ pathname }) => (
       </div>
     </div>
   </header>
-);
+)
 
-export default Header;
+export default Header

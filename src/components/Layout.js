@@ -1,6 +1,5 @@
-import React from 'react';
-
-import Footer from 'components/Footer';
+import Footer from 'components/Footer'
+import React from 'react'
 
 /**
  * Layout
@@ -14,6 +13,6 @@ const Layout = ({ children }) => (
     <main className="h-full mb-16 p-6">{children}</main>
     <Footer />
   </>
-);
+)
 
-export default Layout;
+export default Layout

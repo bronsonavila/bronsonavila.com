@@ -1,19 +1,19 @@
-import { graphql, Link, useStaticQuery } from 'gatsby';
-import Img from 'gatsby-image';
-import Metadata from 'components/Metadata';
-import React, { useEffect, useState } from 'react';
-import posed from 'react-pose';
+import { graphql, Link, useStaticQuery } from 'gatsby'
+import Img from 'gatsby-image'
+import Metadata from 'components/Metadata'
+import posed from 'react-pose'
+import React, { useEffect, useState } from 'react'
 
-const DURATION = 850;
+const DURATION = 850
 
 const AnimatedContainer = posed.div({
-  visible: { staggerChildren: DURATION / 3 },
-});
+  visible: { staggerChildren: DURATION / 3 }
+})
 
 const AnimatedElement = posed.div({
   visible: { y: 0, opacity: 1, transition: { ease: 'easeOut' } },
-  hidden: { y: 50, opacity: 0 },
-});
+  hidden: { y: 50, opacity: 0 }
+})
 
 /**
  * @param {string} alt - Image alt text
@@ -30,20 +30,18 @@ const PhotoCardLink = ({ alt, fluid, to }) => (
       <Img alt={alt} className="h-full w-full" fluid={fluid} />
     </Link>
   </div>
-);
+)
 
 /**
  * @param {object} location - Gatsby location object
  */
 const HomePage = ({ location }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const data = useStaticQuery(
     graphql`
       query {
-        image: allContentfulAsset(
-          filter: { file: { fileName: { eq: "bronson-avila.jpg" } } }
-        ) {
+        image: allContentfulAsset(filter: { file: { fileName: { eq: "bronson-avila.jpg" } } }) {
           nodes {
             title
             fluid(maxWidth: 273, quality: 91) {
@@ -53,22 +51,19 @@ const HomePage = ({ location }) => {
         }
       }
     `
-  );
+  )
 
-  const image = data.image.nodes[0];
+  const image = data.image.nodes[0]
 
   useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+    setIsLoaded(true)
+  }, [])
 
   return (
     <>
       <Metadata pathname={location.pathname} />
 
-      <AnimatedContainer
-        className="container mx-auto px-4"
-        pose={isLoaded ? 'visible' : 'hidden'}
-      >
+      <AnimatedContainer className="container mx-auto px-4" pose={isLoaded ? 'visible' : 'hidden'}>
         <AnimatedElement
           className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-center
             w-full mt-2 pb-5 pt-8 opacity-0"
@@ -78,15 +73,15 @@ const HomePage = ({ location }) => {
 
         <AnimatedElement className="global-editor opacity-0">
           <h1 className="font-normal text-base tracking-normal leading-relaxed">
-            Hi, I'm Bronson – an attorney-turned-software engineer specializing in the
-            front-end development of websites and web applications in fully remote roles.
+            Hi, I'm Bronson – an attorney-turned-software engineer specializing in the front-end development of websites
+            and web applications in fully remote roles.
           </h1>
         </AnimatedElement>
 
         <AnimatedElement className="global-editor mb-8 pb-1 opacity-0">
           <p>
-            Not much to see here, but feel free to browse around to learn more, check out
-            some old photos, or shoot me a message.{' '}
+            Not much to see here, but feel free to browse around to learn more, check out some old photos, or shoot me a
+            message.{' '}
             <span aria-label="Victory Hand emoji" role="img">
               ✌️
             </span>
@@ -94,7 +89,7 @@ const HomePage = ({ location }) => {
         </AnimatedElement>
       </AnimatedContainer>
     </>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

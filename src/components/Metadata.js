@@ -1,8 +1,7 @@
-import { graphql, useStaticQuery } from 'gatsby';
-import React from 'react';
-import Helmet from 'react-helmet';
-
-import formatDate from 'utils/formatDate';
+import { graphql, useStaticQuery } from 'gatsby'
+import formatDate from 'utils/formatDate'
+import Helmet from 'react-helmet'
+import React from 'react'
 
 /**
  * Creates `WebPage` schema data in JSON-LD format.
@@ -15,7 +14,7 @@ import formatDate from 'utils/formatDate';
  * @param {String} url - The URL of the page
  */
 const setJsonLd = ({ author, description, image, lang, title, url }) => {
-  const today = new Date();
+  const today = new Date()
 
   return JSON.stringify({
     '@context': 'http://schema.org',
@@ -33,9 +32,9 @@ const setJsonLd = ({ author, description, image, lang, title, url }) => {
     publisher: { '@type': 'Person', name: author },
     datePublished: formatDate(today),
     dateModified: formatDate(today),
-    image: { '@type': 'ImageObject', url: image },
-  });
-};
+    image: { '@type': 'ImageObject', url: image }
+  })
+}
 
 /**
  * Metadata
@@ -61,12 +60,12 @@ const Metadata = ({ description, image, lang = 'en', pathname, title }) => {
         }
       }
     `
-  ).site;
+  ).site
 
-  const metaDescription = description || siteMetadata.description;
-  const metaImage = image || `${siteMetadata.siteUrl}/icons/icon-512x512.png`;
-  const metaTitle = title || siteMetadata.title;
-  const metaUrl = `${siteMetadata.siteUrl}${pathname}`;
+  const metaDescription = description || siteMetadata.description
+  const metaImage = image || `${siteMetadata.siteUrl}/icons/icon-512x512.png`
+  const metaTitle = title || siteMetadata.title
+  const metaUrl = `${siteMetadata.siteUrl}${pathname}`
 
   return (
     <Helmet
@@ -97,11 +96,11 @@ const Metadata = ({ description, image, lang = 'en', pathname, title }) => {
           image: metaImage,
           lang,
           title: metaTitle,
-          url: metaUrl,
+          url: metaUrl
         })}
       </script>
     </Helmet>
-  );
-};
+  )
+}
 
-export default Metadata;
+export default Metadata

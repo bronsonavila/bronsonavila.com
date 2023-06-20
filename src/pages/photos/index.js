@@ -1,32 +1,31 @@
-import { graphql, Link, useStaticQuery } from 'gatsby';
-import Img from 'gatsby-image';
-import React, { useEffect, useRef } from 'react';
+import { graphql, Link, useStaticQuery } from 'gatsby'
+import IEWarning from 'components/IEWarning'
+import Img from 'gatsby-image'
+import lazyLoad from 'utils/lazyLoad'
+import Metadata from 'components/Metadata'
+import React, { useEffect, useRef } from 'react'
 
-import IEWarning from 'components/IEWarning';
-import Metadata from 'components/Metadata';
-import lazyLoad from 'utils/lazyLoad';
-
-const delay = 300; // For animations and transitions.
+const delay = 300 // For animations and transitions.
 
 /**
  * Handles lazy loading of gallery cards.
  */
 const animateCards = () => {
-  displayCards();
-  lazyLoad(setObserverCallback(delay));
-};
+  displayCards()
+  lazyLoad(setObserverCallback(delay))
+}
 
 /**
  * Changes the display of `.observable` elements from `none` to `block`.
  */
 const displayCards = () => {
-  const cards = [...document.querySelectorAll('.observable')];
+  const cards = [...document.querySelectorAll('.observable')]
 
   cards.forEach((card, index) => {
     // Must trigger before `setObserverCallback` runs.
-    setTimeout(() => card.classList.add('is-visible'), (index * delay) / 3.666);
-  });
-};
+    setTimeout(() => card.classList.add('is-visible'), (index * delay) / 3.666)
+  })
+}
 
 /**
  * Callback for the `lazyLoad` IntersectionObserver. Animates the entrance of
@@ -38,15 +37,15 @@ const displayCards = () => {
 const setObserverCallback = delay => entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('has-entered'), delay / 3);
+      setTimeout(() => entry.target.classList.add('has-entered'), delay / 3)
     }
-  });
-};
+  })
+}
 
 export default ({ location }) => {
   // Disable page on Internet Explorer.
   if (typeof document !== 'undefined' && !!document.documentMode) {
-    return <IEWarning title="Photos" />;
+    return <IEWarning title="Photos" />
   }
 
   const data = useStaticQuery(
@@ -65,23 +64,19 @@ export default ({ location }) => {
         }
       }
     `
-  );
+  )
 
-  const galleries = data.galleries.nodes;
+  const galleries = data.galleries.nodes
 
-  const cardRefs = galleries.map(image => useRef(null));
+  const cardRefs = galleries.map(image => useRef(null))
 
   useEffect(() => {
-    setTimeout(() => animateCards(), delay);
-  }, []);
+    setTimeout(() => animateCards(), delay)
+  }, [])
 
   return (
     <div className="container mx-auto px-4">
-      <Metadata
-        description="Photos by Bronson Avila"
-        pathname={location.pathname}
-        title="Photos"
-      />
+      <Metadata description="Photos by Bronson Avila" pathname={location.pathname} title="Photos" />
       <h1 className="text-center mb-20 pb-3 pt-8">Photos</h1>
       <div className="photo-gallery-index__cards flex flex-col md:flex-row md:flex-wrap items-center justify-between w-full">
         {galleries.map((gallery, index) => (
@@ -109,5 +104,5 @@ export default ({ location }) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}

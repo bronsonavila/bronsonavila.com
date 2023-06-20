@@ -9,15 +9,14 @@
  * @param {Function} observerCallback - Called when element is visible.
  */
 const lazyLoad = observerCallback => {
-  const elements = [...document.querySelectorAll('.observable')];
+  const elements = [...document.querySelectorAll('.observable')]
 
   elements.forEach(element => {
-    const rootMargin =
-      element.getAttribute('data-observer-root-margin') || '0px';
-    const options = { rootMargin };
-    const observer = new IntersectionObserver(observerCallback, options);
-    observer.observe(element);
-  });
-};
+    const rootMargin = element.getAttribute('data-observer-root-margin') || '0px'
+    const options = { rootMargin }
+    const observer = new IntersectionObserver(observerCallback, options)
+    observer.observe(element)
+  })
+}
 
-export default lazyLoad;
+export default lazyLoad

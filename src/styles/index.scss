@@ -1,29 +1,29 @@
 /* purgecss start ignore */
-@import "tailwindcss/base";
-@import "tailwindcss/components";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
 /* purgecss end ignore */
-@import "tailwindcss/utilities";
+@import 'tailwindcss/utilities';
 
 // Typography
-@import "typography.scss";
+@import 'typography.scss';
 
 // `gatsby-starter-default` styles
 // See: https://github.com/gatsbyjs/gatsby-starter-default/
-@import "starter-default.scss";
+@import 'starter-default.scss';
 
 // Override library/default styles
-@import "overrides/gatsby.scss";
-@import "overrides/starter-default.scss";
-@import "overrides/tailwind.scss";
+@import 'overrides/gatsby.scss';
+@import 'overrides/starter-default.scss';
+@import 'overrides/tailwind.scss';
 
 // Component-specific styles
-@import "form.scss";
-@import "header.scss";
-@import "footer.scss";
-@import "logo.scss";
+@import 'form.scss';
+@import 'header.scss';
+@import 'footer.scss';
+@import 'logo.scss';
 
 // Page/template-specific styles
-@import "photo-gallery.scss";
+@import 'photo-gallery.scss';
 
 // Global styles
-@import "global.scss";
+@import 'global.scss';
