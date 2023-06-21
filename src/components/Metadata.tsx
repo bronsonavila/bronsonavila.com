@@ -3,17 +3,52 @@ import formatDate from 'utils/formatDate'
 import Helmet from 'react-helmet'
 import React from 'react'
 
-/**
- * Creates `WebPage` schema data in JSON-LD format.
- *
- * @param {String} author - The author of the page
- * @param {String} description - The description of the page
- * @param {String} image - An image URL
- * @param {String} lang - The language of the page (BCP47 syntax)
- * @param {String} title - The title of the page
- * @param {String} url - The URL of the page
- */
-const setJsonLd = ({ author, description, image, lang, title, url }) => {
+// Types
+
+type JsonLdProps = {
+  author: string
+  description: string
+  image: string
+  lang: string
+  title: string
+  url: string
+}
+
+type MetadataProps = {
+  description?: string
+  image?: string
+  lang?: string
+  pathname?: string
+  title?: string
+}
+
+type SiteMetadata = {
+  author: string
+  authorUsername: string
+  siteUrl: string
+  description: string
+  title: string
+}
+
+// Constants
+
+const SITE_METADATA_QUERY = graphql`
+  query {
+    site {
+      siteMetadata {
+        author
+        authorUsername
+        siteUrl
+        description
+        title
+      }
+    }
+  }
+`
+
+// Functions
+
+const setJsonLd = ({ author, description, image, lang, title, url }: JsonLdProps): string => {
   const today = new Date()
 
   return JSON.stringify({
@@ -36,31 +71,10 @@ const setJsonLd = ({ author, description, image, lang, title, url }) => {
   })
 }
 
-/**
- * Metadata
- *
- * @param {String} description - The description of the page
- * @param {String} image - An image URL
- * @param {String} [lang='en'] - The language of the page (BCP47 syntax)
- * @param {String} pathname - The page's path derived from React Router's `location`
- * @param {String} title - The title of the page
- */
-const Metadata = ({ description, image, lang = 'en', pathname, title }) => {
-  const { siteMetadata } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            author
-            authorUsername
-            siteUrl
-            description
-            title
-          }
-        }
-      }
-    `
-  ).site
+// Components
+
+const Metadata = ({ description, image, lang = 'en', pathname, title }: MetadataProps): JSX.Element => {
+  const { siteMetadata } = useStaticQuery<{ site: { siteMetadata: SiteMetadata } }>(SITE_METADATA_QUERY).site
 
   const metaDescription = description || siteMetadata.description
   const metaImage = image || `${siteMetadata.siteUrl}/icons/icon-512x512.png`
@@ -76,18 +90,21 @@ const Metadata = ({ description, image, lang = 'en', pathname, title }) => {
       <link rel="canonical" href={metaUrl} />
       <meta name="description" content={metaDescription} />
       <meta name="image" content={metaImage} />
+
       {/* Open Graph */}
-      <meta property="og:url" content={metaUrl} />
-      <meta property="og:type" content="website" />
-      <meta property="og:title" content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:image" content={metaImage} />
+      <meta property="og:title" content={metaTitle} />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content={metaUrl} />
+
       {/* Twitter */}
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={siteMetadata.authorUsername} />
-      <meta name="twitter:title" content={metaTitle} />
       <meta name="twitter:description" content={metaDescription} />
       <meta name="twitter:image" content={metaImage} />
+      <meta name="twitter:title" content={metaTitle} />
+
       {/* Structured Data (JSON-LD) */}
       <script type="application/ld+json">
         {setJsonLd({

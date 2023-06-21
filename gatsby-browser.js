@@ -17,7 +17,5 @@ export const wrapPageElement = ({ element, props }) => {
 export const onPreRouteUpdate = ({ location, prevLocation }) => {
   const footer = document.querySelector('footer')
 
-  if (footer) {
-    footer.classList.remove('is-active')
-  }
+  footer?.classList.remove('is-active')
 }
