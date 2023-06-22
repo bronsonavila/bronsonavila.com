@@ -354,8 +354,10 @@ export default ({ data, location }) => {
         <div className="container mx-auto px-4">
           {/* Title */}
           <h1 className="text-center mb-16 pb-1 pt-8">{content.frontmatter.title}</h1>
-          {/* Text Content */}
-          <div className="global-editor mb-16 pb-1" dangerouslySetInnerHTML={{ __html: content.html }} />
+          {/* Subtitle */}
+          <div className="global-editor mb-16 pb-1">
+            <p className="text-center">{content.frontmatter.subtitle}</p>
+          </div>
           {/* Cards */}
           <div className="photo-gallery__cards flex flex-wrap justify-between w-full mb-6">
             <PhotoGalleryModal
@@ -468,6 +470,7 @@ export const query = graphql`
       frontmatter {
         description
         title
+        subtitle
       }
     }
     allGalleries: allContentfulGallery(sort: { order: ASC, fields: title }) {
