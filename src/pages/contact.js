@@ -68,7 +68,7 @@ export default ({ location }) => {
               value={required}
             />
             <AnimatedFormElement className="mb-10 pb-1">
-              <p>Got any questions or want to work together? Drop me a line any time.</p>
+              <p>Any questions or comments? Feel free to use the form below to get in touch.</p>
             </AnimatedFormElement>
             <AnimatedFormElement className="flex flex-col w-full">
               <FormInput label="Name" name="name" onChange={e => setName(e.target.value)} type="text" value={name} />
