@@ -2,7 +2,7 @@ import { graphql, Link, PageProps, useStaticQuery } from 'gatsby'
 import Img, { FluidObject } from 'gatsby-image'
 import Metadata from 'components/Metadata'
 import posed from 'react-pose'
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 // Types
 
@@ -47,7 +47,7 @@ const HOME_PAGE_QUERY = graphql`
 // Components
 
 const AnimatedContainer = posed.div({
-  visible: { staggerChildren: DURATION / 3 }
+  visible: { staggerChildren: DURATION / 3 } // Divide by number of children.
 })
 
 const AnimatedElement = posed.div({
@@ -67,7 +67,7 @@ const PhotoCardLink: React.FC<PhotoCardLinkProps> = ({ alt, fluid, to }) => (
   </div>
 )
 
-const HomePage: React.FC<HomePageProps> = ({ location }) => {
+const HomePage: FC<HomePageProps> = ({ location }) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   const data = useStaticQuery(HOME_PAGE_QUERY) as HomePageQueryData
@@ -99,11 +99,8 @@ const HomePage: React.FC<HomePageProps> = ({ location }) => {
 
         <AnimatedElement className="global-editor mb-8 pb-1 opacity-0">
           <p>
-            Not much to see here, but feel free to browse around to learn more, check out some old photos, or shoot me a
-            message.{' '}
-            <span aria-label="Victory Hand emoji" role="img">
-              ✌️
-            </span>
+            I take a disciplined approach in my work at the intersection of technology, design, and user experience to
+            create polished, accessible, and quality-driven products.
           </p>
         </AnimatedElement>
       </AnimatedContainer>
