@@ -1,13 +1,12 @@
 import { OutboundLink } from 'gatsby-plugin-google-analytics'
-import React from 'react'
+import React, { FC } from 'react'
 
-/**
- * External Link
- *
- * @param {String} href - URL
- * @param {String} text - Inner text
- */
-const ExternalLink = ({ href, text }) => (
+type Props = {
+  href: string
+  text: string
+}
+
+const ExternalLink: FC<Props> = ({ href, text }) => (
   <OutboundLink href={href} rel="noopener noreferrer" target="_blank">
     {text}
   </OutboundLink>
