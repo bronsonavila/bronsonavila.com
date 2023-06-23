@@ -1,6 +1,5 @@
 import { graphql, Link } from 'gatsby'
 import getTransformMatrixArray from 'utils/getTransformMatrixArray'
-import IEWarning from 'components/IEWarning'
 import Img from 'gatsby-image'
 import lazyLoad from 'utils/lazyLoad'
 import Metadata from 'components/Metadata'
@@ -263,11 +262,6 @@ export default ({ data, location }) => {
   const content = data.markdownRemark
   const metaImage = data.metaImage.nodes[0].featured_image
   const modalImages = data.modalImages.nodes
-
-  // Disable page on Internet Explorer.
-  if (typeof document !== 'undefined' && !!document.documentMode) {
-    return <IEWarning title={content.frontmatter.title} />
-  }
 
   const [activeCard, setActiveCard] = useState(null)
   const [isThrottled, setIsThrottled] = useState(false)
