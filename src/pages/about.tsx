@@ -39,7 +39,7 @@ const About: FC<Props> = ({ location }) => {
           <AnimatedContainer pose={isLoaded ? 'visible' : 'hidden'}>
             <AnimatedElement>
               <p>
-                I current work remotely as a front-end engineer at{' '}
+                I currently work remotely as a front-end engineer at{' '}
                 <ExternalLink href="https://www.tryklarity.com/" text="Klarity" />, which uses artificial intelligence
                 to automate document workflows for finance and accounting teams.
               </p>
