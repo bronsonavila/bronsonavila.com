@@ -1,10 +1,10 @@
-interface Mouse {
+type Mouse = {
   x: number
   y: number
   updatePosition(event: MouseEvent): void
 }
 
-interface Config {
+type Config = {
   additionalTransformValues: string // Additional `transform` values to apply alongside `translate`.
   containerSelector: string // CSS selector for the target element's container.
   movementFactor: number // Lower values increase mouse movement intensity; higher values decrease it.

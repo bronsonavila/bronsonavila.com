@@ -1,7 +1,7 @@
 import Footer from 'components/Footer'
 import React, { FC, ReactNode } from 'react'
 
-interface LayoutProps {
+type LayoutProps = {
   children: ReactNode
 }
 
