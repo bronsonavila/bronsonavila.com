@@ -14,7 +14,7 @@ export const wrapPageElement = ({ element, props }) => {
 }
 
 // Hide footer when changing routes.
-export const onPreRouteUpdate = ({ location, prevLocation }) => {
+export const onPreRouteUpdate = () => {
   const footer = document.querySelector('footer')
 
   footer?.classList.remove('is-active')
