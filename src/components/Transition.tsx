@@ -1,25 +1,25 @@
 import posed from 'react-pose'
 
-const delay = 350
+const DELAY = 350
 
 const Transition = posed.div({
   enter: {
-    delay: delay / 2,
+    delay: DELAY / 2,
     opacity: 1,
-    y: 0,
     transition: {
       ease: 'easeOut',
-      duration: delay
-    }
+      duration: DELAY
+    },
+    y: 0
   },
   exit: {
-    delay: delay / 2,
+    delay: DELAY / 2,
     opacity: 0,
-    y: 50,
     transition: {
       ease: 'easeIn',
-      duration: delay / 2
-    }
+      duration: DELAY / 2
+    },
+    y: 50
   }
 })
 

@@ -4,7 +4,7 @@ import ExternalLink from 'components/ExternalLink'
 import Metadata from 'components/Metadata'
 import posed from 'react-pose'
 
-type Props = {
+type AboutPageProps = {
   location: WindowLocation
 }
 
@@ -19,7 +19,7 @@ const AnimatedElement = posed.div({
   hidden: { y: 50, opacity: 0 }
 })
 
-const About: FC<Props> = ({ location }) => {
+const About: FC<AboutPageProps> = ({ location }) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {

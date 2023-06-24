@@ -2,7 +2,7 @@ import { graphql, Link, useStaticQuery } from 'gatsby'
 import Img, { FluidObject } from 'gatsby-image'
 import lazyLoad from 'utils/lazyLoad'
 import Metadata from 'components/Metadata'
-import React, { useEffect, useRef } from 'react'
+import React, { FC, useEffect, useRef } from 'react'
 
 // Types
 
@@ -13,6 +13,10 @@ type GalleryNode = {
     fluid: FluidObject
     title: string
   }
+}
+
+type PhotosPageProps = {
+  location: Location
 }
 
 type QueryData = {
@@ -45,7 +49,7 @@ const animateCards = (delay: number) => (entries: IntersectionObserverEntry[]): 
 
 // Component
 
-const PhotosPage = ({ location }: { location: Location }): JSX.Element => {
+const PhotosPage: FC<PhotosPageProps> = ({ location }) => {
   const data = useStaticQuery<QueryData>(
     graphql`
       query {

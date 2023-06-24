@@ -1,34 +1,29 @@
 import { Link } from 'gatsby'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { FC, RefObject, useEffect, useRef, useState } from 'react'
+
+const FOOTER_REVEAL_DELAY_MS = 850
 
 /**
- * Reveals the footer when the page is no longer scrollable. Add an `offset`
- * value to reveal the footer when the user is `n` pixels away from the bottom
- * of the screen. (NOTE: An `offset` value of at least `1` is required for
- * the footer to work correctly on Firefox on MacOS. The default value is set
- * to `2` for good measure.)
- *
- * @param {Object} footerRef - The footer's `ref` object.
- * @param {Integer} [offset=2] - A number of pixels substracted from `scrollHeight`.
+ * Function to activate the footer when the user has scrolled to the bottom of the page.
+ * An optional `offset` argument can be provided, which activates the footer when the user
+ * is `offset` pixels away from the bottom of the page. By default, this offset is set to 2
+ * to ensure proper functionality on Firefox on MacOS.
  */
-const toggleActiveFooterState = (footerRef, offset = 2) => {
+const toggleActiveFooterState = (footerRef: RefObject<HTMLDivElement>, offset = 2) => {
   if (window.innerHeight + window.scrollY >= document.body.scrollHeight - offset) {
-    if (footerRef && footerRef.current) {
-      footerRef.current.classList.add('is-active')
-    }
+    footerRef.current?.classList.add('is-active')
   }
 }
 
-const Footer = () => {
-  const [isTicking, setIsTicking] = useState(false)
-  const footerRef = useRef(null)
-  const footerRevealDelay = 850
+const Footer: FC = () => {
+  const [isTicking, setIsTicking] = useState<boolean>(false)
+  const footerRef = useRef<HTMLDivElement>(null)
 
+  // Handle scroll events to reveal the footer at the right time.
+  // See: https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event
   useEffect(() => {
-    setTimeout(() => toggleActiveFooterState(footerRef), footerRevealDelay)
+    setTimeout(() => toggleActiveFooterState(footerRef), FOOTER_REVEAL_DELAY_MS)
 
-    // Throttle scroll event. See:
-    // https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event
     const handleScroll = () => {
       if (!isTicking) {
         window.requestAnimationFrame(() => {
@@ -40,8 +35,9 @@ const Footer = () => {
     }
 
     window.addEventListener('scroll', handleScroll)
+
     return () => window.removeEventListener('scroll', handleScroll)
-  })
+  }, [isTicking, footerRef])
 
   return (
     <div className="footer-container absolute bottom-0 w-full overflow-hidden">
