@@ -1,10 +1,9 @@
 import React, { ChangeEvent, FC } from 'react'
 import FormLabel from 'components/FormLabel'
 
-export enum InputType {
-  EMAIL = 'email',
-  TEXTAREA = 'textarea',
-  TEXT = 'text'
+enum InputType {
+  Textarea = 'textarea',
+  Text = 'text'
 }
 
 type FormInputProps = {
@@ -25,7 +24,7 @@ const FormInput: FC<FormInputProps> = ({
   name = '',
   onChange = () => undefined,
   required = true,
-  type = InputType.TEXT,
+  type = InputType.Text,
   value = ''
 }) => {
   const commonProps = {
@@ -42,7 +41,7 @@ const FormInput: FC<FormInputProps> = ({
     <>
       <FormLabel classes={labelClasses} htmlFor={name} label={label} />
 
-      {type === InputType.TEXTAREA ? (
+      {type === InputType.Textarea ? (
         <textarea {...commonProps} maxLength={65535} rows={4} />
       ) : (
         <input {...commonProps} type={type} className={`${commonProps.className} mb-6`} />
