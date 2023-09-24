@@ -92,7 +92,7 @@ const HomePage: FC<HomePageProps> = ({ location }) => {
 
         <AnimatedElement className="global-editor opacity-0">
           <h1 className="font-normal text-base tracking-normal leading-relaxed">
-            Hi, I'm Bronson – an attorney-turned-software engineer specializing in the front-end development of websites
+            Hi, I’m Bronson – an attorney-turned-software engineer specializing in the front-end development of websites
             and web applications in fully remote roles.
           </h1>
         </AnimatedElement>
