@@ -19,7 +19,7 @@
     "plugin:react/recommended"
   ],
   "rules": {
-    // Add your custom rules, if any
+    "@typescript-eslint/no-var-requires": "off"
   },
   "settings": {
     "react": {
