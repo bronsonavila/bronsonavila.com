@@ -44,7 +44,7 @@ self.addEventListener('activate', event => {
 
         await Promise.all(cachesToDelete.map(cacheName => caches.delete(cacheName)))
 
-        await self.clients.claim()
+        self.clients.claim()
       } catch (error) {
         console.error('Failed to activate service worker:', error)
       }
