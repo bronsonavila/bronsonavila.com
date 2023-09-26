@@ -2,6 +2,11 @@ const IMAGE_CACHE = `image-cache-v__SERVICE_WORKER_VERSION__`
 
 // Cache images.
 self.addEventListener('fetch', event => {
+  const isExternalRequest = !event.request.url.startsWith(self.location.origin)
+  const isImageRequest = event.request.headers.get('Accept')?.startsWith('image')
+
+  if (!isImageRequest) return
+
   event.respondWith(
     (async () => {
       try {
@@ -10,16 +15,12 @@ self.addEventListener('fetch', event => {
 
         if (cachedResponse) return cachedResponse
 
-        // Use CORS mode on image requests to avoid opaque responses from a cross-origin (e.g., Contentful).
-        const isImageRequest = event.request.headers.get('Accept')?.includes('image')
-        const request = isImageRequest ? new Request(event.request.url, { mode: 'cors' }) : event.request
+        const request = isExternalRequest ? new Request(event.request.url, { mode: 'cors' }) : event.request
         const networkResponse = await fetch(request)
+        const isGoogleAnalytics = networkResponse?.url.includes('google-analytics')
+        const isImageResponse = networkResponse?.headers.get('Content-Type')?.startsWith('image')
 
-        if (
-          networkResponse?.ok &&
-          networkResponse?.headers.get('Content-Type')?.startsWith('image') &&
-          !networkResponse?.url.includes('google-analytics') // Don't cache Google Analytics requests.
-        ) {
+        if (networkResponse?.ok && isImageResponse && !isGoogleAnalytics) {
           await cache.put(event.request, networkResponse.clone())
         }
 
