@@ -1,8 +1,9 @@
 import { FluidObject } from 'gatsby-image'
-import React, { FC, forwardRef, MouseEvent, ReactElement, TouchEvent, useState } from 'react'
+import { NavigationDirection } from 'templates/photos'
 import Caret from 'src/../static/svg/circle-caret.svg'
 import Close from 'src/../static/svg/circle-close.svg'
 import Img from 'gatsby-image'
+import React, { FC, forwardRef, MouseEvent, ReactElement, TouchEvent, useState } from 'react'
 
 // Types
 
@@ -15,14 +16,12 @@ type GalleryProps = {
   height: number
   images: ImageProps[]
   isOpen: boolean
-  lastNavigationDirection: 'next' | 'previous'
+  lastNavigationDirection: NavigationDirection
   width: number
 }
 
 type ImageProps = {
-  image: {
-    fluid: FluidObject
-  }
+  image: { fluid: FluidObject }
   description?: string
 }
 
@@ -93,10 +92,7 @@ const PhotoGalleryModal = forwardRef<HTMLDivElement, GalleryProps>(
           if (nodeName === 'IMG' || nodeName === 'FIGCAPTION') setIsHovered(!isHovered) // Only toggle overlay when elements other than SVG icons/buttons are tapped.
         }}
         ref={ref}
-        style={{
-          height: `${height}px`,
-          width: `${width}px`
-        }}
+        style={{ height: `${height}px`, width: `${width}px` }}
       >
         <div
           className="relative overflow-hidden transition-all duration-300 ease-in-out"
